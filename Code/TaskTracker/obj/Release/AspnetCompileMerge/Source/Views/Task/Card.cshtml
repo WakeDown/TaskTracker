@@ -1,0 +1,39 @@
+﻿@using TaskTracker.Models
+@model TaskTracker.Models.Task
+@{
+    ViewBag.Title = "Катрочка задачи";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Header = Model.Name;
+    var stateHistory = Model.GetStateHistory();
+}
+
+
+    <div class="row">
+        <div class="col s8">
+            <h5>
+                @Model.Descr
+            </h5>
+        </div>
+        <div class="col s4">
+            <div class="card-panel">
+                <h5>История задачи</h5>
+                @foreach (var st in stateHistory)
+                {
+                    <div class="card @st.TaskState.BgColor">
+                        <div class="card-content">
+                            @*<span class="card-title black-text"></span>*@
+                            <p>
+                                @st.TaskState.Name - @st.DateCreate.ToShortDateString()
+                            </p>
+                        </div>
+                        @*<div class="card-action">
+                    <a href="#">This is a link</a>
+                    <a href="#">This is a link</a>
+                </div>*@
+                    </div>
+                }
+            </div>
+        </div>
+     </div>
+
+

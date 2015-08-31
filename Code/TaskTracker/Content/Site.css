@@ -1,0 +1,44 @@
+﻿/*body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+input,
+select,
+textarea {
+    max-width: 280px;
+}*/
+
+header, main, footer {
+    padding-left: 240px;
+}
+
+ul.side-nav.fixed li.logo {
+    text-align: center;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+nav.top-nav {
+    height: 122px;
+    box-shadow: none;
+}
+
+.page-title {
+    line-height: 122px;
+    font-size: 48px;
+}
+
+.min-width {
+    width: 1px !important;
+}
