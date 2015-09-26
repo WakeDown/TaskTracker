@@ -1,0 +1,229 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.TaskClaim>
+
+@{
+    ViewBag.Title = "Список задач";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<table class="bordered hoverable">
+    <thead>
+        <tr>
+            <th class="min-width center">ID</th>
+            <th style="width: 40%">Задача</th>
+            <th style="width: 10%">Категория</th>
+            <th>
+                <a class='dropdown-button btn' href='#' data-activates='specFilter'>
+                    @if (!String.IsNullOrEmpty(Request.QueryString["spec"]))
+                    {
+                        <span>
+                            @AdHelper.GetUserBySid(Request.QueryString["spec"]).DisplayName
+                        </span>
+                    }
+                    else
+                    {
+                        <span>Специалист</span>
+                    }
+                </a>
+                <ul id='specFilter' class='dropdown-content'>
+                    <li><a href="@Url.Action("List", new {spec = "", author = Request.QueryString["author"]})">все</a></li>
+                    @foreach (var spec in Specialist.GetProgrammers())
+                    {
+                        <li><a href="@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})" class="">@spec.Value</a></li>
+                    }
+                </ul>
+            </th>
+            <th style="min-width: 200px">
+                <a class='dropdown-button btn' href='#' data-activates='authorFilter'>
+                    @if (!String.IsNullOrEmpty(Request.QueryString["author"]))
+                    {
+                        <span>
+                            @AdHelper.GetUserBySid(Request.QueryString["author"]).DisplayName
+                        </span>
+                    }
+                    else
+                    {
+                        <span>Автор</span>
+                    }
+                </a>
+                <ul id='authorFilter' class='dropdown-content'>
+                    <li><a href="@Url.Action("List", new {auth = "", spec = Request.QueryString["spec"]})">все</a></li>
+                    @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+                    {
+                        <li><a href="@Url.Action("List", new {author = auth.Sid, spec = Request.QueryString["spec"]})">@auth.Name</a></li>
+                    }
+                </ul>
+
+            </th>
+            <th style="width: 20%"></th>
+        </tr>
+    </thead>
+    @if (Model.Any())
+    {
+        int i = 0;
+        <tbody>
+        @foreach (TaskClaim task in Model)
+        {
+            i++;
+            <tr>
+                <th class="center">@task.TaskId</th>
+                <td>
+                    @*<span class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="@task.Descr">@task.Name</span>*@
+
+                    @*<ul class="collapsible">
+                                    <li>
+                                        <div class="collapsible-header">@task.Name</div>
+                                        <div class="collapsible-body"><p>@task.Descr</p></div>
+                                    </li>
+                                </ul>*@
+                    <div class="row">
+                        <div class="col s2 l1 m1">
+                            <span class="@task.TaskState.BgColor marker">@task.TaskState.Name</span>
+                        </div>
+                        <div class="col s2 offset-s8 l1 offset-l9 m1 offset-m10">
+                            <span class="bold">@task.Project.Name</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h5><a href="@Url.Action("Card", "Task", new {id = task.TaskId})">@task.Name</a></h5>
+                    </div>
+                    <small>
+                        @if (@task.Descr.Length > 350)
+                        {
+                            @task.Descr.Remove(350)
+                            <br/>
+                            <a class="red-text" href="@Url.Action("Card", "Task", new {id = task.TaskId})">читать полностью</a>
+                        }
+                        else
+                        {
+                            @task.Descr
+                        }
+                    </small>
+
+                </td>
+                <td>
+                    @if (@task.TaskCategory != null)
+                    {
+                        if (@task.TaskCategory.Name.Equals("Bug"))
+                        {
+                            <i class="material-icons red-text small">bug_report</i>
+                        }
+                        if (@task.TaskCategory.Name.Equals("Feature"))
+                        {
+                            <i class="material-icons green-text small">star_rate</i>
+                        }
+                        <br/>
+                        @task.TaskCategory.Name
+                    }
+                    else
+                    {
+                        <a class='dropdown-button btn' href='#' data-activates='category@{ @task.TaskId }'>Назначить</a>
+                        <ul id='category@{ @task.TaskId }' class='dropdown-content'>
+                            @foreach (var cat in TaskCategory.GetList())
+                            {
+                                <li><a href="#!" value="@cat.TaskCategoryId">@cat.Name</a></li>
+                            }
+                        </ul>
+                    }
+                </td>
+                <td class="text-nowrap">
+                    @if (String.IsNullOrEmpty(task.SpecialistSid))
+                    {
+                                @*<div class="row">
+                                    <div class="col s9">*@
+                        <a class='dropdown-button btn' href='#' data-activates='specialist@{ @task.TaskId }'>Назначить</a>
+                        <ul id='specialist@{ @task.TaskId }' class='dropdown-content'>
+                            @foreach (var spec in Specialist.GetProgrammers())
+                            {
+                                <li><a href="#!" value="@spec.Key">@spec.Value</a></li>
+                                <li class="divider"></li>
+                            }
+                        </ul>
+                                @*<div class="input-field"><select class="browser-default">
+                                        <option value="null">--выберите специалиста--</option>
+                                        @foreach (var s in Specialist.GetProgrammers())
+                                        {
+                                            <option value="@s.Key">@s.Value</option>
+                                        }
+                                    </select></div>*@
+                                @*</div>
+                                        <div class="col s3">
+                                            <a href="function:void()" class="btn waves-effect waves-orange"></a>
+                                        </div>
+                                    </div>*@
+                    }
+                    else
+                    {
+                        @task.Specialist.DisplayName
+                    }
+                </td>
+                <td class="text-nowrap">
+                    @AdHelper.GetUserBySid(task.CreatorSid).DisplayName
+                </td>
+                <td>
+                    <a tid="@task.TaskId" type="test" href="#" class="btn amber  waves-effect waves-orange" title="ПРОВЕРКА"><i class="material-icons">computer</i></a>
+                    <a tid="@task.TaskId" type="done" href="#" class="btn green waves-effect waves-orange" title="ПРОВЕРЕНО"><i class="material-icons">done</i></a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+        <tr>
+            <td colspan="6">пусто</td>
+        </tr>
+        </tbody>
+    }
+</table>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('.dropdown-button').dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false, // Does not change width of dropdown to that of the activator
+                gutter: 0, // Spacing from edge
+                belowOrigin: false // Displays dropdown below the button
+            }
+  );
+
+            $('[type="test"]').click(function () {
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTestState")',
+                    method: 'POST',
+                    data: { id: $(this).attr('tid') },
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('[type="done"]').click(function () {
+                $.ajax(
+                {
+                    url: '@Url.Action("SetDoneState")',
+                    method: 'POST',
+                    data: { id: $(this).attr('tid') },
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+        });
+    </script>
+}

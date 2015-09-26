@@ -42,3 +42,59 @@ nav.top-nav {
 .min-width {
     width: 1px !important;
 }
+
+.marker {
+    font-size: 0.8em;
+    padding: 3px;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.task-descr {
+    font-size: 1.2em;
+    padding-left: 35px;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.text-bg {
+    font-size: 1.4em;
+}
+
+.no-marg-bot {
+    margin-bottom: 0 !important;
+}
+
+tr.updated-task-claim {
+    /*border: 1px solid red;*/
+    -webkit-animation-name: updated-task-claim; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: updated-task-claim;
+    animation-duration: 4s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes updated-task-claim {
+    0% {background-color: #ffecb3;}
+    100% {background-color: #fff;}
+}
+
+/* Standard syntax */
+@keyframes updated-task-claim {
+    0% {background-color: #ffecb3;}
+    100% {background-color: #fff;}
+}
+
+.marg-r-sm {
+    margin-right: 5px;    
+}
+
+.marg-r-md {
+    margin-right: 15px;    
+}

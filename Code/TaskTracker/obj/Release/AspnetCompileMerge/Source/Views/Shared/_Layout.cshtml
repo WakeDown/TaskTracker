@@ -10,38 +10,38 @@
 
 </head>
 <body>
-    <header>
-        <nav class="top-nav indigo lighten-2">
-            <div class="container">
-                <div class="row">
-                    <span class="page-title left">
+<header>
+    
+    <nav class="top-nav indigo lighten-2">
+        <div class="container">
+            <div class="row">
+                <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="material-icons large">menu</i></a>
+                <span class="page-title left">
                         @(String.IsNullOrEmpty(ViewBag.Header) ? ViewBag.Title : ViewBag.Header)
                     </span>
-                    <span class="right">
+                <span class="right">
                         Вы вошли как @ViewBag.CurUser.ShortName
                     </span>
-                </div>
             </div>
-        </nav>
-        <div class="container">
-            <a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only"><i class="mdi-navigation-menu"></i></a>
         </div>
-        <ul id="nav-mobile" class="side-nav fixed" style="width: 240px; left: -250px;">
-            <li class="logo">
-                @*@Html.ActionLink("Задачи", "List", "Task", new { area = "" }, new { @class = "brand-logo" })*@
-            </li>
-            <li>
-                <div class="row">
-                    <a class="waves-effect waves-teal" href="@Url.Action("List", "Task")">Список задач<i class="material-icons left center" style="line-height: 64px;">list</i></a>
-                </div>
-            </li>
-            <li>
-                <div class="row">
-                    <a class="waves-effect waves-teal" href="@Url.Action("New", "Task")">Новая<i class="material-icons left center" style="line-height: 64px;">add</i></a>
-                </div>
-            </li>
-        </ul>
-    </header>
+    </nav>
+
+    <ul id="nav-mobile" class="side-nav fixed" style="width: 240px; left: -250px;">
+        <li class="logo">
+            @*@Html.ActionLink("Задачи", "List", "Task", new { area = "" }, new { @class = "brand-logo" })*@
+        </li>
+        <li>
+            <div class="row">
+                <a class="waves-effect waves-teal" href="@Url.Action("List", "Task")">Список задач<i class="material-icons left center" style="line-height: 64px;">list</i></a>
+            </div>
+        </li>
+        <li>
+            <div class="row">
+                <a class="waves-effect waves-teal" href="@Url.Action("New", "Task")">Новая<i class="material-icons left center" style="line-height: 64px;">add</i></a>
+            </div>
+        </li>
+    </ul>
+</header>
     <main>
         <div class="container">
             <div class="row">

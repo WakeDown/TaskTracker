@@ -1,38 +1,46 @@
 ﻿@using TaskTracker.Models
-@model TaskTracker.Models.Task
+@model TaskTracker.Models.TaskClaim
 @{
     ViewBag.Title = "Новая задача";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <p>
-    @using (Html.BeginForm("New", "Task", FormMethod.Post, new { }))
+    <div class="red lighten-3 red-text">
+        @TempData["error"]
+    </div>
+    @using (Html.BeginForm("New", "Task", FormMethod.Post, new {}))
     {
         <div class="row">
-            <div class="input-field col s12">
-                @Html.TextBoxFor(m => m.Name, "{0:d}", new {@id = "name", @class = "validate", required = "required"})
-                <label for="name">Название</label>
+            <div class="col s3">
+                <label for="project">Проект</label>
+                @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new {id = "project", @class = "validate browser-default", required = "required" })
             </div>
-        </div>
+        </div><div class="row">
+                  <div class="input-field col s6">
+                      @Html.TextBoxFor(m => m.Name, new {@id = "name", @class = "validate", required = "required"})
+                      <label for="name">Название</label>
+                  </div>
+              </div>
         <div class="row">
-            <div class="input-field col s12">
-                @Html.TextBoxFor(m => m.Descr, "{0:d}", new {@id = "descr", @class = "validate", required = "required"})
+            <div class="input-field col s6">
+                @Html.TextAreaFor(m => m.Descr, new {@id = "descr", @class = "validate materialize-textarea", required = "required", rows = "5"})
                 <label for="descr">Описание</label>
             </div>
         </div>
-        <div class="row">
-            <div class="col s12">
+        @*<div class="row">
+            <div class="col s3">
                 <label for="category">Категория</label>
                 @Html.DropDownListFor(m => m.TaskCategoryId, TaskCategory.GetSelectionList(), new {required = "required", id = "category", @class = "browser-default"})
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
+            <div class="col s3">
                 <label for="specialist">Специалист</label>
                 @Html.DropDownListFor(m => m.SpecialistSid, Specialist.GetProgrammersSelectionList(), "--специалист не указан--", new { id = "specialist", @class = "browser-default" })
             </div>
-        </div>
+        </div>*@
         <button class="btn waves-effect waves-light" type="submit" name="action">
-            Сохранить<i class="material-icons right">done</i>
+            Сохранить<i class="material-icons right">send</i>
         </button>
     }
 </p>

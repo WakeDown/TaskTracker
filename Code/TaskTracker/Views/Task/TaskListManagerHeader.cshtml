@@ -1,0 +1,62 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.TaskClaim>
+
+@{
+    var selSpec = AdHelper.GetUserBySid(Request.QueryString["spec"]);
+    var selAuthor = AdHelper.GetUserBySid(Request.QueryString["author"]);
+}
+
+<tr>
+    <th class="min-width center">ID</th>
+    <th style="width: 40%">Задача</th>
+    <th style="width: 10%">Категория</th>
+    <th>
+        <a class='dropdown-button btn' href='#' data-activates='specFilter'>
+            @if (!String.IsNullOrEmpty(Request.QueryString["spec"]))
+            {
+                <span id="selectedSpec" sid="@selSpec.SpecialistSid">
+                    @selSpec.DisplayName
+                </span>
+            }
+            else
+            {
+                <span id="selectedSpec" sid="">Специалист</span>
+            }
+        </a>
+        <ul id='specFilter' class='dropdown-content'>
+            <li><a name="spec" sid="" fio="Специалист">все</a></li>
+            @*href="@Url.Action("List", new { spec = "", author = Request.QueryString["author"] })"*@
+            @foreach (var spec in Specialist.GetProgrammers())
+            {
+                <li><a sid="@spec.Key" fio="@spec.Value" name="spec">@spec.Value</a></li>
+                //href = "@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})"
+            }
+        </ul>
+    </th>
+    <th style="min-width: 200px">
+        <a class='dropdown-button btn' href='#' data-activates='authorFilter'>
+            @if (!String.IsNullOrEmpty(Request.QueryString["author"]))
+            {
+                <span id="selectedAuthor" sid="@selAuthor.SpecialistSid">
+                    @selAuthor.DisplayName
+                </span>
+            }
+            else
+            {
+                <span id="selectedAuthor" sid="">Автор</span>
+            }
+        </a>
+        <ul id='authorFilter' class='dropdown-content'>
+            <li><a name="author" sid="" fio="Автор">все</a></li>
+            @*href="@Url.Action("List", new { auth = "", spec = Request.QueryString["spec"] })"*@
+            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+            {
+                <li><a sid="@auth.Sid" fio="@auth.Name" name="author">@auth.Name</a></li>
+                //href = "@Url.Action("List", new {author = auth.Sid, spec = Request.QueryString["spec"]})"
+            }
+        </ul>
+
+    </th>
+    <th style="width: 20%"></th>
+</tr>

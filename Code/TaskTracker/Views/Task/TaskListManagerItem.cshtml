@@ -1,0 +1,121 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model TaskTracker.Models.TaskClaim
+
+<tr id="taskClaim-@Model.TaskId" name="taskClaimItem" tid="@Model.TaskId">
+    <th class="center">@Model.TaskId</th>
+    <td>
+        <div class="row no-marg-bot">
+            <div class="col s12 l8 m8">
+                <span class="bold">@Model.Project.Name</span>
+            </div>
+            <div class="col s12 l4 m4">
+                <span class="@Model.TaskState.BgColor marker">@Model.TaskState.Name</span>
+            </div>
+        </div>
+        <div>
+            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a></div>
+        </div>
+        <small>
+            @if (@Model.Descr.Length > 350)
+            {
+                @Model.Descr.Remove(350)
+                <br />
+                <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
+            }
+            else
+            {
+                @Model.Descr
+            }
+        </small>
+    </td>
+    <td>
+        @if (@Model.TaskCategory != null)
+        {
+            if (@Model.TaskCategory.SysName.ToUpper().Equals("BUG"))
+            {
+                <i class="material-icons red-text small" title="@Model.TaskCategory.Name">bug_report</i>
+            }
+            if (@Model.TaskCategory.SysName.ToUpper().Equals("FEATURE"))
+            {
+                <i class="material-icons green-text small" title="@Model.TaskCategory.Name">star_rate</i>
+            }
+        }
+        else
+        {
+            <a class='dropdown-button btn' href='#' data-activates='category@{ @Model.TaskId }'>Категория</a>
+            <ul id='category@{ @Model.TaskId }' class='dropdown-content'>
+                @foreach (var cat in TaskCategory.GetList())
+                {
+                    <li><a type="set-category" href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</a></li>
+                }
+            </ul>
+    }
+        @if (@Model.TaskImportant != null)
+        {
+            if (@Model.TaskImportant.SysName.Equals("IMP"))
+            {
+                <i class="material-icons red-text small" title="@Model.TaskImportant.Name">assignment_late</i>
+            }
+            if (@Model.TaskImportant.SysName.Equals("NOTIMP"))
+            {
+                <i class="material-icons green-text small" title="@Model.TaskImportant.Name">assignment</i>
+            }
+        }
+        else
+        {
+            <a class='dropdown-button btn' href='#' data-activates='important@{ @Model.TaskId }'>Важность</a>
+            <ul id='important@{ @Model.TaskId }' class='dropdown-content'>
+                @foreach (var imp in TaskImportant.GetList())
+                {
+                    <li><a type="set-important" href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</a></li>
+                }
+            </ul>
+    }
+        @if (@Model.TaskQuickly != null)
+        {
+            if (@Model.TaskQuickly.SysName.Equals("QUICK"))
+            {
+                <i class="material-icons red-text small" title="@Model.TaskQuickly.Name">alarm_on</i>
+            }
+            if (@Model.TaskQuickly.SysName.Equals("NOTQUICK"))
+            {
+                <i class="material-icons green-text small" title="@Model.TaskQuickly.Name">alarm_off</i>
+            }
+        }
+        else
+        {
+            <a class='dropdown-button btn' href='#' data-activates='quickly@{ @Model.TaskId }'>Срочность</a>
+            <ul id='quickly@{ @Model.TaskId }' class='dropdown-content'>
+                @foreach (var qick in TaskQuickly.GetList())
+                {
+                    <li><a type="set-quickly" href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</a></li>
+                }
+            </ul>
+    }
+    </td>
+    <td class="text-nowrap">
+        @if (String.IsNullOrEmpty(Model.SpecialistSid))
+        {
+            <a class='dropdown-button btn' href='#' data-activates='specialist@{ @Model.TaskId }'>Специалист</a>
+            <ul id='specialist@{ @Model.TaskId }' class='dropdown-content'>
+                @foreach (var spec in Specialist.GetProgrammers())
+                {
+                    <li><a type="set-specialist" href="#!" sid="@spec.Key" tid="@Model.TaskId">@spec.Value</a></li>
+                                <li class="divider"></li>
+                }
+            </ul>
+    }
+    else
+    {
+        @Model.Specialist.DisplayName
+    }
+    </td>
+    <td class="text-nowrap">
+        @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName
+    </td>
+    <td>
+        @*<a tid="@Model.TaskId" type="test" href="#" class="btn amber  waves-effect waves-orange" title="ПРОВЕРКА"><i class="material-icons">computer</i></a>*@
+        <a tid="@Model.TaskId" type="done" href="#!" class="btn green waves-effect waves-orange"><i class="material-icons">done</i></a>
+    </td>
+</tr>

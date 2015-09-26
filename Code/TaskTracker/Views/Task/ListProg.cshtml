@@ -1,0 +1,83 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.TaskClaim>
+
+@{
+    ViewBag.Title = "Список задач";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<table class="bordered hoverable">
+    <thead>
+    @Html.Partial("TaskListProgHeader", Model)
+    </thead>
+    @if (Model.Any())
+    {
+        <tbody>
+        @foreach (TaskClaim task in Model)
+        {
+            @Html.Partial("TaskListProgItem", task)
+        }
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+        <tr>
+            <td colspan="6">пусто</td>
+        </tr>
+        </tbody>
+    }
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            initTaskList();
+        });
+        function initTaskList($container) {
+            if ($container == null) $container = $('body');
+
+            $('[type="done"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetDoneState")',
+                    method: 'POST',
+                    data: { id: tid },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('.dropdown-button', $container).dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false, // Does not change width of dropdown to that of the activator
+                gutter: 0, // Spacing from edge
+                belowOrigin: false // Displays dropdown below the button
+            });
+        }
+        function updateTaskItem(id) {
+            $.ajax({
+                url: '@Url.Action("GetTaskListProgItem", "Task")?id=' + id,
+                method: 'GET',
+                success: function (html) {
+                    $("tr#taskClaim-" + id).replaceWith(html);
+                    var $tr = $("tr#taskClaim-" + id);
+                    $tr.addClass('updated-task-claim');
+                    initTaskList($tr);
+                },
+                error: function (data) {
+                    alert(data.error);
+                }
+            });
+        }
+    </script>
+}

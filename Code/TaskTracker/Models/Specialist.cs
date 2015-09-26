@@ -17,6 +17,8 @@ namespace TaskTracker.Models
         public string SpecialistSid { get; set; }
         public string FullName { get; set; }
         public string DisplayName { get; set; }
+        [MaxLength(150)]
+        public string Email { get; set; }
 
         //public string SpecialistCategorySysName { get; set; }
         //public virtual SpecialistCategory SpecialistCategory { get; set; }

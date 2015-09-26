@@ -15,9 +15,21 @@ namespace TaskTracker.Objects
             base.Seed(context);
             
             var tCats = new List<TaskCategory>();
-            tCats.Add(new TaskCategory(1, "Feature", 1) { Selected = true });
-            tCats.Add(new TaskCategory(2, "Bug", 2));
+            tCats.Add(new TaskCategory(1, "Feature", 2, "FEATURE") { Selected = true });
+            tCats.Add(new TaskCategory(2, "Bug", 1, "BUG"));
             tCats.ForEach(s => context.TaskCategories.Add(s));
+            context.SaveChanges();
+
+            var tImps = new List<TaskImportant>();
+            tImps.Add(new TaskImportant("Важно", 1, "IMP"));
+            tImps.Add(new TaskImportant("Не важно", 2, "NOTIMP"));
+            tImps.ForEach(s => context.TaskImportants.Add(s));
+            context.SaveChanges();
+
+            var tQuicks = new List<TaskQuickly>();
+            tQuicks.Add(new TaskQuickly("Срочно", 1, "QUICK"));
+            tQuicks.Add(new TaskQuickly("Не срочно", 2, "NOTQUICK"));
+            tQuicks.ForEach(s => context.TaskQuicklies.Add(s));
             context.SaveChanges();
 
             //var specCats = new List<SpecialistCategory>();
@@ -27,10 +39,13 @@ namespace TaskTracker.Objects
             //context.SaveChanges();
 
             var tStates = new List<TaskState>();
-            tStates.Add(new TaskState("Создано", "NEW", "yellow", 1));
-            tStates.Add(new TaskState("Назначено", "SET","orange", 2));
-            tStates.Add(new TaskState("Приостановлено", "PAUSED", "blue", 3));
-            tStates.Add(new TaskState("Выполнено", "DONE", "green", 4));
+            tStates.Add(new TaskState("Создано", "NEW", "red lighten-2", 1));
+            tStates.Add(new TaskState("Назначено", "SETED", "orange", 2));
+            tStates.Add(new TaskState("В работе", "WORK", "orange", 3));
+            tStates.Add(new TaskState("Приостановлено", "PAUSED", "blue", 4));
+            tStates.Add(new TaskState("На проверке", "TEST", "amber", 5));
+            tStates.Add(new TaskState("Доработка", "WORK2", "orange", 6));
+            tStates.Add(new TaskState("Проверено", "DONE", "green", 7));
             tStates.ForEach(s => context.TaskStates.Add(s));
             context.SaveChanges();
 
@@ -38,6 +53,21 @@ namespace TaskTracker.Objects
             specs.AddRange(AdHelper.GetSpecialistListS(AdGroup.TaskTrackerManager));
             specs.GroupBy(x => x.SpecialistSid).Select(s=> new Specialist { SpecialistSid= s.First().SpecialistSid, DisplayName = s.First().DisplayName, FullName = s.First().FullName }).ForEach(s => context.Specialists.Add(s));
             context.SaveChanges();
+
+            var proj = new List<Project>();
+            proj.Add(new Project("Сервис"));
+            proj.Add(new Project("Заявки на ЗИП"));
+            proj.Add(new Project("ДСУ планирование"));
+            proj.Add(new Project("СпецРасчет"));
+            proj.Add(new Project("Портал"));
+            proj.Add(new Project("TaskTracker"));
+            proj.Add(new Project("API"));
+            proj.Add(new Project("Эталон"));
+            proj.Add(new Project("1С"));
+            proj.Add(new Project("UN1T счетчик"));
+            proj.ForEach(s => context.Projects.Add(s));
+            context.SaveChanges();
         }
+
     }
 }

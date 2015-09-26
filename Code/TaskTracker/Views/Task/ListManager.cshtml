@@ -1,0 +1,215 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.TaskClaim>
+
+@{
+    ViewBag.Title = "Список задач";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] selStatesStr = String.IsNullOrEmpty(Request.QueryString["tsts"]) ? new string[0] : Request.QueryString["tsts"].Split(',');
+    var sts = TaskState.GetList();
+    int[] selStates = !selStatesStr.Any() ? TaskState.GetManagerDefaultList().Select(x=>x.TaskStateId).ToArray() : Array.ConvertAll<string, int>(selStatesStr, int.Parse);
+}
+
+<table class="bordered hoverable">
+    <thead>
+        <tr>
+            <td colspan="6">
+                <div class="left" id="stateFilterContainer">
+                    <div class="left marg-r-md">
+                        <input type="checkbox" value="" id="chk-ts-all" @(sts.Count()== selStates.Count()?"checked=\"checked\"":"") /><label for="chk-ts-all">все</label>
+                    </div>
+                    @foreach (var ts in TaskState.GetList())
+                    {
+                        <div class="left marg-r-md">
+                            <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked=\"checked\"" : "")/><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
+                        </div>
+                    }
+                </div>
+                <div class="left">
+                    <a class="btn-floating btn-large waves-effect waves-light blue" id="search"><i class="material-icons">search</i></a>
+                </div>
+            </td>
+        </tr>
+        @Html.Partial("TaskListManagerHeader", Model)
+    </thead>
+    @if (Model.Any())
+    {
+        <tbody>
+            @foreach (TaskClaim task in Model)
+            {
+                @Html.Partial("TaskListManagerItem", task)
+            }
+        </tbody>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td colspan="6">пусто</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $('#chk-ts-all').click(function () {
+                $('#stateFilterContainer [name="chk-ts"]').prop('checked', $(this).is(':checked'));
+            });
+            $('#stateFilterContainer [name="chk-ts"]').click(function () {
+                $('#chk-ts-all').prop('checked', ($('#stateFilterContainer [name="chk-ts"]').length === $('#stateFilterContainer [name="chk-ts"]:checked').length));
+            });
+            $('#search').click(function () {
+                var selStates = $('#stateFilterContainer :checked');
+                var stArr = [];
+                for (var i = 0; i < selStates.length; i++) {
+                    var val = $(selStates[i]).val();
+                    if (val !== '')stArr.push();
+                }
+                var tsts = stArr.join(',');
+                var author = $('#selectedAuthor').attr('sid') !== undefined ? $('#selectedAuthor').attr('sid') : '';
+                var spec = $('#selectedSpec').attr('sid') !== undefined ? $('#selectedSpec').attr('sid') : '';
+                var url = '@Url.Action("List")?tsts=' + tsts + '&author=' + author + '&spec=' + spec;
+                window.location = url;
+            });
+            $('#specFilter [name="spec"]').click(function () {
+                var el = $(this);
+                var $sel = $('#selectedSpec');
+                $sel.attr('sid', el.attr('sid'));
+                $sel.text(el.attr('fio'));
+            });
+            $('#authorFilter [name="author"]').click(function () {
+                var el = $(this);
+                var $sel = $('#selectedAuthor');
+                $sel.attr('sid', el.attr('sid'));
+                $sel.text(el.attr('fio'));
+            });
+            initTaskList();
+        });
+        function initTaskList($container) {
+            if ($container == null) $container = $('body');
+
+            @*$('[type="test"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTestState")',
+                    method: 'POST',
+                    data: { id: tid },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });*@
+            $('[type="done"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetDoneState")',
+                    method: 'POST',
+                    data: { id: tid },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('[type="set-category"]', $container).click(function (e) {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTaskCategory")',
+                    method: 'POST',
+                    data: { id: tid, cid: $(this).attr('cid') },
+                    success: function (e) {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+
+            });
+            $('[type="set-specialist"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTaskSpecialist")',
+                    method: 'POST',
+                    data: { id: tid, sid: $(this).attr('sid') },
+                    success: function (data) {
+                        if (data.error == null) {
+                            updateTaskItem(tid);
+                        } else {
+                            alert(data.error);
+                        }
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('[type="set-important"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTaskImportant")',
+                    method: 'POST',
+                    data: { id: tid, iid: $(this).attr('iid') },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('[type="set-quickly"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetTaskQuickly")',
+                    method: 'POST',
+                    data: { id: tid, qid: $(this).attr('qid') },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+
+            $('.dropdown-button', $container).dropdown({
+                inDuration: 300,
+                outDuration: 225,
+                constrain_width: false, // Does not change width of dropdown to that of the activator
+                gutter: 0, // Spacing from edge
+                belowOrigin: false // Displays dropdown below the button
+            });
+        }
+        function updateTaskItem(id) {
+            $.ajax({
+                url: '@Url.Action("GetTaskListManagerItem", "Task")?id=' + id,
+                method: 'GET',
+                success: function (html) {
+                    $("tr#taskClaim-" + id).replaceWith(html);
+                    var $tr = $("tr#taskClaim-" + id);
+                    $tr.addClass('updated-task-claim');
+                    initTaskList($tr);
+                },
+                error: function (data) {
+                    alert(data.error);
+                }
+            });
+        }
+    </script>
+}

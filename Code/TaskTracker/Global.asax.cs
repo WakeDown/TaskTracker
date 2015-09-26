@@ -18,9 +18,11 @@ namespace TaskTracker
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
+            
             Database.SetInitializer<TaskTrackerContext>(null);
+#if DEBUG
             //Database.SetInitializer<TaskTrackerContext>(new TaskTrackerInitializer());
+#endif
         }
     }
 }

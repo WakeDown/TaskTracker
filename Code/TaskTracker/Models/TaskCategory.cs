@@ -12,23 +12,25 @@ namespace TaskTracker.Models
     public class TaskCategory
     {
         public TaskCategory() { }
-        public TaskCategory(int id, string name, int orderNum)
+        public TaskCategory(int id, string name, int orderNum, string sysName)
         {
             TaskCategoryId = id;
             Name = name;
             OrderNum = orderNum;
+            SysName = sysName;
         }
         [Key]
         public int TaskCategoryId { get; set; }
         public string Name { get; set; }
         public int OrderNum { get; set; }
+        public string SysName { get; set; }
         [NotMapped]
         public bool Selected { get; set; }
 
-        public static IEnumerable<TaskCategory> GetList(int topRows=10)
+        public static IEnumerable<TaskCategory> GetList()
         {
             TaskTrackerContext db = new TaskTrackerContext();
-            var list = db.TaskCategories.ToList().Take(topRows).OrderBy(c => c.OrderNum);
+            var list = db.TaskCategories.OrderBy(c => c.OrderNum).ThenBy(c => c.Name);
             if (list.Any())
             {
                 list.First().Selected = true;

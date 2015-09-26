@@ -1,0 +1,53 @@
+﻿@using TaskTracker.Models
+@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.TaskClaim>
+
+<tr>
+    <th class="min-width center">ID</th>
+    <th style="width: 40%">Задача</th>
+    <th style="width: 10%">Категория</th>
+    @*<th>
+        <a class='dropdown-button btn' href='#' data-activates='specFilter'>
+            @if (!String.IsNullOrEmpty(Request.QueryString["spec"]))
+            {
+                <span>
+                    @AdHelper.GetUserBySid(Request.QueryString["spec"]).DisplayName
+                </span>
+            }
+            else
+            {
+                <span>Специалист</span>
+            }
+        </a>
+        <ul id='specFilter' class='dropdown-content'>
+            <li><a href="@Url.Action("List", new {spec = "", author = Request.QueryString["author"]})">все</a></li>
+            @foreach (var spec in Specialist.GetProgrammers())
+            {
+                <li><a href="@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})" class="">@spec.Value</a></li>
+            }
+        </ul>
+    </th>*@
+    <th style="min-width: 200px">
+        <a class='dropdown-button btn' href='#' data-activates='authorFilter'>
+            @if (!String.IsNullOrEmpty(Request.QueryString["author"]))
+            {
+                <span>
+                    @AdHelper.GetUserBySid(Request.QueryString["author"]).DisplayName
+                </span>
+            }
+            else
+            {
+                <span>Автор</span>
+            }
+        </a>
+        <ul id='authorFilter' class='dropdown-content'>
+            <li><a href="@Url.Action("List", new {auth = "", spec = Request.QueryString["spec"]})">все</a></li>
+            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+            {
+                <li><a href="@Url.Action("List", new {author = auth.Sid, spec = Request.QueryString["spec"]})">@auth.Name</a></li>
+            }
+        </ul>
+
+    </th>
+    <th style="width: 20%"></th>
+</tr>

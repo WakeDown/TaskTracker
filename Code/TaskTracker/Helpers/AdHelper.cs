@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.DirectoryServices.AccountManagement;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Web;
 using TaskTracker.Helpers;
 using TaskTracker.Models;
@@ -96,6 +97,8 @@ namespace TaskTracker.Objects
         {
             var result = new Specialist();
 
+            if (String.IsNullOrEmpty(sid)) return new Specialist();
+
             using (WindowsImpersonationContextFacade impersonationContext
                 = new WindowsImpersonationContextFacade(
                     nc))
@@ -108,10 +111,36 @@ namespace TaskTracker.Objects
                     result.SpecialistSid = sid;
                     result.FullName = userPrincipal.DisplayName;
                     result.DisplayName = StringHelper.ShortName(result.FullName);
+                    result.Email = userPrincipal.EmailAddress;
                 }
             }
 
             return result;
+        }
+
+        public static bool UserInGroup(string sid, params AdGroup[] groups)
+        {
+            using (WindowsImpersonationContextFacade impersonationContext
+                = new WindowsImpersonationContextFacade(
+                    nc))
+            {
+                var context = new PrincipalContext(ContextType.Domain);
+                var userPrincipal = UserPrincipal.FindByIdentity(context, IdentityType.Sid, sid);
+
+                if (userPrincipal == null) return false;
+                ////if (userPrincipal.IsMemberOf(context, IdentityType.Sid, AdUserGroup.GetSidByAdGroup(AdGroup.SuperAdmin))) { return true; }//Если юзер Суперадмин
+
+                foreach (var grp in groups)
+                {
+                    if (userPrincipal.IsMemberOf(context, IdentityType.Sid, AdUserGroup.GetSidByAdGroup(grp)))
+                    {
+                        return true;
+                    }
+                }
+
+
+                return false;
+            }
         }
     }
 }

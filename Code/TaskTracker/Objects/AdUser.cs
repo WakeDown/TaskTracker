@@ -10,7 +10,7 @@ namespace TaskTracker.Objects
     {
         public string Sid { get; set; }
         public string Login { get; set; }
-
+        //public List<AdGroup> AdGroups { get; set; }
         private string _fullName;
         public string FullName
         {
@@ -27,5 +27,28 @@ namespace TaskTracker.Objects
 
         public string Email { get; set; }
         public string ShortName { get; set; }
+
+        public bool Is(params AdGroup[] groups)
+        {
+            bool result = false;
+
+            if (String.IsNullOrEmpty(Sid)) return false;
+            result = AdHelper.UserInGroup(Sid, groups);
+            //foreach (AdGroup group in groups)
+            //{
+            //    result = AdGroups.Contains(group);
+            //    if (result) break;
+            //}
+            return result;
+        }
+
+        public bool HasAccess(params AdGroup[] groups)
+        {
+            bool result = false;
+            if (String.IsNullOrEmpty(Sid)) return false;
+            if (AdHelper.UserInGroup(Sid, AdGroup.TaskTrackerAdmin)) return true;
+            result = AdHelper.UserInGroup(Sid, groups);
+            return result;
+        }
     }
 }

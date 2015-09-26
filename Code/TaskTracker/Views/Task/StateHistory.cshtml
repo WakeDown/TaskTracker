@@ -1,0 +1,19 @@
+﻿@using TaskTracker.Objects
+@model IEnumerable<TaskTracker.Models.Task2TaskState>
+<div class="card-panel">
+    <h5>История задачи</h5>
+    @foreach (var st in Model)
+    {
+        <div class="card @st.TaskState.BgColor">
+            <div class="card-content white-text">
+                @*<span class="card-title black-text"></span>*@
+                <p>
+                    <small>@String.Format("{0:dd.MM.yy hh:mm}", st.DateCreate)</small>
+                    <div>
+                        @st.TaskState.Name - @AdHelper.GetUserBySid(st.CreatorSid).DisplayName
+                    </div>
+                </p>
+            </div>
+        </div>
+    }
+</div>

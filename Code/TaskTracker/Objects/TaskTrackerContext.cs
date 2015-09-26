@@ -17,14 +17,19 @@ namespace TaskTracker.Objects
             this.Configuration.ProxyCreationEnabled = true;
         }
 
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskClaim> Tasks { get; set; }
         public DbSet<TaskState> TaskStates { get; set; }
         public DbSet<TaskCategory> TaskCategories { get; set; }
         public DbSet<Specialist> Specialists { get; set; }
         public DbSet<Task2TaskState> TaskStateHistory { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<TaskImportant> TaskImportants { get; set; }
+        public DbSet<TaskQuickly> TaskQuicklies { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            //modelBuilder.Entity<TaskClaim>().Property(m => m.SpecialistSid).IsOptional();
+            //base.OnModelCreating(modelBuilder);
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
