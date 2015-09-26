@@ -79,6 +79,11 @@ namespace TaskTracker.Models
         {
             return await Get("DONE");
         }
+
+        public async static Task<TaskState> GetPauseState()
+        {
+            return await Get("PAUSE");
+        }
         public async static Task<TaskState> GetSetedState()
         {
             return await Get("SETED");

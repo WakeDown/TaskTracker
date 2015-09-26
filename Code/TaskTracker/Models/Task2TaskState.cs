@@ -15,16 +15,18 @@ namespace TaskTracker.Models
         public virtual TaskState TaskState { get; set; }
         public DateTime DateCreate { get; set; }
         public string CreatorSid { get; set; }
+        public string Descr { get; set; }
 
         public Task2TaskState()
         {
         }
-        public Task2TaskState(int taskId, int taskStateId, string creatorSid)
+        public Task2TaskState(int taskId, int taskStateId, string creatorSid, string descr = null)
         {
             TaskId = taskId;
             TaskStateId = taskStateId;
             DateCreate=DateTime.Now;
             CreatorSid = creatorSid;
+            Descr = descr;
         }
     }
 }

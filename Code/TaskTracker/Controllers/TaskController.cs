@@ -126,7 +126,12 @@ namespace TaskTracker.Controllers
             await TaskClaim.SetDone(id, CurUser.Sid);
             return Json(new { });
         }
-
+        [HttpPost]
+        public async Task<JsonResult> SetPauseState(int id, string descr)
+        {
+            await TaskClaim.SetPause(id, descr, CurUser.Sid);
+            return Json(new { });
+        }
 
         //public async Task<ActionResult> StateHistory(int? id)
         //{

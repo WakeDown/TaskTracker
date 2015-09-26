@@ -14,13 +14,14 @@
             </div>
         </div>
         <div>
-            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a></div>
+            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a>
+            </div>
         </div>
         <small>
             @if (@Model.Descr.Length > 350)
             {
                 @Model.Descr.Remove(350)
-                <br />
+                <br/>
                 <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
             }
             else
@@ -50,7 +51,7 @@
                     <li><a type="set-category" href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</a></li>
                 }
             </ul>
-    }
+        }
         @if (@Model.TaskImportant != null)
         {
             if (@Model.TaskImportant.SysName.Equals("IMP"))
@@ -71,7 +72,7 @@
                     <li><a type="set-important" href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</a></li>
                 }
             </ul>
-    }
+        }
         @if (@Model.TaskQuickly != null)
         {
             if (@Model.TaskQuickly.SysName.Equals("QUICK"))
@@ -92,7 +93,7 @@
                     <li><a type="set-quickly" href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</a></li>
                 }
             </ul>
-    }
+        }
     </td>
     <td class="text-nowrap">
         @if (String.IsNullOrEmpty(Model.SpecialistSid))
@@ -102,20 +103,22 @@
                 @foreach (var spec in Specialist.GetProgrammers())
                 {
                     <li><a type="set-specialist" href="#!" sid="@spec.Key" tid="@Model.TaskId">@spec.Value</a></li>
-                                <li class="divider"></li>
+                    <li class="divider"></li>
                 }
             </ul>
-    }
-    else
-    {
-        @Model.Specialist.DisplayName
-    }
+        }
+        else
+        {
+            @Model.Specialist.DisplayName
+        }
     </td>
     <td class="text-nowrap">
         @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName
     </td>
     <td>
         @*<a tid="@Model.TaskId" type="test" href="#" class="btn amber  waves-effect waves-orange" title="ПРОВЕРКА"><i class="material-icons">computer</i></a>*@
-        <a tid="@Model.TaskId" type="done" href="#!" class="btn green waves-effect waves-orange"><i class="material-icons">done</i></a>
+        <a tid="@Model.TaskId" href="#modalPause" class="btn orange waves-effect waves-orange modal-trigger" id="modalPauseModal"><i class="material-icons">pause</i></a>
+        <a tid="@Model.TaskId" type="done" href="#!" class="btn green waves-effect waves-green"><i class="material-icons">done</i></a>
     </td>
 </tr>
+

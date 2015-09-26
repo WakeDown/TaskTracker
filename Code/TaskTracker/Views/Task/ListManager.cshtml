@@ -51,11 +51,29 @@
     }
 </table>
 
+<div id="modalPause" class="modal">
+    <div class="modal-content">
+        <h4>Укажите причину</h4>
+            <div class="input-field col s12">
+                <input type="text" id="pauseDescr" class="validate" required="required" />
+                <label for="pauseDescr">Причина</label>
+            </div>
+    </div>
+    <div class="modal-footer">
+        <a id="pause" href="#!" class="modal-action modal-close waves-effect waves-green btn green"><i class="material-icons">done</i></a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn red "><i class="material-icons">close</i></a>
+    </div>
+</div>
+
 @section scripts
 {
     <script type="text/javascript">
-
+        
         $(function () {
+            $('#modalPauseModal.modal-trigger').click(function () {
+                $('#pause').attr('tid', $(this).attr('tid'));
+                $('#modalPause').openModal();
+            });
             $('#chk-ts-all').click(function () {
                 $('#stateFilterContainer [name="chk-ts"]').prop('checked', $(this).is(':checked'));
             });
@@ -114,6 +132,23 @@
                     url: '@Url.Action("SetDoneState")',
                     method: 'POST',
                     data: { id: tid },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('#pause', $container).click(function () {
+                var tid = $(this).attr('tid');
+                var descr = $('#pauseDescr').val();
+                $(this).attr('tid','');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetPauseState")',
+                    method: 'POST',
+                    data: { id: tid, descr: descr },
                     success: function () {
                         updateTaskItem(tid);
                     },
