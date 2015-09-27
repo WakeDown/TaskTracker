@@ -39,6 +39,6 @@ D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\bin\System.Web.WebPages.D
 D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\bin\System.Web.WebPages.Razor.xml
 D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\bin\Antlr3.Runtime.pdb
 D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\bin\Newtonsoft.Json.xml
-D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\obj\Debug\TaskTracker.csprojResolveAssemblyReference.cache
 D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\obj\Debug\TaskTracker.dll
 D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\obj\Debug\TaskTracker.pdb
+D:\GoogleDrive\Dev\GitHub\TaskTracker\Code\TaskTracker\obj\Debug\TaskTracker.csprojResolveAssemblyReference.cache

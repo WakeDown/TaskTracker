@@ -109,8 +109,24 @@ namespace TaskTracker.Controllers
         {
             if (!id.HasValue) return HttpNotFound();
             var task = await TaskClaim.Get(id.Value);
-            ViewBag.StateHistory = await task.GetStateHistory();
-            return View(task);
+            ViewBag.StateHistory = await task.GetStateHistoryAsync();
+
+            if (CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
+            {
+                ViewBag.Checkpoints = await TaskCheckpoint.GetListAsync(id.Value);
+                return View("CardPerf",task);
+            }
+            else
+            {
+                return View("CardUser", task);
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> AddCheckpoint(int taskId, string chekpointName)
+        {
+            var chk = new TaskCheckpoint() {TaskClaimId = taskId, Name = chekpointName};
+            int id = await chk.AddAsync(CurUser.Sid);
+            return Json(new {id= id });
         }
 
         //[HttpPost]
@@ -127,11 +143,25 @@ namespace TaskTracker.Controllers
             return Json(new { });
         }
         [HttpPost]
+        public async Task<JsonResult> SetWorkState(int id)
+        {
+            await TaskClaim.SetWork(id, CurUser.Sid);
+            return Json(new { });
+        }
+        [HttpPost]
         public async Task<JsonResult> SetPauseState(int id, string descr)
         {
             await TaskClaim.SetPause(id, descr, CurUser.Sid);
             return Json(new { });
         }
+
+        [HttpPost]
+        public async Task<JsonResult> SetReworkState(int id, string descr)
+        {
+            await TaskClaim.SetRework(id, descr, CurUser.Sid);
+            return Json(new { });
+        }
+        
 
         //public async Task<ActionResult> StateHistory(int? id)
         //{
@@ -207,6 +237,43 @@ namespace TaskTracker.Controllers
             await TaskClaim.SetTaskQuickly(id, qid, CurUser.Sid);
             return Json(new { });
         }
-        
+        [HttpGet]
+        public async Task<ActionResult> GetCheckpointItem(int id)
+        {
+            var chkp = await TaskCheckpoint.GetAsync(id);
+            return PartialView("CheckpointItem", chkp);
+        }
+        [HttpPost]
+        public async Task<JsonResult> SetCheckpointDone(int id)
+        {
+            await TaskCheckpoint.SetDoneAsync(id, CurUser.Sid);
+            return Json(new { });
+        }
+        [HttpPost]
+        public async Task<JsonResult> SetCheckpointUndone(int id)
+        {
+            await TaskCheckpoint.SetUndoneAsync(id, CurUser.Sid);
+            return Json(new { });
+        }
+
+        //[HttpPost]
+        //public JsonResult SetCheckpointDone(int id)
+        //{
+        //    TaskCheckpoint.SetDone(id, CurUser.Sid);
+        //    return Json(new { });
+        //}
+        //[HttpPost]
+        //public JsonResult SetCheckpointUndone(int id)
+        //{
+        //    TaskCheckpoint.SetUndone(id, CurUser.Sid);
+        //    return Json(new { });
+        //}
+
+        [HttpPost]
+        public async Task<JsonResult> CloseCheckpoint(int id)
+        {
+            await TaskCheckpoint.CloseAsync(id, CurUser.Sid);
+            return Json(new { });
+        }
     }
 }

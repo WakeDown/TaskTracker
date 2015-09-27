@@ -139,6 +139,7 @@
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Specialist.cs" />
+    <Compile Include="Models\TaskCheckpoint.cs" />
     <Compile Include="Models\TaskClaim.cs" />
     <Compile Include="Models\TaskCategory.cs" />
     <Compile Include="Models\TaskImportant.cs" />
@@ -214,7 +215,7 @@
     <Content Include="Views\Task\New.cshtml" />
     <Content Include="Views\Task\ListTbl.cshtml" />
     <Content Include="Views\Task\Edit.cshtml" />
-    <Content Include="Views\Task\Card.cshtml" />
+    <Content Include="Views\Task\CardUser.cshtml" />
     <Content Include="Views\Error\AccessDenied.cshtml" />
     <Content Include="Views\Task\ListManager.cshtml" />
     <Content Include="Views\Task\TaskListManagerItem.cshtml" />
@@ -228,6 +229,8 @@
     <Content Include="Views\Task\TaskListProgHeader.cshtml" />
     <Content Include="Views\Task\TaskListManagerFilter.cshtml" />
     <Content Include="Views\Task\TaskFilteredManagerList.cshtml" />
+    <Content Include="Views\Task\CardPerf.cshtml" />
+    <Content Include="Views\Task\CheckpointItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

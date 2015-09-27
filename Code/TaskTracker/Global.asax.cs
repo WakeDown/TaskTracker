@@ -21,7 +21,7 @@ namespace TaskTracker
             
             Database.SetInitializer<TaskTrackerContext>(null);
 #if DEBUG
-            //Database.SetInitializer<TaskTrackerContext>(new TaskTrackerInitializer());
+            Database.SetInitializer<TaskTrackerContext>(new TaskTrackerInitializer());
 #endif
         }
     }

@@ -16,12 +16,12 @@
             <td colspan="6">
                 <div class="left" id="stateFilterContainer">
                     <div class="left marg-r-md">
-                        <input type="checkbox" value="" id="chk-ts-all" @(sts.Count()== selStates.Count()?"checked=\"checked\"":"") /><label for="chk-ts-all">все</label>
+                        <input type="checkbox" value="" id="chk-ts-all" @(sts.Count()== selStates.Count()?"checked='checked'":"") /><label for="chk-ts-all">все</label>
                     </div>
                     @foreach (var ts in TaskState.GetList())
                     {
                         <div class="left marg-r-md">
-                            <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked=\"checked\"" : "")/><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
+                            <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked='checked'" : "")/><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
                         </div>
                     }
                 </div>
@@ -53,14 +53,27 @@
 
 <div id="modalPause" class="modal">
     <div class="modal-content">
-        <h4>Укажите причину</h4>
-            <div class="input-field col s12">
-                <input type="text" id="pauseDescr" class="validate" required="required" />
-                <label for="pauseDescr">Причина</label>
-            </div>
+        <h4>Укажите причину приостановки</h4>
+        <div class="input-field col s12">
+            <input type="text" id="pauseDescr" class="validate" required="required"/>
+            <label for="pauseDescr">Причина</label>
+        </div>
     </div>
     <div class="modal-footer">
         <a id="pause" href="#!" class="modal-action modal-close waves-effect waves-green btn green"><i class="material-icons">done</i></a>
+        <a href="#!" class="modal-action modal-close waves-effect waves-red btn red "><i class="material-icons">close</i></a>
+    </div>
+</div>
+<div id="modalRework" class="modal">
+    <div class="modal-content">
+        <h4>Укажите причину возврата в работу</h4>
+        <div class="input-field col s12">
+            <input type="text" id="reworkDescr" class="validate" required="required" />
+            <label for="reworkDescr">Причина</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a id="rework" href="#!" class="modal-action modal-close waves-effect waves-green btn green"><i class="material-icons">done</i></a>
         <a href="#!" class="modal-action modal-close waves-effect waves-red btn red "><i class="material-icons">close</i></a>
     </div>
 </div>
@@ -68,11 +81,15 @@
 @section scripts
 {
     <script type="text/javascript">
-        
+
         $(function () {
             $('#modalPauseModal.modal-trigger').click(function () {
                 $('#pause').attr('tid', $(this).attr('tid'));
                 $('#modalPause').openModal();
+            });
+            $('#modalReworkModal.modal-trigger').click(function () {
+                $('#rework').attr('tid', $(this).attr('tid'));
+                $('#modalRework').openModal();
             });
             $('#chk-ts-all').click(function () {
                 $('#stateFilterContainer [name="chk-ts"]').prop('checked', $(this).is(':checked'));
@@ -81,11 +98,11 @@
                 $('#chk-ts-all').prop('checked', ($('#stateFilterContainer [name="chk-ts"]').length === $('#stateFilterContainer [name="chk-ts"]:checked').length));
             });
             $('#search').click(function () {
-                var selStates = $('#stateFilterContainer :checked');
+                var selStates = $('#stateFilterContainer [name="chk-ts"]:checked');
                 var stArr = [];
                 for (var i = 0; i < selStates.length; i++) {
-                    var val = $(selStates[i]).val();
-                    if (val !== '')stArr.push();
+                    var val = $(selStates[i]).attr('value');
+                    if (val !== '') stArr.push(val);
                 }
                 var tsts = stArr.join(',');
                 var author = $('#selectedAuthor').attr('sid') !== undefined ? $('#selectedAuthor').attr('sid') : '';
@@ -140,6 +157,21 @@
                     }
                 });
             });
+            $('[type="work"]', $container).click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetWorkState")',
+                    method: 'POST',
+                    data: { id: tid },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
             $('#pause', $container).click(function () {
                 var tid = $(this).attr('tid');
                 var descr = $('#pauseDescr').val();
@@ -147,6 +179,23 @@
                 $.ajax(
                 {
                     url: '@Url.Action("SetPauseState")',
+                    method: 'POST',
+                    data: { id: tid, descr: descr },
+                    success: function () {
+                        updateTaskItem(tid);
+                    },
+                    error: function (data) {
+                        alert(data.error);
+                    }
+                });
+            });
+            $('#rework', $container).click(function () {
+                var tid = $(this).attr('tid');
+                var descr = $('#reworkDescr').val();
+                $(this).attr('tid', '');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetReworkState")',
                     method: 'POST',
                     data: { id: tid, descr: descr },
                     success: function () {
