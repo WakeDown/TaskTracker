@@ -50,8 +50,12 @@ nav.top-nav {
     border-radius: 2px;
 }
 
-.task-descr {
+.text-lg {
     font-size: 1.2em;
+    
+}
+
+.pad-l-lg {
     padding-left: 35px;
 }
 
