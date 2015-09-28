@@ -142,6 +142,7 @@
     <Compile Include="Models\TaskCheckpoint.cs" />
     <Compile Include="Models\TaskClaim.cs" />
     <Compile Include="Models\TaskCategory.cs" />
+    <Compile Include="Models\TaskFiles.cs" />
     <Compile Include="Models\TaskImportant.cs" />
     <Compile Include="Models\TaskQuickly.cs" />
     <Compile Include="Models\TaskState.cs" />
@@ -231,6 +232,7 @@
     <Content Include="Views\Task\TaskFilteredManagerList.cshtml" />
     <Content Include="Views\Task\CardPerf.cshtml" />
     <Content Include="Views\Task\CheckpointItem.cshtml" />
+    <Content Include="Views\Task\AddFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

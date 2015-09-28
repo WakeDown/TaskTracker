@@ -12,7 +12,7 @@
     <div class="col s8">
         @*<h6>@String.Format("{0:dd.MM.yy}", Model.DateCreate) в @String.Format("{0:hh:mm}", Model.DateCreate) поступило сообщение от пользователя @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName</h6>*@
         <h5>Пишет @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName</h5>
-        <div class="task-descr">
+        <div class="text-lg pad-l-lg">
             @Model.Descr
         </div>
     </div>

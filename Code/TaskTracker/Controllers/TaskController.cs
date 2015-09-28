@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -81,12 +82,40 @@ namespace TaskTracker.Controllers
             return View(task);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetTaskFileData(string guid)
+        {
+            var file = await TaskFile.GetAsync(guid);
+            return File(file.Data, System.Net.Mime.MediaTypeNames.Application.Octet, file.Name);
+        }
+
         [HttpPost]
         public async Task<ActionResult> New(TaskClaim model)
         {
             try
             {
-                await model.Add(CurUser.Sid);
+                int taskId = await model.Add(CurUser.Sid);
+                await SaveFile2Task(taskId);
+                //if (Request.Files.Count > 0)
+                //{
+                //    for (int i =0; i< Request.Files.Count ; i++)
+                //    {
+                //        var file = Request.Files[i];
+                //        if (file != null && file.ContentLength > 0)
+                //        {
+                //            //string ext = Path.GetExtension(file.FileName).ToLower();
+                //            //if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".gif") throw new Exception("Формат фотографии должен быть .png .jpeg .gif");
+
+                //            byte[] data = null;
+                //            using (var br = new BinaryReader(file.InputStream))
+                //            {
+                //                data = br.ReadBytes(file.ContentLength);
+                //            }
+                //            var taskFile = new TaskFile() {TaskClaimId = taskId, Data = data, Name=file.FileName};
+                //            await taskFile.Add(CurUser.Sid);
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -94,6 +123,38 @@ namespace TaskTracker.Controllers
                 return View("New", model);
             }
             return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddFile2Task(int? taskId)
+        {
+            if (!taskId.HasValue) return HttpNotFound();
+            await SaveFile2Task(taskId.Value);
+            return RedirectToAction("Card", new {id = taskId.Value});
+        }
+
+        public async Task SaveFile2Task(int taskId)
+        {
+            if (Request.Files.Count > 0)
+            {
+                for (int i = 0; i < Request.Files.Count; i++)
+                {
+                    var file = Request.Files[i];
+                    if (file != null && file.ContentLength > 0)
+                    {
+                        //string ext = Path.GetExtension(file.FileName).ToLower();
+                        //if (ext != ".png" && ext != ".jpeg" && ext != ".jpg" && ext != ".gif") throw new Exception("Формат фотографии должен быть .png .jpeg .gif");
+
+                        byte[] data = null;
+                        using (var br = new BinaryReader(file.InputStream))
+                        {
+                            data = br.ReadBytes(file.ContentLength);
+                        }
+                        var taskFile = new TaskFile() { TaskClaimId = taskId, Data = data, Name = file.FileName };
+                        await taskFile.Add(CurUser.Sid);
+                    }
+                }
+            }
         }
 
         [HttpGet]
@@ -114,6 +175,7 @@ namespace TaskTracker.Controllers
             if (CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
             {
                 ViewBag.Checkpoints = await TaskCheckpoint.GetListAsync(id.Value);
+                ViewBag.TaskFiles = await TaskFile.GetListAsync(id.Value);
                 return View("CardPerf",task);
             }
             else
