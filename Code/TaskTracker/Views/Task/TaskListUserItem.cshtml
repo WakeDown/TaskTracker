@@ -14,20 +14,24 @@
             </div>
         </div>
         <div>
-            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a></div>
+            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a>
+            </div>
         </div>
-        <small>
-            @if (@Model.Descr.Length > 350)
-            {
-                @Model.Descr.Remove(350)
-                <br />
-                <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
-            }
-            else
-            {
-                @Model.Descr
-            }
-        </small>
+@if (!String.IsNullOrEmpty(Model.Descr))
+{
+    <small>
+        @if (@Model.Descr.Length > 350)
+        {
+            @Model.Descr.Remove(350)
+            <br/>
+            <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
+        }
+        else
+        {
+            @Model.Descr
+        }
+    </small>
+}
     </td>
     @*<td>
     @if (@Model.TaskCategory != null)
