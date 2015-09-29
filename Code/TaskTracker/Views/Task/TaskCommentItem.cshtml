@@ -1,0 +1,11 @@
+﻿
+@using TaskTracker.Objects
+@model TaskTracker.Models.TaskComment
+
+<div>
+    <h5>@AdHelper.GetUserBySid(Model.CreatorSid).DisplayName</h5>
+    <p>
+        <div><small>@Model.DateCreate.ToString("dd.MM.yyyy")</small></div>
+        @Model.Text
+    </p>
+</div>

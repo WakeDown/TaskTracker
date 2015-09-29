@@ -176,6 +176,7 @@ namespace TaskTracker.Controllers
             {
                 ViewBag.Checkpoints = await TaskCheckpoint.GetListAsync(id.Value);
                 ViewBag.TaskFiles = await TaskFile.GetListAsync(id.Value);
+                ViewBag.TaskComments = await TaskComment.GetListAsync(id.Value);
                 return View("CardPerf",task);
             }
             else
@@ -189,6 +190,14 @@ namespace TaskTracker.Controllers
             var chk = new TaskCheckpoint() {TaskClaimId = taskId, Name = chekpointName};
             int id = await chk.AddAsync(CurUser.Sid);
             return Json(new {id= id });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddTaskComment(int taskId, string commentText)
+        {
+            var chk = new TaskComment() { TaskClaimId = taskId, Text = commentText };
+            int id = await chk.AddAsync(CurUser.Sid);
+            return Json(new { id = id });
         }
 
         //[HttpPost]
@@ -304,6 +313,12 @@ namespace TaskTracker.Controllers
         {
             var chkp = await TaskCheckpoint.GetAsync(id);
             return PartialView("CheckpointItem", chkp);
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetTaskCommentItem(int id)
+        {
+            var comment = await TaskComment.GetAsync(id);
+            return PartialView("TaskCommentItem", comment);
         }
         [HttpPost]
         public async Task<JsonResult> SetCheckpointDone(int id)

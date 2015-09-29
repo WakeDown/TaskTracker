@@ -137,11 +137,13 @@
     </Compile>
     <Compile Include="Helpers\MessageHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\Specialist.cs" />
     <Compile Include="Models\TaskCheckpoint.cs" />
     <Compile Include="Models\TaskClaim.cs" />
     <Compile Include="Models\TaskCategory.cs" />
+    <Compile Include="Models\TaskComment.cs" />
     <Compile Include="Models\TaskFiles.cs" />
     <Compile Include="Models\TaskImportant.cs" />
     <Compile Include="Models\TaskQuickly.cs" />
@@ -233,6 +235,7 @@
     <Content Include="Views\Task\CardPerf.cshtml" />
     <Content Include="Views\Task\CheckpointItem.cshtml" />
     <Content Include="Views\Task\AddFile.cshtml" />
+    <Content Include="Views\Task\TaskCommentItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

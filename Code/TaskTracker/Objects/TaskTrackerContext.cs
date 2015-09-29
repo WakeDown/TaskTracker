@@ -27,6 +27,7 @@ namespace TaskTracker.Objects
         public DbSet<TaskQuickly> TaskQuicklies { get; set; }
         public DbSet<TaskCheckpoint> TaskCheckpoints { get; set; }
         public DbSet<TaskFile> TaskFiles { get; set; }
+        public DbSet<TaskComment> TaskComments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
