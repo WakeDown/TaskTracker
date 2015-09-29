@@ -55,16 +55,16 @@ namespace TaskTracker.Objects
             context.SaveChanges();
 
             var proj = new List<Project>();
-            proj.Add(new Project("Сервис"));
-            proj.Add(new Project("Заявки на ЗИП"));
-            proj.Add(new Project("ДСУ планирование"));
-            proj.Add(new Project("СпецРасчет"));
-            proj.Add(new Project("Портал"));
-            proj.Add(new Project("TaskTracker"));
-            proj.Add(new Project("API"));
-            proj.Add(new Project("Эталон"));
-            proj.Add(new Project("1С"));
-            proj.Add(new Project("UN1T счетчик"));
+            proj.Add(new Project("Сервис") {ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("Заявки на ЗИП") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("ДСУ планирование") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("СпецРасчет") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("Портал") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("TaskTracker") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("API") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("Эталон") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("1С") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
+            proj.Add(new Project("UN1T счетчик") { ManagerSid = "S-1-5-21-1970802976-3466419101-4042325969-2365" });
             proj.ForEach(s => context.Projects.Add(s));
             context.SaveChanges();
         }

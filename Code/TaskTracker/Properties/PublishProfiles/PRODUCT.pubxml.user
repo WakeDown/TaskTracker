@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>09/28/2015 08:42:27</publishTime>
+      <publishTime>09/29/2015 19:45:58</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>09/28/2015 08:42:27</publishTime>
+      <publishTime>09/29/2015 19:45:58</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/26/2015 08:24:18</publishTime>
@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:06</publishTime>
     </File>
     <File Include="bin/TaskTracker.dll">
-      <publishTime>09/28/2015 08:40:56</publishTime>
+      <publishTime>09/29/2015 19:45:54</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/25/2015 08:27:09</publishTime>
@@ -190,7 +190,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:24:20</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>09/28/2015 08:42:25</publishTime>
+      <publishTime>09/29/2015 19:45:55</publishTime>
     </File>
     <File Include="Scripts/jquery-2.1.4.js">
       <publishTime>08/26/2015 08:24:01</publishTime>
@@ -250,16 +250,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2015 09:32:53</publishTime>
     </File>
     <File Include="Views/Task/CardPerf.cshtml">
-      <publishTime>09/27/2015 23:16:03</publishTime>
+      <publishTime>09/29/2015 19:42:33</publishTime>
     </File>
     <File Include="Views/Task/CardUser.cshtml">
       <publishTime>09/27/2015 23:22:27</publishTime>
     </File>
     <File Include="Views/Task/CheckpointItem.cshtml">
-      <publishTime>09/27/2015 16:01:28</publishTime>
+      <publishTime>09/29/2015 19:45:29</publishTime>
     </File>
     <File Include="Views/Task/Edit.cshtml">
-      <publishTime>09/28/2015 08:40:49</publishTime>
+      <publishTime>09/29/2015 19:44:04</publishTime>
     </File>
     <File Include="Views/Task/List.cshtml">
       <publishTime>09/03/2015 23:06:48</publishTime>
@@ -277,10 +277,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/06/2015 19:44:22</publishTime>
     </File>
     <File Include="Views/Task/New.cshtml">
-      <publishTime>09/28/2015 08:40:49</publishTime>
+      <publishTime>09/29/2015 19:44:04</publishTime>
     </File>
     <File Include="Views/Task/StateHistory.cshtml">
       <publishTime>09/27/2015 13:23:34</publishTime>
+    </File>
+    <File Include="Views/Task/TaskCommentItem.cshtml">
+      <publishTime>09/29/2015 19:45:29</publishTime>
     </File>
     <File Include="Views/Task/TaskFilteredManagerList.cshtml">
       <publishTime>09/26/2015 19:43:52</publishTime>
