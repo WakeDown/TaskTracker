@@ -19,7 +19,7 @@ namespace TaskTracker.Models
         public DateTime DateCreate { get; set; }
         public string CreatorSid { get; set; }
         public bool Enabled { get; set; }
-        public DateTime DateDelete { get; set; }
+        public DateTime? DateDelete { get; set; }
         public string DeleterSid { get; set; }
 
         public TaskComment()

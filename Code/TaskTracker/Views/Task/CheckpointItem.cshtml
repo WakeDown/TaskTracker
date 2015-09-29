@@ -2,7 +2,7 @@
 @model TaskTracker.Models.TaskCheckpoint
 <div id="cntnr-task-chkp-@Model.TaskCheckpointId">
     <input type="checkbox" value="@Model.TaskCheckpointId" name="task-chkp" id="task-chkp-@Model.TaskCheckpointId" @(Model.Done ? "checked='checked'" : "")/>
-    <label for="task-chkp-@Model.TaskCheckpointId">@Model.Name <br/>@(Model.Done && Model.DateDone.HasValue ? String.Format(" {1:dd.MM.yyyy hh:mm} - {0}", AdHelper.GetUserBySid(Model.DonerSid).DisplayName, Model.DateDone.Value) : "")</label>
+    <label for="task-chkp-@Model.TaskCheckpointId">@Model.Name <br/>@(Model.Done && Model.DateDone.HasValue ? String.Format(" {1:dd.MM.yyyy HH:mm} - {0}", AdHelper.GetUserBySid(Model.DonerSid).DisplayName, Model.DateDone.Value) : "")</label>
     @if (!Model.Done)
     {
         <a class="btn-floating" href="#!" chkpid="@Model.TaskCheckpointId" name="task-chkp-del"><i class="material-icons">highlight_off</i></a>
