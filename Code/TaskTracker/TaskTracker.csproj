@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\PlaningController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,6 +144,7 @@
     <Compile Include="Models\TaskCheckpoint.cs" />
     <Compile Include="Models\TaskClaim.cs" />
     <Compile Include="Models\TaskCategory.cs" />
+    <Compile Include="Models\TaskClaimPlanItem.cs" />
     <Compile Include="Models\TaskComment.cs" />
     <Compile Include="Models\TaskFiles.cs" />
     <Compile Include="Models\TaskImportant.cs" />
@@ -236,6 +238,7 @@
     <Content Include="Views\Task\CheckpointItem.cshtml" />
     <Content Include="Views\Task\AddFile.cshtml" />
     <Content Include="Views\Task\TaskCommentItem.cshtml" />
+    <Content Include="Views\Planing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

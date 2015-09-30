@@ -1,0 +1,62 @@
+﻿@using TaskTracker.Models
+@model IEnumerable<TaskTracker.Models.TaskClaimPlanItem>
+@{
+    ViewBag.Title = "Планирование";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <div class="red lighten-3 red-text">
+        @TempData["error"]
+    </div>
+
+
+    @*<div id="full-calendar">              
+              <div class="row">
+                <div class="col s12 m4 l3">
+                  <div id="external-events">    
+                    <h4 class="header">Draggable Events</h4>
+                    <div class="fc-event cyan ui-draggable ui-draggable-handle">March Invoices</div>
+                    <div class="fc-event teal ui-draggable ui-draggable-handle">Call Emy</div>
+                    <div class="fc-event cyan darken-1 ui-draggable ui-draggable-handle">Dinner with Team</div>
+                    <div class="fc-event cyan accent-4 ui-draggable ui-draggable-handle">Meeting with Support Team</div>
+                    <div class="fc-event teal accent-4 ui-draggable ui-draggable-handle">Meeting with Sales Team</div>
+                    <div class="fc-event light-blue accent-3 ui-draggable ui-draggable-handle">Design an iOS App</div>
+                    <div class="fc-event light-blue accent-4 ui-draggable ui-draggable-handle" style="z-index: auto; left: 0px; top: 0px;">Company Party</div>
+                    <p>
+                      <input type="checkbox" id="drop-remove">
+                      <label for="drop-remove">remove after drop</label>
+                    </p>
+                  </div>
+                </div>
+                <div class="col s12 m8 l9">
+                  <div id="calendar" class="fc fc-ltr fc-unthemed"><div class="fc-toolbar"><div class="fc-left"><div class="fc-button-group"><button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button><button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button></div><button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">today</button></div><div class="fc-right"><div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left">month</button><button type="button" class="fc-basicWeek-button fc-button fc-state-default">week</button><button type="button" class="fc-basicDay-button fc-button fc-state-default fc-corner-right fc-state-active">day</button></div></div><div class="fc-center"><h2>May 12, 2015</h2></div><div class="fc-clear"></div></div><div class="fc-view-container" style=""><div class="fc-view fc-basicDay-view fc-basic-view"><table><thead class="fc-head"><tr><td class="fc-widget-header"><div class="fc-row fc-widget-header"><table><thead><tr><th class="fc-day-header fc-widget-header fc-tue">Tuesday</th></tr></thead></table></div></td></tr></thead><tbody class="fc-body"><tr><td class="fc-widget-content"><div class="fc-day-grid-container"><div class="fc-day-grid"><div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 856px;"><div class="fc-bg"><table><tbody><tr><td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-05-12"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><tbody><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#2196f3;border-color:#2196f3"><div class="fc-content"><span class="fc-time">10:30a - 12:30p</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#ff5722;border-color:#ff5722"><div class="fc-content"><span class="fc-time">12p</span> <span class="fc-title">Lunch</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#4caf50;border-color:#4caf50"><div class="fc-content"><span class="fc-time">2:30p</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#03a9f4;border-color:#03a9f4"><div class="fc-content"><span class="fc-time">5:30p</span> <span class="fc-title">Happy Hour</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#009688;border-color:#009688"><div class="fc-content"><span class="fc-time">8p</span> <span class="fc-title">Dinner</span></div></a></td></tr></tbody></table></div></div></div></div></td></tr></tbody></table></div></div></div>
+                </div>
+              </div>
+            </div>*@
+
+    <div class="row">
+        
+    </div>
+    <div class="row">
+        <div class="col l6">
+            <h5>Задачи</h5>
+            @if (Model.Any())
+            {
+                foreach (TaskClaimPlanItem task in Model)
+                {
+                    <div>@task.TaskClaim.Name</div>
+                    if (task.Checkpoints.Any())
+                    {
+                        foreach (var chkp in task.Checkpoints)
+                        {
+                            <div>@chkp.Name</div>
+                        }
+                    }
+                }
+            }
+        </div>
+        <div class="col l6">
+            <h5></h5>
+        </div>
+    </div>
+</p>

@@ -18,10 +18,12 @@ textarea {
     max-width: 280px;
 }*/
 
-header, main, footer {
+
+@media only screen and (min-width : 992px) {
+    header, main, footer {
     padding-left: 240px;
 }
-
+}
 ul.side-nav.fixed li.logo {
     text-align: center;
     margin-top: 32px;
