@@ -8,6 +8,7 @@
 }
 
 <tr>
+    <th></th>
     <th class="min-width center">ID</th>
     <th style="width: 40%">Задача</th>
     <th style="width: 10%">Категория</th>
@@ -50,7 +51,7 @@
         <ul id='authorFilter' class='dropdown-content'>
             <li><a name="author" sid="" fio="Автор">все</a></li>
             @*href="@Url.Action("List", new { auth = "", spec = Request.QueryString["spec"] })"*@
-            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new {Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName}).OrderBy(x => x.Name))
             {
                 <li><a sid="@auth.Sid" fio="@auth.Name" name="author">@auth.Name</a></li>
                 //href = "@Url.Action("List", new {author = auth.Sid, spec = Request.QueryString["spec"]})"

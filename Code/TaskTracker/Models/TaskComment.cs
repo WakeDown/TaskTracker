@@ -80,15 +80,25 @@ namespace TaskTracker.Models
             string body =
                 $"Новый комментарий по задаче \"{taskClaim.Name}\" в проекте {taskClaim.Project.Name}.<br />{AdHelper.GetUserBySid(CreatorSid).DisplayName} пишет:<br />{Text}<p>Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a></p>";
 
-            MailAddress to = null;
+            
+            string mailToSid = null;
             if (taskClaim.CreatorSid.Equals(CreatorSid))
             {
-                to = new MailAddress(AdHelper.GetUserBySid(taskClaim.SpecialistSid).Email);
+                if (String.IsNullOrEmpty(taskClaim.SpecialistSid))
+                {
+                    mailToSid = taskClaim.Project.ManagerSid;
+                }
+                else
+                {
+                    mailToSid = taskClaim.SpecialistSid;
+                }
+                
             }
             else
             {
-                to = new MailAddress(AdHelper.GetUserBySid(taskClaim.CreatorSid).Email); 
+                mailToSid = taskClaim.CreatorSid; 
             }
+            MailAddress to = new MailAddress(AdHelper.GetUserBySid(mailToSid).Email);
             MessageHelper.SendNotice($"Новый комментарий", body, true, null, to);
         }
     }

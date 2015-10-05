@@ -104,3 +104,23 @@ tr.updated-task-claim {
 .marg-r-md {
     margin-right: 15px;    
 }
+
+.no-pad-bot {
+    padding-bottom: 0 !important;
+}
+
+.no-marg-bot {
+    margin-bottom: 0 !important;
+}
+
+.no-pad {
+    padding: 0 !important;
+}
+
+.no-marg {
+    margin: 0 !important;
+}
+
+td.row-marker {
+    width: 5px; 
+}

@@ -16,7 +16,7 @@ namespace TaskTracker.Models
         public string Name { get; set; }
         [NotMapped]
         public bool Selected { get; set; }
-
+        public string BgColor { get; set; }
         public string ManagerSid { get; set; }
 
         public Project()
