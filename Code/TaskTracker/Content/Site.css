@@ -141,10 +141,15 @@ td.row-marker {
     vertical-align: top;
 }
 
-/*.plan-task-item .text {
-    opacity: 1;
-    filter: alpha(Opacity=100);
-}*/
+.plan-task-item-dated {
+    padding: 1px 5px 1px 5px;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.plan-task-item-dated .text {
+    
+}
 
 .plan-chkp-item {
     

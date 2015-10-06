@@ -190,7 +190,7 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> AddCheckpoint(int taskId, string chekpointName)
         {
-            var chk = new TaskCheckpoint() {TaskClaimId = taskId, Name = chekpointName};
+            var chk = new TaskCheckpoint() { TaskId = taskId, Name = chekpointName};
             int id = await chk.AddAsync(CurUser.Sid);
             return Json(new {id= id });
         }

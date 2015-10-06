@@ -241,6 +241,7 @@
     <Content Include="Views\Task\AddFile.cshtml" />
     <Content Include="Views\Task\TaskCommentItem.cshtml" />
     <Content Include="Views\Planing\Index.cshtml" />
+    <Content Include="Views\Planing\TaskPlanItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

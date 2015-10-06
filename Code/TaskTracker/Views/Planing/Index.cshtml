@@ -8,32 +8,6 @@
     <div class="red lighten-3 red-text">
         @TempData["error"]
     </div>
-
-
-    @*<div id="full-calendar">
-          <div class="row">
-            <div class="col s12 m4 l3">
-              <div id="external-events">
-                <h4 class="header">Draggable Events</h4>
-                <div class="fc-event cyan ui-draggable ui-draggable-handle">March Invoices</div>
-                <div class="fc-event teal ui-draggable ui-draggable-handle">Call Emy</div>
-                <div class="fc-event cyan darken-1 ui-draggable ui-draggable-handle">Dinner with Team</div>
-                <div class="fc-event cyan accent-4 ui-draggable ui-draggable-handle">Meeting with Support Team</div>
-                <div class="fc-event teal accent-4 ui-draggable ui-draggable-handle">Meeting with Sales Team</div>
-                <div class="fc-event light-blue accent-3 ui-draggable ui-draggable-handle">Design an iOS App</div>
-                <div class="fc-event light-blue accent-4 ui-draggable ui-draggable-handle" style="z-index: auto; left: 0px; top: 0px;">Company Party</div>
-                <p>
-                  <input type="checkbox" id="drop-remove">
-                  <label for="drop-remove">remove after drop</label>
-                </p>
-              </div>
-            </div>
-            <div class="col s12 m8 l9">
-              <div id="calendar" class="fc fc-ltr fc-unthemed"><div class="fc-toolbar"><div class="fc-left"><div class="fc-button-group"><button type="button" class="fc-prev-button fc-button fc-state-default fc-corner-left"><span class="fc-icon fc-icon-left-single-arrow"></span></button><button type="button" class="fc-next-button fc-button fc-state-default fc-corner-right"><span class="fc-icon fc-icon-right-single-arrow"></span></button></div><button type="button" class="fc-today-button fc-button fc-state-default fc-corner-left fc-corner-right">today</button></div><div class="fc-right"><div class="fc-button-group"><button type="button" class="fc-month-button fc-button fc-state-default fc-corner-left">month</button><button type="button" class="fc-basicWeek-button fc-button fc-state-default">week</button><button type="button" class="fc-basicDay-button fc-button fc-state-default fc-corner-right fc-state-active">day</button></div></div><div class="fc-center"><h2>May 12, 2015</h2></div><div class="fc-clear"></div></div><div class="fc-view-container" style=""><div class="fc-view fc-basicDay-view fc-basic-view"><table><thead class="fc-head"><tr><td class="fc-widget-header"><div class="fc-row fc-widget-header"><table><thead><tr><th class="fc-day-header fc-widget-header fc-tue">Tuesday</th></tr></thead></table></div></td></tr></thead><tbody class="fc-body"><tr><td class="fc-widget-content"><div class="fc-day-grid-container"><div class="fc-day-grid"><div class="fc-row fc-week fc-widget-content fc-rigid" style="height: 856px;"><div class="fc-bg"><table><tbody><tr><td class="fc-day fc-widget-content fc-tue fc-past" data-date="2015-05-12"></td></tr></tbody></table></div><div class="fc-content-skeleton"><table><tbody><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#2196f3;border-color:#2196f3"><div class="fc-content"><span class="fc-time">10:30a - 12:30p</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#ff5722;border-color:#ff5722"><div class="fc-content"><span class="fc-time">12p</span> <span class="fc-title">Lunch</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#4caf50;border-color:#4caf50"><div class="fc-content"><span class="fc-time">2:30p</span> <span class="fc-title">Meeting</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#03a9f4;border-color:#03a9f4"><div class="fc-content"><span class="fc-time">5:30p</span> <span class="fc-title">Happy Hour</span></div></a></td></tr><tr><td class="fc-event-container"><a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end fc-draggable" style="background-color:#009688;border-color:#009688"><div class="fc-content"><span class="fc-time">8p</span> <span class="fc-title">Dinner</span></div></a></td></tr></tbody></table></div></div></div></div></td></tr></tbody></table></div></div></div>
-            </div>
-          </div>
-        </div>*@
-
     <div class="row no-marg-bot">
         <div class="col l3">
             &nbsp;
@@ -44,7 +18,7 @@
                     <button class="btn" id="today">сегодня</button>
                 </div>
                 <div class="col l9">
-                    <h4 id="selDay" class="no-pad no-marg" val="@DateTime.Now.ToString("yyyy-mm-dd")'">@DateTime.Now.ToString("D")</h4>
+                    <h4 id="selDay" class="no-pad no-marg" val="@DateTime.Now.ToString("yyyy-MM-dd")">@DateTime.Now.ToString("D")</h4>
                 </div>
             </div>
         </div>
@@ -65,20 +39,24 @@
                                 <label for="task-@task.TaskClaim.TaskId"></label>
                             </td>
                             <td>
+                                <div>
+                                    <small class="marker @(String.IsNullOrEmpty(task.TaskClaim.Project.BgColor) ? "indigo lighten-2" : task.TaskClaim.Project.BgColor)">@task.TaskClaim.Project.Name</small>
+                                    <a href="@Url.Action("Card", "Task", new {id=task.TaskClaim.TaskId})" target="_blank" class="right"><i class="material-icons">pageview</i></a>
+                                </div>
                                 @task.TaskClaim.Name
                                 @if (task.Checkpoints.Any())
                                 {
                                     <table>
                                         @foreach (var chkp in task.Checkpoints)
                                         {
-                                        <tr class="plan-chkp-item">
-                                            <td></td>
-                                            <td></td>
-                                            <td>
-                                                <input type="checkbox" name="chkp" id="task-chkp-@chkp.TaskCheckpointId" value="@chkp.TaskCheckpointId" />
-                                                <label for="task-chkp-@chkp.TaskCheckpointId" class="black-text">@chkp.Name</label>
-                                            </td>
-                                        </tr>
+                                            <tr class="plan-chkp-item">
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <input type="checkbox" name="chkp" id="task-chkp-@chkp.TaskCheckpointId" value="@chkp.TaskCheckpointId"/>
+                                                    <label for="task-chkp-@chkp.TaskCheckpointId" class="black-text">@chkp.Name</label>
+                                                </td>
+                                            </tr>
                                         }
                                     </table>
                                 }
@@ -125,9 +103,10 @@
                     <h5 id="selDayWeek">
                         @DateTime.Now.ToString("ddddd")
                     </h5>
-                    
-
                 </div>
+            </div>
+            <div id="planTaskContainer">
+
             </div>
         </div>
     </div>
@@ -137,6 +116,7 @@
 {
     <script type="text/javascript">
         $(function () {
+            
             $('#add2plan').click(function() {
                 var planDate = $('#selDay').attr('val');
                 var selTasks = [];
@@ -151,30 +131,62 @@
                     var chkpId = $(chkpIds[i]).val();
                     selChkps.push(chkpId);
                 }
-                alert(selChkps);
-                alert(selTasks);
-                $.post({
-                    url:'@Url.Action("GetPlanList")',
+                $.ajax({
+                    url: '@Url.Action("Add2Plan")',
                     method:'POST',
                     data: JSON.stringify({planDate:planDate, selTasks:selTasks, selChkps:selChkps}),
-                    success: function(data) {
-                        alert(data);
-                    },
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    success: loadPlanTasks,
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
-            });
-            $('#today').click(function () {
-                var today = new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day);
-                selDay(today);
-            });
         });
+        $('#today').click(function () {
+            var today = new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day);
+            selDay(today);
+        });
+            loadPlanTasks();
+        });
+
+        function loadPlanTasks() {
+            //$('#planTaskContainer').clear();
+            var planDate = $('#selDay').attr('val');
+            $.ajax({
+                url:'@Url.Action("GetPlanList")',
+                method:'POST',
+                data: JSON.stringify({planDate:planDate}),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function(data) {
+                    if (data && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var taskId = data[i];
+                            $.ajax({
+                                url:'@Url.Action("GetTaskPlanItem")',
+                                method:'POST',
+                                data: {id:taskId},
+                                success: function(html) {
+                                    $('#planTaskContainer').append(html);
+                                }
+                            });
+
+                            //var item = '<div>test ' + task.TaskClaim.Name + '</div>';
+                            //$tcnt.append(item);
+                        }
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });}
 
         function selDay(date) {
             $('#selDay').attr('val', $.format.date(date, 'yyyy-mm-dd'));
             $('#selDay').text($.format.date(date, 'dd MMMM yyyy'));
             $('#selDayWeek').text($.format.date(date, 'ddd'));
+            loadPlanTasks();
         }
     </script>
 }

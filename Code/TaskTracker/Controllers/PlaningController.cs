@@ -15,26 +15,43 @@ namespace TaskTracker.Controllers
         public async Task<ActionResult> Index()
         {
             var list = new List<TaskClaimPlanItem>();
-            var tasks = await TaskClaim.GetListAsync(CurUser);
+            var tasks = await TaskClaim.GetActiveTaskListAsync(CurUser);
             foreach (var task in tasks)
             {
-                var chkp = await TaskCheckpoint.GetListAsync(task.TaskId);
+                var chkp = await TaskCheckpoint.GetActiveChkpListAsync(task.TaskId);
                 var item = new TaskClaimPlanItem() {TaskClaim = task, Checkpoints = chkp};
                 list.Add(item);
             }
-
             
-
             return View(list);
         }
 
+        public async Task<JsonResult> DeletePlanTask(int id)
+        {
+            return Json(new {});
+        }
+
+        public async Task<JsonResult> Add2Plan(DateTime planDate, int[] selTasks = null, int[] selChkps = null)
+        {
+            await TaskPlan.AddRange(CurUser.Sid, planDate,selTasks, selChkps);
+
+            return Json(new {});
+        }
+
         [HttpPost]
-        public async Task<JsonResult> GetPlanList(DateTime planDate, int[] selTasks, int[] selChkps)
+        public async Task<JsonResult> GetPlanList(DateTime planDate)
         {
             //if (!planDate.HasValue) return Json(new {});
-
-            var list = await TaskPlan.GetListAsync(CurUser, planDate);
+            //var planDate = DateTime.Parse(planDateStr);
+            var list = await TaskPlan.GetListIdsAsync(CurUser, planDate);
             return Json(list);
+        }
+        [HttpPost]
+        public ActionResult GetTaskPlanItem(int? id)
+        {
+            if (!id.HasValue) return HttpNotFound();
+            var taskPlan = TaskPlan.Get(id.Value);
+            return PartialView("TaskPlanItem", taskPlan);
         }
     }
 }

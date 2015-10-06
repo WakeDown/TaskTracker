@@ -13,7 +13,7 @@ namespace TaskTracker.Models
     {
         [Key]
         public int TaskCheckpointId { get; set; }
-        public int TaskClaimId { get; set; }
+        public int TaskId { get; set; }
         public virtual TaskClaim TaskClaim { get; set; }
         [MaxLength(500)]
         public string Name { get; set; }
@@ -34,7 +34,11 @@ namespace TaskTracker.Models
 
         public TaskCheckpoint()
         {
+        }
 
+        public TaskCheckpoint(int taskId)
+        {
+            TaskId = taskId;
         }
 
         public static async Task<TaskCheckpoint> GetAsync(int id)
@@ -49,12 +53,17 @@ namespace TaskTracker.Models
             return db.TaskCheckpoints.SingleOrDefault(x => x.TaskCheckpointId == id);
         }
 
-        public static async Task<IEnumerable<TaskCheckpoint>> GetListAsync(int taskId)
+        public static async Task<IEnumerable<TaskCheckpoint>> GetListAsync(int taskId, bool? done = null)
         {
             TaskTrackerContext db = new TaskTrackerContext();
 
-            var list = db.TaskCheckpoints.Where(x => x.Enabled && x.TaskClaimId==taskId).OrderBy(x => x.OrderNum).ToListAsync();
+            var list = db.TaskCheckpoints.Where(x => x.Enabled && x.TaskId == taskId && (!done.HasValue || (done.HasValue && x.Done== done))).OrderBy(x => x.OrderNum).ToListAsync();
                 return await list;
+        }
+
+        public static async Task<IEnumerable<TaskCheckpoint>> GetActiveChkpListAsync(int taskId)
+        {
+            return await GetListAsync(taskId, false);
         }
 
         public async Task<int> AddAsync(string creatorSid)

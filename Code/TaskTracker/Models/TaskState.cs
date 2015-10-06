@@ -96,5 +96,31 @@ namespace TaskTracker.Models
         {
             return await Get("SETED");
         }
+
+        public async static Task<TaskState> GetDiscardState()
+        {
+            return await Get("DISCARD");
+        }
+
+        public static IEnumerable<TaskState> GetTaskUnactiveStates()
+        {
+            return GetList().Where(x => x.SysName.Equals("DONE") || x.SysName.Equals("PAUSE") || x.SysName.Equals("DISCARD"));
+        }
+
+        public static IEnumerable<int> GetTaskUnactiveStateIds()
+        {
+            return GetTaskUnactiveStates().Select(x => x.TaskStateId);
+        }
+
+        public static IEnumerable<TaskState> GetTaskActiveStates()
+        {
+            var activeStates = GetTaskUnactiveStateIds();
+            return GetList().Where(x => !activeStates.Contains(x.TaskStateId));
+        }
+
+        public static IEnumerable<int> GetTaskActiveStateIds()
+        {
+            return GetTaskActiveStates().Select(x => x.TaskStateId);
+        }
     }
 }
