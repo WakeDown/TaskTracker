@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/06/2015 09:45:06</publishTime>
+      <publishTime>10/06/2015 20:09:07</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/06/2015 09:45:06</publishTime>
+      <publishTime>10/06/2015 20:09:07</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/26/2015 08:24:18</publishTime>
@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:06</publishTime>
     </File>
     <File Include="bin/TaskTracker.dll">
-      <publishTime>06/10/2015 09:44:00</publishTime>
+      <publishTime>06/10/2015 20:04:03</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/25/2015 08:27:09</publishTime>
@@ -190,7 +190,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:24:20</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/06/2015 09:45:03</publishTime>
+      <publishTime>10/06/2015 20:09:05</publishTime>
     </File>
     <File Include="Scripts/jquery-2.1.4.js">
       <publishTime>08/26/2015 08:24:01</publishTime>
@@ -249,6 +249,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>08/25/2015 08:27:12</publishTime>
     </File>
+    <File Include="Views/Shared/WindowClose.cshtml">
+      <publishTime>06/10/2015 19:59:25</publishTime>
+    </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
@@ -286,7 +289,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/New.cshtml">
-      <publishTime>06/10/2015 09:37:10</publishTime>
+      <publishTime>10/06/2015 20:08:23</publishTime>
     </File>
     <File Include="Views/Task/StateHistory.cshtml">
       <publishTime>09/27/2015 13:23:34</publishTime>

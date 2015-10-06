@@ -119,14 +119,26 @@ namespace TaskTracker.Controllers
                 //        }
                 //    }
                 //}
+
+                if (!String.IsNullOrEmpty(Request.Form["Continue"]))
+                {
+                    return RedirectToAction("Card", new { id = taskId });
+                }
+                else
+                {
+                    return View("WindowClose");
+                }
             }
             catch (Exception ex)
             {
                 TempData["error"] = ex.Message;
                 return View("New", model);
             }
+
             return RedirectToAction("List");
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult> AddFile2Task(int? taskId)
