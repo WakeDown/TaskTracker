@@ -16,13 +16,13 @@
                 @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new {id = "project", @class = "validate browser-default", required = "required" })
             </div>
         </div><div class="row">
-                  <div class="input-field col s6">
+                  <div class="input-field col  l6 s12">
                       @Html.TextBoxFor(m => m.Name, new {@id = "name", @class = "validate", required = "required"})
                       <label for="name">Название</label>
                   </div>
               </div>
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col l6 s12">
                 @Html.TextAreaFor(m => m.Descr, new {@id = "descr", @class = "validate materialize-textarea", rows = "5"})
                 <label for="descr">Описание</label>
             </div>
@@ -39,7 +39,12 @@
                 @Html.DropDownListFor(m => m.SpecialistSid, Specialist.GetProgrammersSelectionList(), "--специалист не указан--", new { id = "specialist", @class = "browser-default" })
             </div>
         </div>*@
-        @Html.Partial("AddFile")
+        <div class="row">
+            <div class="col l6 s12">
+                @Html.Partial("AddFile")
+            </div>
+        </div>
+        
         <button class="btn waves-effect waves-light" type="submit" name="action">
             Сохранить<i class="material-icons right">send</i>
         </button>

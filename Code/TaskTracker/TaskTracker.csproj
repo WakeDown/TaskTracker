@@ -131,6 +131,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\PlaningController.cs" />
     <Compile Include="Controllers\TaskController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -143,9 +144,11 @@
     <Compile Include="Models\TaskCheckpoint.cs" />
     <Compile Include="Models\TaskClaim.cs" />
     <Compile Include="Models\TaskCategory.cs" />
+    <Compile Include="Models\TaskClaimPlanItem.cs" />
     <Compile Include="Models\TaskComment.cs" />
     <Compile Include="Models\TaskFiles.cs" />
     <Compile Include="Models\TaskImportant.cs" />
+    <Compile Include="Models\TaskPlan.cs" />
     <Compile Include="Models\TaskQuickly.cs" />
     <Compile Include="Models\TaskState.cs" />
     <Compile Include="Models\Task2TaskState.cs" />
@@ -192,6 +195,7 @@
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-dateformat.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -236,6 +240,8 @@
     <Content Include="Views\Task\CheckpointItem.cshtml" />
     <Content Include="Views\Task\AddFile.cshtml" />
     <Content Include="Views\Task\TaskCommentItem.cshtml" />
+    <Content Include="Views\Planing\Index.cshtml" />
+    <Content Include="Views\Planing\TaskPlanItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

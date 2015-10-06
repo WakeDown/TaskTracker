@@ -12,43 +12,46 @@ namespace TaskTracker.Controllers
 {
     public class TaskController : BaseController
     {
-        public async Task<ActionResult> List(string tsts, string spec = null, string author = null)
+        public async Task<ActionResult> List(string tsts, string spec = null, string author = null, string prjs = null)
         {
             string[] statesStr = String.IsNullOrEmpty(tsts) ? new string[0] : tsts.Split(',');
             int[] states = Array.ConvertAll<string, int>(statesStr, int.Parse);
 
+            string[] projectsStr = String.IsNullOrEmpty(prjs) ? new string[0] : prjs.Split(',');
+            int[] projects = Array.ConvertAll<string, int>(projectsStr, int.Parse);
+
             if (CurUser.Is(AdGroup.TaskTrackerManager))
             {
-                if (states == null || !states.Any())
-                {
-                    states = TaskState.GetManagerDefaultList().Select(x=>x.TaskStateId).ToArray();
-                }
+                //if (states == null || !states.Any())
+                //{
+                //    states = TaskState.GetManagerDefaultList().Select(x=>x.TaskStateId).ToArray();
+                //}
                 
-                var list = await TaskClaim.GetListAsync(spec, author, states);
+                var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
                 return View("ListManager", list);
             }
             else if (CurUser.Is(AdGroup.TaskTrackerProg))
             {
-                if (states == null || !states.Any())
-                {
-                    states = TaskState.GetProgDefaultList().Select(x => x.TaskStateId).ToArray();
-                }
+                //if (states == null || !states.Any())
+                //{
+                //    states = TaskState.GetProgDefaultList().Select(x => x.TaskStateId).ToArray();
+                //}
 
-                spec = CurUser.Sid;
-                var list = await TaskClaim.GetListAsync(spec, author, states);
+                //spec = CurUser.Sid;
+                var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
                 return View("ListProg", list);
             }
             else
             {
-                if (states == null || !states.Any())
-                {
-                    states = TaskState.GetUserDefaultList().Select(x => x.TaskStateId).ToArray();
-                }
+                //if (states == null || !states.Any())
+                //{
+                //    states = TaskState.GetUserDefaultList().Select(x => x.TaskStateId).ToArray();
+                //}
 
-                author = CurUser.Sid;
-                var list = await TaskClaim.GetListAsync(spec, author, states);
+                //author = CurUser.Sid;
+                var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
                 return View("ListUser", list);
             }
@@ -187,7 +190,7 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> AddCheckpoint(int taskId, string chekpointName)
         {
-            var chk = new TaskCheckpoint() {TaskClaimId = taskId, Name = chekpointName};
+            var chk = new TaskCheckpoint() { TaskId = taskId, Name = chekpointName};
             int id = await chk.AddAsync(CurUser.Sid);
             return Json(new {id= id });
         }

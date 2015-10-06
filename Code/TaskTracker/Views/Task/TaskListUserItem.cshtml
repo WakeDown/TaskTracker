@@ -3,35 +3,36 @@
 @model TaskTracker.Models.TaskClaim
 
 <tr id="taskClaim-@Model.TaskId" name="taskClaimItem" tid="@Model.TaskId">
+    <td class="row-marker @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor)"></td>
     <th class="center">@Model.TaskId</th>
     <td>
         <div class="row no-marg-bot">
             <div class="col s12 l6 m6">
-                <span class="bold">@Model.Project.Name</span>
+                <span class="bold @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor) marker">@Model.Project.Name</span>
             </div>
             <div class="col s12 l6 m6">
-                <span class="@Model.TaskState.BgColor marker">@AdHelper.GetUserBySid(Model.ModifierSid).DisplayName - @Model.TaskState.Name</span>
+                <span class="@(String.IsNullOrEmpty(Model.TaskState.BgColor) ? "indigo lighten-2" : Model.TaskState.BgColor) marker">@AdHelper.GetUserBySid(Model.ModifierSid).DisplayName - @Model.TaskState.Name</span>
             </div>
         </div>
         <div>
-            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a>
+            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">@Model.Name</a>
             </div>
         </div>
-@if (!String.IsNullOrEmpty(Model.Descr))
-{
-    <small>
-        @if (@Model.Descr.Length > 350)
+        @if (!String.IsNullOrEmpty(Model.Descr))
         {
-            @Model.Descr.Remove(350)
-            <br/>
-            <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
+            <small>
+                @if (@Model.Descr.Length > 350)
+                {
+                    @Model.Descr.Remove(350)
+                    <br/>
+                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
+                }
+                else
+                {
+                    @Model.Descr
+                }
+            </small>
         }
-        else
-        {
-            @Model.Descr
-        }
-    </small>
-}
     </td>
     @*<td>
     @if (@Model.TaskCategory != null)
@@ -84,7 +85,7 @@
         @if (String.IsNullOrEmpty(Model.SpecialistSid))
         {
             @:не назначен
-    }
+        }
         else
         {
             @Model.Specialist.DisplayName

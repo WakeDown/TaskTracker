@@ -3,6 +3,7 @@
 @model IEnumerable<TaskTracker.Models.TaskClaim>
 
 <tr>
+    <th></th>
     <th class="min-width center">ID</th>
     <th style="width: 40%">Задача</th>
     <th style="width: 10%">Категория</th>
@@ -42,7 +43,7 @@
         </a>
         <ul id='authorFilter' class='dropdown-content'>
             <li><a href="@Url.Action("List", new {auth = "", spec = Request.QueryString["spec"]})">все</a></li>
-            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+            @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new {Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName}).OrderBy(x => x.Name))
             {
                 <li><a href="@Url.Action("List", new {author = auth.Sid, spec = Request.QueryString["spec"]})">@auth.Name</a></li>
             }

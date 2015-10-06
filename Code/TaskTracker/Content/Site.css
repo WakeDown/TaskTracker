@@ -104,3 +104,57 @@ tr.updated-task-claim {
 .marg-r-md {
     margin-right: 15px;    
 }
+
+.no-pad-bot {
+    padding-bottom: 0 !important;
+}
+
+.no-marg-bot {
+    margin-bottom: 0 !important;
+}
+
+.no-pad {
+    padding: 0 !important;
+}
+
+.no-marg {
+    margin: 0 !important;
+}
+
+td.row-marker {
+    width: 5px; 
+}
+.text-sm {
+    font-size: 0.8rem !important;
+}
+
+.text-xs {
+    font-size: 0.6rem !important;
+}
+
+.plan-task-item td, .plan-chkp-item td {
+    padding-top: 5px;
+    padding-bottom: 0;
+}
+
+.plan-task-item td.chk {
+    vertical-align: top;
+}
+
+.plan-task-item-dated {
+    padding: 1px 5px 1px 5px;
+    border-radius: 3px;
+    margin: 5px;
+}
+
+.plan-task-item-dated .text {
+    
+}
+
+.plan-chkp-item {
+    
+}
+
+.valign-top {
+    vertical-align: top !important;
+}

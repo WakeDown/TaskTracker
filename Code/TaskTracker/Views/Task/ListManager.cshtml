@@ -7,26 +7,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] selStatesStr = String.IsNullOrEmpty(Request.QueryString["tsts"]) ? new string[0] : Request.QueryString["tsts"].Split(',');
     var sts = TaskState.GetList();
-    int[] selStates = !selStatesStr.Any() ? TaskState.GetManagerDefaultList().Select(x=>x.TaskStateId).ToArray() : Array.ConvertAll<string, int>(selStatesStr, int.Parse);
+    int[] selStates = !selStatesStr.Any() ? TaskState.GetManagerDefaultList().Select(x => x.TaskStateId).ToArray() : Array.ConvertAll<string, int>(selStatesStr, int.Parse);
+
+    string[] selProjectsStr = String.IsNullOrEmpty(Request.QueryString["prjs"]) ? new string[0] : Request.QueryString["prjs"].Split(',');
+    var prjs = Project.GetList();
+    int[] selProjects = !selProjectsStr.Any() ? prjs.Select(x=>x.ProjectId).ToArray() : Array.ConvertAll<string, int>(selProjectsStr, int.Parse);
 }
 
 <table class="bordered hoverable">
     <thead>
         <tr>
-            <td colspan="6">
-                <div class="left" id="stateFilterContainer">
-                    <div class="left marg-r-md">
-                        <input type="checkbox" value="" id="chk-ts-all" @(sts.Count()== selStates.Count()?"checked='checked'":"") /><label for="chk-ts-all">все</label>
-                    </div>
-                    @foreach (var ts in TaskState.GetList())
-                    {
-                        <div class="left marg-r-md">
-                            <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked='checked'" : "")/><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
+            <td colspan="7" class="no-pad-bot">
+                <div class="row no-pad-bot no-marg-bot">
+                    <div class="col l8">
+                        <div class="row">
+                            <div id="stateFilterContainer" class="row">
+                                <div class="col l1">
+                                    <div class="left marg-r-md">
+                                        <input type="checkbox" value="" id="chk-ts-all" @(sts.Count() == selStates.Count() ? "checked='checked'" : "")/><label for="chk-ts-all">все</label>
+                                    </div>
+                                </div>
+                                <div class="col l11">
+                                    @foreach (var ts in sts)
+                                    {
+                                        <div class="left marg-r-md">
+                                            <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked='checked'" : "") /><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
                         </div>
-                    }
-                </div>
-                <div class="left">
-                    <a class="btn-floating btn-large waves-effect waves-light blue" id="search"><i class="material-icons">search</i></a>
+                        <div class="row no-pad-bot no-marg-bot">
+                            <div id="projectFilterContainer" class="row">
+                                <div class="col l1">
+                                    <div class="left marg-r-md">
+                                        <input type="checkbox" value="" id="chk-prj-all" @(prjs.Count() == selProjects.Count() ? "checked='checked'" : "")/><label for="chk-prj-all">все</label>
+                                    </div>
+                                </div>
+                                <div class="col l11">
+                                    @foreach (var prj in Project.GetList())
+                                    {
+                                        <div class="left marg-r-md">
+                                            <input type="checkbox" value="@prj.ProjectId" name="chk-prj" id="chk-prj-@prj.ProjectId" @(selProjects.Contains(prj.ProjectId) ? "checked='checked'" : "") /><label for="chk-prj-@prj.ProjectId">@prj.Name</label>
+                                        </div>
+                                    }
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col l1">
+                        <a class="btn-floating btn-large waves-effect waves-light blue" id="search"><i class="material-icons">search</i></a>
+                    </div>
                 </div>
             </td>
         </tr>
@@ -45,7 +76,7 @@
     {
         <tbody>
             <tr>
-                <td colspan="6">пусто</td>
+                <td colspan="7">пусто</td>
             </tr>
         </tbody>
     }
@@ -55,7 +86,7 @@
     <div class="modal-content">
         <h4>Укажите причину приостановки</h4>
         <div class="input-field col s12">
-            <input type="text" id="pauseDescr" class="validate" required="required"/>
+            <input type="text" id="pauseDescr" class="validate" required="required" />
             <label for="pauseDescr">Причина</label>
         </div>
     </div>
@@ -91,6 +122,12 @@
                 $('#rework').attr('tid', $(this).attr('tid'));
                 $('#modalRework').openModal();
             });
+            $('#chk-prj-all').click(function () {
+                $('#projectFilterContainer [name="chk-prj"]').prop('checked', $(this).is(':checked'));
+            });
+            $('#projectFilterContainer [name="chk-prj"]').click(function () {
+                $('#chk-prj-all').prop('checked', ($('#projectFilterContainer [name="chk-prj"]').length === $('#projectFilterContainer [name="chk-prj"]:checked').length));
+            });
             $('#chk-ts-all').click(function () {
                 $('#stateFilterContainer [name="chk-ts"]').prop('checked', $(this).is(':checked'));
             });
@@ -105,9 +142,16 @@
                     if (val !== '') stArr.push(val);
                 }
                 var tsts = stArr.join(',');
+                var selProjects = $('#projectFilterContainer [name="chk-prj"]:checked');
+                var prjArr = [];
+                for (var i = 0; i < selProjects.length; i++) {
+                    var val = $(selProjects[i]).attr('value');
+                    if (val !== '') prjArr.push(val);
+                }
+                var prjs = prjArr.join(',');
                 var author = $('#selectedAuthor').attr('sid') !== undefined ? $('#selectedAuthor').attr('sid') : '';
                 var spec = $('#selectedSpec').attr('sid') !== undefined ? $('#selectedSpec').attr('sid') : '';
-                var url = '@Url.Action("List")?tsts=' + tsts + '&author=' + author + '&spec=' + spec;
+                var url = '@Url.Action("List")?tsts=' + tsts + '&author=' + author + '&spec=' + spec + '&prjs=' + prjs;
                 window.location = url;
             });
             $('#specFilter [name="spec"]').click(function () {
@@ -152,8 +196,8 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -167,15 +211,15 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
             $('#pause', $container).click(function () {
                 var tid = $(this).attr('tid');
                 var descr = $('#pauseDescr').val();
-                $(this).attr('tid','');
+                $(this).attr('tid', '');
                 $.ajax(
                 {
                     url: '@Url.Action("SetPauseState")',
@@ -184,8 +228,8 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -201,8 +245,8 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -216,8 +260,8 @@
                     success: function (e) {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
 
@@ -236,8 +280,8 @@
                             alert(data.error);
                         }
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -251,8 +295,8 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -266,8 +310,8 @@
                     success: function () {
                         updateTaskItem(tid);
                     },
-                    error: function (data) {
-                        alert(data.error);
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
                     }
                 });
             });
@@ -290,8 +334,8 @@
                     $tr.addClass('updated-task-claim');
                     initTaskList($tr);
                 },
-                error: function (data) {
-                    alert(data.error);
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
                 }
             });
         }

@@ -1,0 +1,11 @@
+﻿@model TaskTracker.Models.TaskPlan
+
+<div class="plan-task-item-dated @(String.IsNullOrEmpty(Model.TaskClaim.Project.BgColor) ? "indigo lighten-2" : Model.TaskClaim.Project.BgColor) center">
+    <div class="text white">
+        @Model.TaskClaim.Name
+        <div class="right">
+            <a href="@Url.Action("Card", "Task", new {id = Model.TaskClaim.TaskId})" target="_blank"><i class="material-icons">pageview</i></a>
+            <a href="@Url.Action("DeletePlanTask", "Planing", new {id=Model.TaskClaim.TaskId})" target="_blank"><i class="material-icons">clear</i></a>
+        </div>
+    </div>
+</div>

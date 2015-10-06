@@ -3,37 +3,39 @@
 @model TaskTracker.Models.TaskClaim
 
 <tr id="taskClaim-@Model.TaskId" name="taskClaimItem" tid="@Model.TaskId">
+    <td class="row-marker @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor)"></td>
     <th class="center">@Model.TaskId</th>
     <td>
         <div class="row no-marg-bot">
             <div class="col s12 l8 m8">
-                <span class="bold">@Model.Project.Name</span>
+                <span class="bold @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor) marker">@Model.Project.Name</span>
             </div>
             <div class="col s12 l4 m4">
-                <span class="@Model.TaskState.BgColor marker">@Model.TaskState.Name</span>
+                <span class="@(String.IsNullOrEmpty(Model.TaskState.BgColor) ? "indigo lighten-2" : Model.TaskState.BgColor) marker">@Model.TaskState.Name</span>
             </div>
         </div>
         <div>
-            <div class="text-bg"><a href="@Url.Action("Card", "Task", new {id = Model.TaskId})">@Model.Name</a>
+            <div class="text-bg">
+                <a href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">@Model.Name</a>
             </div>
         </div>
-@if (!String.IsNullOrEmpty(Model.Descr))
+        @if (!String.IsNullOrEmpty(Model.Descr))
             {
-                <small>
+            <small>
 
-                    @if (Model.Descr.Length > 350)
-                    {
+                @if (Model.Descr.Length > 350)
+                {
                     @Model.Descr.Remove(350)
-                    <br/>
-                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})">читать полностью</a>
-                    }
-                    else
-                    {
+                    <br />
+                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
+                }
+                else
+                {
                     @Model.Descr
-                    }
+                }
 
-                </small>
-}
+            </small>
+        }
     </td>
     <td>
         @if (@Model.TaskCategory != null)
@@ -56,7 +58,7 @@
                     <li><a type="set-category" href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</a></li>
                 }
             </ul>
-        }
+    }
         @if (@Model.TaskImportant != null)
         {
             if (@Model.TaskImportant.SysName.Equals("IMP"))
@@ -77,7 +79,7 @@
                     <li><a type="set-important" href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</a></li>
                 }
             </ul>
-        }
+    }
         @if (@Model.TaskQuickly != null)
         {
             if (@Model.TaskQuickly.SysName.Equals("QUICK"))
@@ -98,7 +100,7 @@
                     <li><a type="set-quickly" href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</a></li>
                 }
             </ul>
-        }
+    }
     </td>
     <td class="text-nowrap">
         @if (String.IsNullOrEmpty(Model.SpecialistSid))
@@ -111,11 +113,11 @@
                     <li class="divider"></li>
                 }
             </ul>
-        }
-        else
-        {
-            @Model.Specialist.DisplayName
-        }
+    }
+    else
+    {
+        @Model.Specialist.DisplayName
+    }
     </td>
     <td class="text-nowrap">
         @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName

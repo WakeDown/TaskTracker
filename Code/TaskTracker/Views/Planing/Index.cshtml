@@ -1,0 +1,192 @@
+﻿@using TaskTracker.Models
+@model IEnumerable<TaskTracker.Models.TaskClaimPlanItem>
+@{
+    ViewBag.Title = "Планирование";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<p>
+    <div class="red lighten-3 red-text">
+        @TempData["error"]
+    </div>
+    <div class="row no-marg-bot">
+        <div class="col l3">
+            &nbsp;
+        </div>
+        <div class="col l9">
+            <div class="row no-marg-bot">
+                <div class="col l3">
+                    <button class="btn" id="today">сегодня</button>
+                </div>
+                <div class="col l9">
+                    <h4 id="selDay" class="no-pad no-marg" val="@DateTime.Now.ToString("yyyy-MM-dd")">@DateTime.Now.ToString("D")</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col l3">
+
+            <table class="bordered">
+                <tr><th></th><th></th><th><h5>Задачи</h5></th></tr>
+                @if (Model.Any())
+            {
+                foreach (TaskClaimPlanItem task in Model)
+                {
+                        <tr class="plan-task-item">
+                            <td class="row-marker @(String.IsNullOrEmpty(task.TaskClaim.Project.BgColor) ? "indigo lighten-2" : task.TaskClaim.Project.BgColor)"></td>
+                            <td class="chk">
+                                <input type="checkbox" name="task" id="task-@task.TaskClaim.TaskId" value="@task.TaskClaim.TaskId" />
+                                <label for="task-@task.TaskClaim.TaskId"></label>
+                            </td>
+                            <td>
+                                <div>
+                                    <small class="marker @(String.IsNullOrEmpty(task.TaskClaim.Project.BgColor) ? "indigo lighten-2" : task.TaskClaim.Project.BgColor)">@task.TaskClaim.Project.Name</small>
+                                    <a href="@Url.Action("Card", "Task", new {id=task.TaskClaim.TaskId})" target="_blank" class="right"><i class="material-icons">pageview</i></a>
+                                </div>
+                                @task.TaskClaim.Name
+                                @if (task.Checkpoints.Any())
+                                {
+                                    <table>
+                                        @foreach (var chkp in task.Checkpoints)
+                                        {
+                                            <tr class="plan-chkp-item">
+                                                <td></td>
+                                                <td></td>
+                                                <td>
+                                                    <input type="checkbox" name="chkp" id="task-chkp-@chkp.TaskCheckpointId" value="@chkp.TaskCheckpointId"/>
+                                                    <label for="task-chkp-@chkp.TaskCheckpointId" class="black-text">@chkp.Name</label>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </table>
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </table>
+
+            @*<ul class="collection with-header">
+                    <li class="collection-header"><h5>Задачи</h5></li>
+                    @if (Model.Any())
+                    {
+                        foreach (TaskClaimPlanItem task in Model)
+                        {
+                            <li class="collection-item plan-task-item @(String.IsNullOrEmpty(task.TaskClaim.Project.BgColor) ? "indigo lighten-2" : task.TaskClaim.Project.BgColor)">
+                                <input type="checkbox" id="task-@task.TaskClaim.TaskId" value="@task.TaskClaim.TaskId"/>
+                                <label for="task-@task.TaskClaim.TaskId" class="black-text">@task.TaskClaim.Name</label>
+                                @if (task.Checkpoints.Any())
+                                {
+                                    <ul class="collection">
+                                        @foreach (var chkp in task.Checkpoints)
+                                        {
+                                            <li class="collection-item plan-chkp-item grey-text">
+                                                <input type="checkbox" id="task-chkp-@chkp.TaskCheckpointId" value="@chkp.TaskCheckpointId" />
+                                                <label for="task-chkp-@chkp.TaskCheckpointId" class="black-text">@chkp.Name</label>
+
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </li>
+                        }
+                    }
+                </ul>*@
+        </div>
+        <div class="col l9">
+            <div class="row no-marg-bot">
+                <div class="col l4">
+                    <button class="btn" id="add2plan">добавить</button>
+                </div>
+                <div class="col l8">
+                    <h5 id="selDayWeek">
+                        @DateTime.Now.ToString("ddddd")
+                    </h5>
+                </div>
+            </div>
+            <div id="planTaskContainer">
+
+            </div>
+        </div>
+    </div>
+</p>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            
+            $('#add2plan').click(function() {
+                var planDate = $('#selDay').attr('val');
+                var selTasks = [];
+                var taskIds = $('[name="task"]:checked');
+                for (var i = 0; i < taskIds.length; i++) {
+                    var taskId = $(taskIds[i]).val();
+                    selTasks.push(taskId);
+                }
+                var selChkps = [];
+                var chkpIds = $('[name="chkp"]:checked');
+                for (var i = 0; i < chkpIds.length; i++) {
+                    var chkpId = $(chkpIds[i]).val();
+                    selChkps.push(chkpId);
+                }
+                $.ajax({
+                    url: '@Url.Action("Add2Plan")',
+                    method:'POST',
+                    data: JSON.stringify({planDate:planDate, selTasks:selTasks, selChkps:selChkps}),
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    success: loadPlanTasks,
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                    }
+                });
+        });
+        $('#today').click(function () {
+            var today = new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day);
+            selDay(today);
+        });
+            loadPlanTasks();
+        });
+
+        function loadPlanTasks() {
+            //$('#planTaskContainer').clear();
+            var planDate = $('#selDay').attr('val');
+            $.ajax({
+                url:'@Url.Action("GetPlanList")',
+                method:'POST',
+                data: JSON.stringify({planDate:planDate}),
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                success: function(data) {
+                    if (data && data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var taskId = data[i];
+                            $.ajax({
+                                url:'@Url.Action("GetTaskPlanItem")',
+                                method:'POST',
+                                data: {id:taskId},
+                                success: function(html) {
+                                    $('#planTaskContainer').append(html);
+                                }
+                            });
+
+                            //var item = '<div>test ' + task.TaskClaim.Name + '</div>';
+                            //$tcnt.append(item);
+                        }
+                    }
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });}
+
+        function selDay(date) {
+            $('#selDay').attr('val', $.format.date(date, 'yyyy-mm-dd'));
+            $('#selDay').text($.format.date(date, 'dd MMMM yyyy'));
+            $('#selDayWeek').text($.format.date(date, 'ddd'));
+            loadPlanTasks();
+        }
+    </script>
+}
