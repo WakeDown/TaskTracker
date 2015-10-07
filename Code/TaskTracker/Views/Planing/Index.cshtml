@@ -148,7 +148,7 @@
             });
             loadPlanTasks();
 
-           
+
         });
 
         function loadPlanTasks() {
@@ -170,17 +170,7 @@
                                 data: { id: taskId },
                                 success: function(html) {
                                     $('#planTaskContainer').append(html);
-                                    $('[name="task-plan-close"]').click(function() {
-                                        var tpid = $(this).attr('tpid');
-                                        $.ajax({
-                                            url: '@Url.Action("DeletePlanTask", "Planing")',
-                                            method:'POST',
-                                            data: {taskPlanId: tpid},
-                                            success: function() {
-                                                $('[name="plan-task-item-dated-' + tpid + '"]').addClass('closed');
-                                            }
-                                        });
-                                    });
+                                    taskPlainItemDatedBtnsWrap();
                                 }
                             });
 
@@ -192,6 +182,56 @@
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.responseText);
                 }
+            });
+        }
+
+        function taskPlainItemDatedBtnsWrap() {
+            $('[name="task-plan-close"]').click(function() {
+                var tpid = $(this).attr('tpid');
+                $.ajax({
+                    url: '@Url.Action("DeletePlanTask", "Planing")',
+                    method:'POST',
+                    data: {taskPlanId: tpid},
+                    success: function() {
+                        $('[name="plan-task-item-dated-' + tpid + '"]').addClass('closed');
+                    }
+                });
+            });
+
+            $('[name="task-plan-restore"]').click(function() {
+                var tpid = $(this).attr('tpid');
+                $.ajax({
+                    url: '@Url.Action("RestorePlanTask", "Planing")',
+                    method:'POST',
+                    data: {taskPlanId: tpid},
+                    success: function() {
+                        $('[name="plan-task-item-dated-' + tpid + '"].closed').removeClass('closed');
+                    }
+                });
+            });
+
+            $('[name="task-plan-done"]').click(function() {
+                var tpid = $(this).attr('tpid');
+                $.ajax({
+                    url: '@Url.Action("DonePlanTask", "Planing")',
+                    method:'POST',
+                    data: {taskPlanId: tpid},
+                    success: function() {
+                        $('[name="plan-task-item-dated-' + tpid + '"]').addClass('done');
+                    }
+                });
+            });
+
+            $('[name="task-plan-undone"]').click(function() {
+                var tpid = $(this).attr('tpid');
+                $.ajax({
+                    url: '@Url.Action("UndonePlanTask", "Planing")',
+                    method:'POST',
+                    data: {taskPlanId: tpid},
+                    success: function() {
+                        $('[name="plan-task-item-dated-' + tpid + '"].done').removeClass('done');
+                    }
+                });
             });
         }
 

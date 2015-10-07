@@ -111,5 +111,36 @@ namespace TaskTracker.Models
             taskPlan.DateDelete = DateTime.Now;
             db.SaveChanges();
         }
+
+        public static void Restore(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+            taskPlan.Enabled = true;
+            taskPlan.DeleterSid = null;
+            taskPlan.DateDelete =null;
+            db.SaveChanges();
+        }
+
+        public static void Done(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+
+            //taskPlan.Enabled = true;
+            //taskPlan.DeleterSid = creatorSid;
+            //taskPlan.DateDelete = DateTime.Now;
+            db.SaveChanges();
+        }
+
+        public static void Undone(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+            //taskPlan.Enabled = true;
+            //taskPlan.DeleterSid = creatorSid;
+            //taskPlan.DateDelete = DateTime.Now;
+            db.SaveChanges();
+        }
     }
 }

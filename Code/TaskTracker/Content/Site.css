@@ -147,7 +147,11 @@ td.row-marker {
     margin: 5px;
 }
 
-.plan-task-item-dated.closed {
+.plan-task-item-dated .text {
+    padding: 10px 25px;
+}
+
+.plan-task-item-dated.closed, .plan-task-item-dated.done {
     opacity: 0.4;
     filter: alpha(opacity=40); /* For IE8 and earlier */
 }
@@ -156,17 +160,26 @@ td.row-marker {
     display: block;
 }
 
-.plan-task-item-dated .btn-task-plan-restore {
+.plan-task-item-dated .btn-task-plan-restore, .plan-task-item-dated .btn-task-plan-undone {
     display: none;
 }
+
 
 .plan-task-item-dated.closed .btn-task-plan-close, .plan-task-item-dated.closed .btn-task-plan-done {
     display: none;
 }
 
-.plan-task-item-dated .text {
-    
+.plan-task-item-dated.done .btn-task-plan-close, .plan-task-item-dated.done .btn-task-plan-done {
+    display: none;
 }
+
+.plan-task-item-dated.done .btn-task-plan-undone {
+    display: block;
+}
+
+.plan-task-item-dated .btns {
+    display: table-cell;
+} 
 
 .plan-chkp-item {
     
@@ -174,4 +187,8 @@ td.row-marker {
 
 .valign-top {
     vertical-align: top !important;
+}
+
+.valign-middle {
+    vertical-align: middle !important;
 }
