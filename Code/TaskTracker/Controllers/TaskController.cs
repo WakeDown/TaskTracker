@@ -367,5 +367,15 @@ namespace TaskTracker.Controllers
             await TaskCheckpoint.CloseAsync(id, CurUser.Sid);
             return Json(new { });
         }
+
+        [HttpPost]
+        public async Task<JsonResult> GetTaskCheckpointCount(int taskId)
+        {
+            var list = await TaskCheckpoint.GetListAsync(taskId);
+            int all = list.Count();
+            int done = list.Count(x => x.Done);
+            int undone = list.Count(x => !x.Done);
+            return Json(new { all = all, done = done , undone = undone });
+        }
     }
 }

@@ -113,28 +113,30 @@
 {
     <script type="text/javascript">
 
-        $(function () {
-            $('#modalPauseModal.modal-trigger').click(function () {
+        $(function() {
+
+            loadCheckpointCounts();
+            $('#modalPauseModal.modal-trigger').click(function() {
                 $('#pause').attr('tid', $(this).attr('tid'));
                 $('#modalPause').openModal();
             });
-            $('#modalReworkModal.modal-trigger').click(function () {
+            $('#modalReworkModal.modal-trigger').click(function() {
                 $('#rework').attr('tid', $(this).attr('tid'));
                 $('#modalRework').openModal();
             });
-            $('#chk-prj-all').click(function () {
+            $('#chk-prj-all').click(function() {
                 $('#projectFilterContainer [name="chk-prj"]').prop('checked', $(this).is(':checked'));
             });
-            $('#projectFilterContainer [name="chk-prj"]').click(function () {
+            $('#projectFilterContainer [name="chk-prj"]').click(function() {
                 $('#chk-prj-all').prop('checked', ($('#projectFilterContainer [name="chk-prj"]').length === $('#projectFilterContainer [name="chk-prj"]:checked').length));
             });
-            $('#chk-ts-all').click(function () {
+            $('#chk-ts-all').click(function() {
                 $('#stateFilterContainer [name="chk-ts"]').prop('checked', $(this).is(':checked'));
             });
-            $('#stateFilterContainer [name="chk-ts"]').click(function () {
+            $('#stateFilterContainer [name="chk-ts"]').click(function() {
                 $('#chk-ts-all').prop('checked', ($('#stateFilterContainer [name="chk-ts"]').length === $('#stateFilterContainer [name="chk-ts"]:checked').length));
             });
-            $('#search').click(function () {
+            $('#search').click(function() {
                 var selStates = $('#stateFilterContainer [name="chk-ts"]:checked');
                 var stArr = [];
                 for (var i = 0; i < selStates.length; i++) {
@@ -154,13 +156,13 @@
                 var url = '@Url.Action("List")?tsts=' + tsts + '&author=' + author + '&spec=' + spec + '&prjs=' + prjs;
                 window.location = url;
             });
-            $('#specFilter [name="spec"]').click(function () {
+            $('#specFilter [name="spec"]').click(function() {
                 var el = $(this);
                 var $sel = $('#selectedSpec');
                 $sel.attr('sid', el.attr('sid'));
                 $sel.text(el.attr('fio'));
             });
-            $('#authorFilter [name="author"]').click(function () {
+            $('#authorFilter [name="author"]').click(function() {
                 var el = $(this);
                 var $sel = $('#selectedAuthor');
                 $sel.attr('sid', el.attr('sid'));
@@ -168,6 +170,40 @@
             });
             initTaskList();
         });
+
+        function loadCheckpointCounts() {
+            var $list = $('[name="taskClaimItem"]');
+            for (var i = 0; i < $list.length; i++) {
+                //var $item = $('[name="chkpCount"]', $list[i]);
+                var tid = $($list[i]).attr('tid');
+                var listItemId = $($list[i]).attr('id');
+                setCheckpointCounts(tid, listItemId);
+                @*$.ajax({
+                    url: '@Url.Action("GetTaskCheckpointCount")',
+                    method: 'POST',
+                    data: { taskId: tid },
+                    success: function(data) {
+                        $('#' + itemId).append('test');
+                    }
+            });*@
+                
+            }
+            
+        }
+
+        function setCheckpointCounts(tid, listItemId) {
+            $.ajax({
+                url: '@Url.Action("GetTaskCheckpointCount")',
+                method: 'POST',
+                data: { taskId: tid },
+                success: function (data) {
+                    var $item = $('#' + listItemId + ' [name="chkpCount"]');
+                    
+                    $item.append('<div><span class="bold" title="контрольные точки">КТ:</span> <span class="grey-text" title="всего">' + data.all + '</span>-<span class="green-text" title="выполнено">' + data.done + '</span>-<span class="red-text" title="невыполнено">' + data.undone + '</span></div>');
+                }
+            });
+        }
+
         function initTaskList($container) {
             if ($container == null) $container = $('body');
 
@@ -186,37 +222,37 @@
                     }
                 });
             });*@
-            $('[type="done"]', $container).click(function () {
+            $('[type="done"]', $container).click(function() {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetDoneState")',
                     method: 'POST',
                     data: { id: tid },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('[type="work"]', $container).click(function () {
+            $('[type="work"]', $container).click(function() {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetWorkState")',
                     method: 'POST',
                     data: { id: tid },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('#pause', $container).click(function () {
+            $('#pause', $container).click(function() {
                 var tid = $(this).attr('tid');
                 var descr = $('#pauseDescr').val();
                 $(this).attr('tid', '');
@@ -225,15 +261,15 @@
                     url: '@Url.Action("SetPauseState")',
                     method: 'POST',
                     data: { id: tid, descr: descr },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('#rework', $container).click(function () {
+            $('#rework', $container).click(function() {
                 var tid = $(this).attr('tid');
                 var descr = $('#reworkDescr').val();
                 $(this).attr('tid', '');
@@ -242,75 +278,75 @@
                     url: '@Url.Action("SetReworkState")',
                     method: 'POST',
                     data: { id: tid, descr: descr },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('[type="set-category"]', $container).click(function (e) {
+            $('[type="set-category"]', $container).click(function(e) {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetTaskCategory")',
                     method: 'POST',
                     data: { id: tid, cid: $(this).attr('cid') },
-                    success: function (e) {
+                    success: function(e) {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
 
             });
-            $('[type="set-specialist"]', $container).click(function () {
+            $('[type="set-specialist"]', $container).click(function() {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetTaskSpecialist")',
                     method: 'POST',
                     data: { id: tid, sid: $(this).attr('sid') },
-                    success: function (data) {
+                    success: function(data) {
                         if (data.error == null) {
                             updateTaskItem(tid);
                         } else {
                             alert(data.error);
                         }
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('[type="set-important"]', $container).click(function () {
+            $('[type="set-important"]', $container).click(function() {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetTaskImportant")',
                     method: 'POST',
                     data: { id: tid, iid: $(this).attr('iid') },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
             });
-            $('[type="set-quickly"]', $container).click(function () {
+            $('[type="set-quickly"]', $container).click(function() {
                 var tid = $(this).attr('tid');
                 $.ajax(
                 {
                     url: '@Url.Action("SetTaskQuickly")',
                     method: 'POST',
                     data: { id: tid, qid: $(this).attr('qid') },
-                    success: function () {
+                    success: function() {
                         updateTaskItem(tid);
                     },
-                    error: function (xhr, ajaxOptions, thrownError) {
+                    error: function(xhr, ajaxOptions, thrownError) {
                         alert(xhr.responseText);
                     }
                 });
@@ -324,17 +360,18 @@
                 belowOrigin: false // Displays dropdown below the button
             });
         }
+
         function updateTaskItem(id) {
             $.ajax({
                 url: '@Url.Action("GetTaskListManagerItem", "Task")?id=' + id,
                 method: 'GET',
-                success: function (html) {
+                success: function(html) {
                     $("tr#taskClaim-" + id).replaceWith(html);
                     var $tr = $("tr#taskClaim-" + id);
                     $tr.addClass('updated-task-claim');
                     initTaskList($tr);
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
+                error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.responseText);
                 }
             });
