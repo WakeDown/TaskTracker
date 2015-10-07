@@ -147,6 +147,23 @@ td.row-marker {
     margin: 5px;
 }
 
+.plan-task-item-dated.closed {
+    opacity: 0.4;
+    filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+.plan-task-item-dated.closed .btn-task-plan-restore {
+    display: block;
+}
+
+.plan-task-item-dated .btn-task-plan-restore {
+    display: none;
+}
+
+.plan-task-item-dated.closed .btn-task-plan-close, .plan-task-item-dated.closed .btn-task-plan-done {
+    display: none;
+}
+
 .plan-task-item-dated .text {
     
 }

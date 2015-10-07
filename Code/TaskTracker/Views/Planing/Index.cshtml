@@ -115,8 +115,7 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(function () {
-            
+        $(function() {
             $('#add2plan').click(function() {
                 var planDate = $('#selDay').attr('val');
                 var selTasks = [];
@@ -133,8 +132,8 @@
                 }
                 $.ajax({
                     url: '@Url.Action("Add2Plan")',
-                    method:'POST',
-                    data: JSON.stringify({planDate:planDate, selTasks:selTasks, selChkps:selChkps}),
+                    method: 'POST',
+                    data: JSON.stringify({ planDate: planDate, selTasks: selTasks, selChkps: selChkps }),
                     dataType: "json",
                     contentType: 'application/json; charset=utf-8',
                     success: loadPlanTasks,
@@ -142,21 +141,23 @@
                         alert(xhr.responseText);
                     }
                 });
-        });
-        $('#today').click(function () {
-            var today = new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day);
-            selDay(today);
-        });
+            });
+            $('#today').click(function() {
+                var today = new Date(@DateTime.Now.Year, @DateTime.Now.Month, @DateTime.Now.Day);
+                selDay(today);
+            });
             loadPlanTasks();
+
+           
         });
 
         function loadPlanTasks() {
             //$('#planTaskContainer').clear();
             var planDate = $('#selDay').attr('val');
             $.ajax({
-                url:'@Url.Action("GetPlanList")',
-                method:'POST',
-                data: JSON.stringify({planDate:planDate}),
+                url: '@Url.Action("GetPlanList")',
+                method: 'POST',
+                data: JSON.stringify({ planDate: planDate }),
                 dataType: "json",
                 contentType: 'application/json; charset=utf-8',
                 success: function(data) {
@@ -164,11 +165,22 @@
                         for (var i = 0; i < data.length; i++) {
                             var taskId = data[i];
                             $.ajax({
-                                url:'@Url.Action("GetTaskPlanItem")',
-                                method:'POST',
-                                data: {id:taskId},
+                                url: '@Url.Action("GetTaskPlanItem")',
+                                method: 'POST',
+                                data: { id: taskId },
                                 success: function(html) {
                                     $('#planTaskContainer').append(html);
+                                    $('[name="task-plan-close"]').click(function() {
+                                        var tpid = $(this).attr('tpid');
+                                        $.ajax({
+                                            url: '@Url.Action("DeletePlanTask", "Planing")',
+                                            method:'POST',
+                                            data: {taskPlanId: tpid},
+                                            success: function() {
+                                                $('[name="plan-task-item-dated-' + tpid + '"]').addClass('closed');
+                                            }
+                                        });
+                                    });
                                 }
                             });
 
@@ -180,7 +192,8 @@
                 error: function(xhr, ajaxOptions, thrownError) {
                     alert(xhr.responseText);
                 }
-            });}
+            });
+        }
 
         function selDay(date) {
             $('#selDay').attr('val', $.format.date(date, 'yyyy-mm-dd'));

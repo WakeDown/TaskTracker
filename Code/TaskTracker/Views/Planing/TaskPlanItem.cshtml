@@ -1,11 +1,29 @@
 ﻿@model TaskTracker.Models.TaskPlan
 
-<div class="plan-task-item-dated @(String.IsNullOrEmpty(Model.TaskClaim.Project.BgColor) ? "indigo lighten-2" : Model.TaskClaim.Project.BgColor) center">
-    <div class="text white">
-        @Model.TaskClaim.Name
-        <div class="right">
-            <a href="@Url.Action("Card", "Task", new {id = Model.TaskClaim.TaskId})" target="_blank"><i class="material-icons">pageview</i></a>
-            <a href="@Url.Action("DeletePlanTask", "Planing", new {id=Model.TaskClaim.TaskId})" target="_blank"><i class="material-icons">clear</i></a>
+<div class="plan-task-item-dated @(String.IsNullOrEmpty(Model.TaskClaim.Project.BgColor) ? "indigo lighten-2" : Model.TaskClaim.Project.BgColor) row" name="plan-task-item-dated-@Model.TaskPlanId">
+    <div class="col l10 text white">
+        <div class="col l1">
+            &nbsp;
+            <a href="#!" tpid="@Model.TaskPlanId" name="task-plan-close" class="btn-task-plan-close"><i class="material-icons">clear</i></a>
         </div>
+        <div class="col l10">
+            @if (Model.TaskCheckpointId <= 0)
+            {
+                <a href="@Url.Action("Card", "Task", new {id = Model.TaskClaim.TaskId})" target="_blank">@Model.TaskClaim.Name</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Card", "Task", new {id = Model.TaskClaim.TaskId})#cntnr-task-chkp-@Model.TaskCheckpointId" target="_blank">@Model.TaskCheckpoint.Name</a>
+                <div class="blue-grey-text pad-l-lg">@Model.TaskClaim.Name</div>
+            }
+        </div>
+        <div class="col l1">
+            &nbsp;
+            <a href="@Url.Action("RestorePlanTask", "Planing", new {id = Model.TaskPlanId})" target="_blank" class="btn-task-plan-restore"><i class="material-icons">replay</i></a>
+            <a href="@Url.Action("DonePlanTask", "Planing", new {id = Model.TaskPlanId})" target="_blank" class="btn-task-plan-done"><i class="material-icons">done</i></a>
+        </div>
+    </div>
+    <div class="col l2">
+        <div class="marker">@Model.TaskClaim.Project.Name</div>
     </div>
 </div>
