@@ -101,5 +101,46 @@ namespace TaskTracker.Models
             var list = await db.TaskPlans.Where(x => x.Enabled && DbFunctions.TruncateTime(x.PlanDate) == DbFunctions.TruncateTime(planDate)).Select(x=>x.TaskPlanId).ToListAsync();
             return list;
         }
+
+        public static void Close(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+            taskPlan.Enabled = false;
+            taskPlan.DeleterSid = creatorSid;
+            taskPlan.DateDelete = DateTime.Now;
+            db.SaveChanges();
+        }
+
+        public static void Restore(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+            taskPlan.Enabled = true;
+            taskPlan.DeleterSid = null;
+            taskPlan.DateDelete =null;
+            db.SaveChanges();
+        }
+
+        public static void Done(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+
+            //taskPlan.Enabled = true;
+            //taskPlan.DeleterSid = creatorSid;
+            //taskPlan.DateDelete = DateTime.Now;
+            db.SaveChanges();
+        }
+
+        public static void Undone(string creatorSid, int taskPlanId)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var taskPlan = db.TaskPlans.Single(x => x.TaskPlanId == taskPlanId);
+            //taskPlan.Enabled = true;
+            //taskPlan.DeleterSid = creatorSid;
+            //taskPlan.DateDelete = DateTime.Now;
+            db.SaveChanges();
+        }
     }
 }

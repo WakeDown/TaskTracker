@@ -119,14 +119,26 @@ namespace TaskTracker.Controllers
                 //        }
                 //    }
                 //}
+
+                if (!String.IsNullOrEmpty(Request.Form["Continue"]))
+                {
+                    return RedirectToAction("Card", new { id = taskId });
+                }
+                else
+                {
+                    return View("WindowClose");
+                }
             }
             catch (Exception ex)
             {
                 TempData["error"] = ex.Message;
                 return View("New", model);
             }
+
             return RedirectToAction("List");
         }
+
+
 
         [HttpPost]
         public async Task<ActionResult> AddFile2Task(int? taskId)
@@ -354,6 +366,16 @@ namespace TaskTracker.Controllers
         {
             await TaskCheckpoint.CloseAsync(id, CurUser.Sid);
             return Json(new { });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetTaskCheckpointCount(int taskId)
+        {
+            var list = await TaskCheckpoint.GetListAsync(taskId);
+            int all = list.Count();
+            int done = list.Count(x => x.Done);
+            int undone = list.Count(x => !x.Done);
+            return Json(new { all = all, done = done , undone = undone });
         }
     }
 }

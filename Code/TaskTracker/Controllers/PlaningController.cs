@@ -25,10 +25,32 @@ namespace TaskTracker.Controllers
             
             return View(list);
         }
-
-        public async Task<JsonResult> DeletePlanTask(int id)
+        [HttpPost]
+        public JsonResult DeletePlanTask(int taskPlanId)
         {
+            TaskPlan.Close(CurUser.Sid, taskPlanId);
             return Json(new {});
+        }
+
+        [HttpPost]
+        public JsonResult RestorePlanTask(int taskPlanId)
+        {
+            TaskPlan.Restore(CurUser.Sid, taskPlanId);
+            return Json(new { });
+        }
+
+        [HttpPost]
+        public JsonResult DonePlanTask(int taskPlanId)
+        {
+            TaskPlan.Done(CurUser.Sid, taskPlanId);
+            return Json(new { });
+        }
+
+        [HttpPost]
+        public JsonResult UndonePlanTask(int taskPlanId)
+        {
+            TaskPlan.Undone(CurUser.Sid, taskPlanId);
+            return Json(new { });
         }
 
         public async Task<JsonResult> Add2Plan(DateTime planDate, int[] selTasks = null, int[] selChkps = null)
