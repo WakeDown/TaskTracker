@@ -1,21 +1,38 @@
 ﻿@using TaskTracker.Models
 @model TaskTracker.Models.TaskClaim
 @{
-    ViewBag.Title = "Новая задача";
+    if (Model.ParentTaskId.HasValue)
+    {
+        ViewBag.Title = "Новая подзадача";
+    }
+    else
+    {
+        ViewBag.Title = "Новая задача";
+    }
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+    }
 <p>
     <div class="red lighten-3 red-text">
         @TempData["error"]
     </div>
     @using (Html.BeginForm("New", "Task", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
     {
+        @Html.HiddenFor(m=>m.ParentTaskId)
+        @Html.HiddenFor(m => m.ProjectId)
         <div class="row">
             <div class="col s3">
                 <label for="project">Проект</label>
-                @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new {id = "project", @class = "validate browser-default", required = "required" })
+                @if (Model.ParentTaskId.HasValue)
+                {
+                    @:Главная задача
+                }
+                else
+                {
+                    @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new { id = "project", @class = "validate browser-default", required = "required" })
+                }
             </div>
-        </div><div class="row">
+        </div>
+    <div class="row">
                   <div class="input-field col  l6 s12">
                       @Html.TextBoxFor(m => m.Name, new {@id = "name", @class = "validate", required = "required"})
                       <label for="name">Название</label>

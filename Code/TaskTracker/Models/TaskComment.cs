@@ -75,7 +75,7 @@ namespace TaskTracker.Models
 
         private async Task SendNoticeToAuthor()
         {
-            TaskClaim taskClaim = await TaskClaim.Get(TaskClaimId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(TaskClaimId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Новый комментарий по задаче \"{taskClaim.Name}\" в проекте {taskClaim.Project.Name}.<br />{AdHelper.GetUserBySid(CreatorSid).DisplayName} пишет:<br />{Text}<p>Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a></p>";

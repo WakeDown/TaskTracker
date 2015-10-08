@@ -78,18 +78,28 @@ namespace TaskTracker.Controllers
         //    return View(list);
         //}
 
-        [HttpGet]
-        public ActionResult New()
-        {
-            var task = new TaskClaim();
-            return View(task);
-        }
+       
 
         [HttpGet]
         public async Task<ActionResult> GetTaskFileData(string guid)
         {
             var file = await TaskFile.GetAsync(guid);
             return File(file.Data, System.Net.Mime.MediaTypeNames.Application.Octet, file.Name);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> New(int? idParent)
+        {
+            var task = new TaskClaim();
+
+            if (idParent.HasValue)
+            {
+                var parent = await TaskClaim.GetAsync(idParent.Value);
+
+                task = new TaskClaim() { ParentTaskId = idParent, ProjectId = parent .ProjectId};
+            }
+            
+            return View(task);
         }
 
         [HttpPost]
@@ -176,7 +186,7 @@ namespace TaskTracker.Controllers
         public async Task<ActionResult> Edit(int? id)
         {
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaim.Get(id.Value);
+            var task = await TaskClaim.GetAsync(id.Value);
             return View(task);
         }
 
@@ -184,7 +194,7 @@ namespace TaskTracker.Controllers
         public async Task<ActionResult> Card(int? id)
         {
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaim.Get(id.Value);
+            var task = await TaskClaim.GetAsync(id.Value);
             ViewBag.StateHistory = await task.GetStateHistoryAsync();
 
             if (CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
@@ -261,7 +271,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaim.Get(id.Value);
+            var task = await TaskClaim.GetAsync(id.Value);
             return PartialView("TaskListManagerItem", task);
         }
 
@@ -270,7 +280,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaim.Get(id.Value);
+            var task = await TaskClaim.GetAsync(id.Value);
             return PartialView("TaskListProgItem", task);
         }
 
@@ -279,7 +289,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaim.Get(id.Value);
+            var task = await TaskClaim.GetAsync(id.Value);
             return PartialView("TaskListUserItem", task);
         }
         //[HttpPost]

@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>10/07/2015 20:28:11</publishTime>
+      <publishTime>10/08/2015 08:24:34</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>10/07/2015 20:28:11</publishTime>
+      <publishTime>10/08/2015 08:24:34</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/26/2015 08:24:18</publishTime>
@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:06</publishTime>
     </File>
     <File Include="bin/TaskTracker.dll">
-      <publishTime>10/07/2015 20:28:06</publishTime>
+      <publishTime>10/08/2015 08:24:30</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/25/2015 08:27:09</publishTime>
@@ -166,7 +166,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:23:45</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>10/07/2015 19:06:57</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>08/25/2015 08:26:22</publishTime>
@@ -190,7 +190,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:24:20</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>10/07/2015 20:28:08</publishTime>
+      <publishTime>10/08/2015 08:24:31</publishTime>
     </File>
     <File Include="Scripts/jquery-2.1.4.js">
       <publishTime>08/26/2015 08:24:01</publishTime>
@@ -202,7 +202,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:24:01</publishTime>
     </File>
     <File Include="Scripts/jquery-dateformat.min.js">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
       <publishTime>08/25/2015 08:27:10</publishTime>
@@ -232,28 +232,28 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="Scripts/site.js">
-      <publishTime>09/06/2015 19:33:04</publishTime>
+      <publishTime>06/09/2015 19:33:04</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Error/AccessDenied.cshtml">
       <publishTime>08/30/2015 17:50:54</publishTime>
     </File>
     <File Include="Views/Planing/Index.cshtml">
-      <publishTime>10/07/2015 18:38:56</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Planing/TaskPlanItem.cshtml">
-      <publishTime>10/07/2015 19:06:58</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>08/25/2015 08:27:12</publishTime>
     </File>
     <File Include="Views/Shared/WindowClose.cshtml">
-      <publishTime>10/06/2015 19:59:25</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>10/07/2015 19:49:51</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Task/AddFile.cshtml">
       <publishTime>09/27/2015 23:22:27</publishTime>
@@ -262,13 +262,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2015 09:32:53</publishTime>
     </File>
     <File Include="Views/Task/CardPerf.cshtml">
-      <publishTime>10/07/2015 19:42:36</publishTime>
+      <publishTime>10/08/2015 08:22:43</publishTime>
     </File>
     <File Include="Views/Task/CardUser.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/CheckpointItem.cshtml">
-      <publishTime>10/07/2015 19:37:50</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Task/Edit.cshtml">
       <publishTime>09/29/2015 20:06:02</publishTime>
@@ -277,25 +277,25 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2015 23:06:48</publishTime>
     </File>
     <File Include="Views/Task/ListManager.cshtml">
-      <publishTime>10/07/2015 20:26:24</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Task/ListProg.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/ListTbl.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/ListUser.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/New.cshtml">
-      <publishTime>06/10/2015 20:08:23</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Task/StateHistory.cshtml">
       <publishTime>09/27/2015 13:23:34</publishTime>
     </File>
     <File Include="Views/Task/TaskCommentItem.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/TaskFilteredManagerList.cshtml">
       <publishTime>09/26/2015 19:43:52</publishTime>
@@ -307,22 +307,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/26/2015 20:02:09</publishTime>
     </File>
     <File Include="Views/Task/TaskListManagerHeader.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/TaskListManagerItem.cshtml">
-      <publishTime>10/07/2015 20:27:14</publishTime>
+      <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Task/TaskListProgHeader.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/TaskListProgItem.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/TaskListUserHeader.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Task/TaskListUserItem.cshtml">
-      <publishTime>10/06/2015 09:37:10</publishTime>
+      <publishTime>06/10/2015 09:37:10</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>08/25/2015 08:26:22</publishTime>
