@@ -4,6 +4,7 @@
     if (Model.ParentTaskId.HasValue)
     {
         ViewBag.Title = "Новая подзадача";
+        ViewBag.HeaderBgColor = Model.ParentTask.Project.BgColor;
     }
     else
     {
@@ -20,17 +21,28 @@
         @Html.HiddenFor(m=>m.ParentTaskId)
         @Html.HiddenFor(m => m.ProjectId)
         <div class="row">
-            <div class="col s3">
-                <label for="project">Проект</label>
-                @if (Model.ParentTaskId.HasValue)
+            @if (Model.ParentTaskId.HasValue)
                 {
-                    @:Главная задача
-                }
-                else
-                {
+                    <div class="col l12 s12">
+                        <label>Надзадача</label>
+                        <div>
+                            <span class="marker @Model.ParentTask.Project.BgColor">
+                                @Model.ParentTask.Project.Name
+                            </span>
+                        </div>
+                        <div class="bold">
+                            @Model.ParentTask.Name
+                        </div>
+
+                    </div>
+            }
+            else
+            {
+                <div class="col s3">
+                    <label for="project">Проект</label>
                     @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new { id = "project", @class = "validate browser-default", required = "required" })
-                }
-            </div>
+                </div>
+            }
         </div>
     <div class="row">
                   <div class="input-field col  l6 s12">
@@ -40,7 +52,7 @@
               </div>
         <div class="row">
             <div class="input-field col l6 s12">
-                @Html.TextAreaFor(m => m.Descr, new {@id = "descr", @class = "validate materialize-textarea", rows = "5"})
+                @Html.TextAreaFor(m => m.Descr, new {@id = "descr", @class = "validate materialize-textarea no-marg-bot no-pad-bot"})
                 <label for="descr">Описание</label>
             </div>
         </div>

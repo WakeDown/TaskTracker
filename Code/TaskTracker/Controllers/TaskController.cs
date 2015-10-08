@@ -97,6 +97,7 @@ namespace TaskTracker.Controllers
                 var parent = await TaskClaim.GetAsync(idParent.Value);
 
                 task = new TaskClaim() { ParentTaskId = idParent, ProjectId = parent .ProjectId};
+                task.ParentTask = parent;
             }
             
             return View(task);
