@@ -243,6 +243,7 @@
     <Content Include="Views\Planing\Index.cshtml" />
     <Content Include="Views\Planing\TaskPlanItem.cshtml" />
     <Content Include="Views\Shared\WindowClose.cshtml" />
+    <Content Include="Views\Task\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

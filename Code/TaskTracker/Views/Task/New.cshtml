@@ -18,11 +18,12 @@
     </div>
     @using (Html.BeginForm("New", "Task", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
     {
-        @Html.HiddenFor(m=>m.ParentTaskId)
-        @Html.HiddenFor(m => m.ProjectId)
+        
         <div class="row">
             @if (Model.ParentTaskId.HasValue)
                 {
+                @Html.HiddenFor(m => m.ParentTaskId)
+                @Html.HiddenFor(m => m.ProjectId)
                     <div class="col l12 s12">
                         <label>Надзадача</label>
                         <div>
@@ -33,7 +34,6 @@
                         <div class="bold">
                             @Model.ParentTask.Name
                         </div>
-
                     </div>
             }
             else

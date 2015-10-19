@@ -29,7 +29,8 @@ namespace TaskTracker.Controllers
                 
                 var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
-                return View("ListManager", list);
+                ViewBag.AdGroup = AdGroup.TaskTrackerManager;
+                return View("List", list);
             }
             else if (CurUser.Is(AdGroup.TaskTrackerProg))
             {
@@ -41,7 +42,8 @@ namespace TaskTracker.Controllers
                 //spec = CurUser.Sid;
                 var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
-                return View("ListProg", list);
+                ViewBag.AdGroup = AdGroup.TaskTrackerProg;
+                return View("List", list);
             }
             else
             {
@@ -53,7 +55,7 @@ namespace TaskTracker.Controllers
                 //author = CurUser.Sid;
                 var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
-                return View("ListUser", list);
+                return View("List", list);
             }
         }
 
