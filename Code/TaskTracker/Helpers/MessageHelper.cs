@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Web;
 
@@ -19,20 +20,21 @@ namespace TaskTracker.Helpers
             mail.Subject = subj;
             mail.Body = body;
             mail.IsBodyHtml = isBodyHtml;
-            if (form == null)
-            {
-                mail.From = new MailAddress("tt@un1t.group");
-            }
-            else
-            {
-                mail.From = form; 
-            }
+            //if (form == null)
+            //{
+                mail.From = new MailAddress("delivery@unitgroup.ru");
+            //}
+            //else
+            //{
+            //    mail.From = form; 
+            //}
 
             SmtpClient client = new SmtpClient();
-            client.Port = 25;
+            client.Port = 587;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.EnableSsl = false;
-            client.Host = "ums-1";
+            client.EnableSsl = true;
+            client.Host = "smtp.office365.com";
+            client.Credentials = new NetworkCredential("delivery@unitgroup.ru", "pRgvD7TL");
             client.Send(mail);
         }
     }
