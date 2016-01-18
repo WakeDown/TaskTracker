@@ -6,28 +6,103 @@
     <td class="row-marker @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor)"></td>
     <th class="center">@Model.TaskId</th>
     <td>
-        <div class="row no-marg-bot">
-            <div class="col s12 l8 m8">
+        <div class="no-marg-bot">
+            <div class="pull-left">
                 <span class="bold @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor) marker">@Model.Project.Name</span>
             </div>
-            <div class="col s12 l4 m4">
+            <div class="pull-left">
+                <div class="pull-left" style="padding-left: 5px;">
+                    @if (Model.TaskCategory != null)
+                    {
+                        if (Model.TaskCategory.SysName.ToUpper().Equals("BUG"))
+                        {
+                            <i class="material-icons red-text small fa fa-bug" title="@Model.TaskCategory.Name"></i>
+                        }
+                        if (Model.TaskCategory.SysName.ToUpper().Equals("FEATURE"))
+                        {
+                            <i class="material-icons green-text small fa fa-star" title="@Model.TaskCategory.Name"></i>
+                        }
+                    }
+                    else
+                    {
+                        @*<a class='dropdown-button btn' href='#' data-activates='category@{ @Model.TaskId }'>Категория</a>*@
+                        <select name="set-category" id='category@{ @Model.TaskId }' class='form-control input-xs'>
+                            <option href="#!">Категория</option>
+                            @foreach (var cat in ViewBag.TaskCategoryList)
+                            {
+                                <option href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</option>
+                            }
+                        </select>
+    }
+                </div>
+                <div class="pull-left" style="padding-left: 5px;">
+                    @if (@Model.TaskImportant != null)
+                    {
+                        if (@Model.TaskImportant.SysName.Equals("IMP"))
+                        {
+                            <i class="material-icons red-text small fa fa-warning" title="@Model.TaskImportant.Name"></i>
+                        }
+                        if (@Model.TaskImportant.SysName.Equals("NOTIMP"))
+                        {
+                            <i class="material-icons green-text small fa fa-file-o" title="@Model.TaskImportant.Name"></i>
+                        }
+                    }
+                    else
+                    {
+                        @*<a class='dropdown-button btn' href='#' data-activates='important@{ @Model.TaskId }'>Важность</a>*@
+                        <select name="set-important" id='important@{ @Model.TaskId }' class='form-control input-xs'>
+                            <option href="#!">Важность</option>
+                            @foreach (var imp in ViewBag.TaskImportantList)
+                            {
+                                <option href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</option>
+                            }
+                        </select>
+    }
+                </div>
+                <div class="pull-left" style="padding-left: 5px;">
+                    @if (@Model.TaskQuickly != null)
+                    {
+                        if (@Model.TaskQuickly.SysName.Equals("QUICK"))
+                        {
+                            <i class="material-icons red-text small fa fa-bell" title="@Model.TaskQuickly.Name"></i>
+                        }
+                        if (@Model.TaskQuickly.SysName.Equals("NOTQUICK"))
+                        {
+                            <i class="material-icons green-text small fa fa-bell-slash" title="@Model.TaskQuickly.Name"></i>
+                        }
+                    }
+                    else
+                    {
+                        @*<a class='dropdown-button btn' href='#' data-activates='quickly@{ @Model.TaskId }'>Срочность</a>*@
+                        <select name="set-quickly" id='quickly@{ @Model.TaskId }' class='form-control input-xs'>
+                            <option href="#!">Срочность</option>
+                            @foreach (var qick in ViewBag.TaskQuicklyList)
+                            {
+                                <option href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</option>
+                            }
+                        </select>
+    }
+                </div>
+            </div>
+            <div class="pull-right">
                 <span class="@(String.IsNullOrEmpty(Model.TaskState.BgColor) ? "indigo lighten-2" : Model.TaskState.BgColor) marker">@Model.TaskState.Name</span>
             </div>
         </div>
+        <div class="clearfix"></div>
         <div>
             <div class="text-bg">
                 <a href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">@Model.Name</a>
             </div>
         </div>
         @if (!String.IsNullOrEmpty(Model.Descr))
-            {
+        {
             <small>
 
                 @if (Model.Descr.Length > 350)
                 {
                     @Model.Descr.Remove(350)
                     <br />
-                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
+                                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
                 }
                 else
                 {
@@ -37,83 +112,17 @@
             </small>
         }
     </td>
-    <td>
-        @if (@Model.TaskCategory != null)
-        {
-            if (@Model.TaskCategory.SysName.ToUpper().Equals("BUG"))
-            {
-                <i class="material-icons red-text small" title="@Model.TaskCategory.Name">bug_report</i>
-            }
-            if (@Model.TaskCategory.SysName.ToUpper().Equals("FEATURE"))
-            {
-                <i class="material-icons green-text small" title="@Model.TaskCategory.Name">star_rate</i>
-            }
-        }
-        else
-        {
-            <a class='dropdown-button btn' href='#' data-activates='category@{ @Model.TaskId }'>Категория</a>
-            <ul id='category@{ @Model.TaskId }' class='dropdown-content'>
-                @foreach (var cat in TaskCategory.GetList())
-                {
-                    <li><a type="set-category" href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</a></li>
-                }
-            </ul>
-    }
-        @if (@Model.TaskImportant != null)
-        {
-            if (@Model.TaskImportant.SysName.Equals("IMP"))
-            {
-                <i class="material-icons red-text small" title="@Model.TaskImportant.Name">assignment_late</i>
-            }
-            if (@Model.TaskImportant.SysName.Equals("NOTIMP"))
-            {
-                <i class="material-icons green-text small" title="@Model.TaskImportant.Name">assignment</i>
-            }
-        }
-        else
-        {
-            <a class='dropdown-button btn' href='#' data-activates='important@{ @Model.TaskId }'>Важность</a>
-            <ul id='important@{ @Model.TaskId }' class='dropdown-content'>
-                @foreach (var imp in TaskImportant.GetList())
-                {
-                    <li><a type="set-important" href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</a></li>
-                }
-            </ul>
-    }
-        @if (@Model.TaskQuickly != null)
-        {
-            if (@Model.TaskQuickly.SysName.Equals("QUICK"))
-            {
-                <i class="material-icons red-text small" title="@Model.TaskQuickly.Name">alarm_on</i>
-            }
-            if (@Model.TaskQuickly.SysName.Equals("NOTQUICK"))
-            {
-                <i class="material-icons green-text small" title="@Model.TaskQuickly.Name">alarm_off</i>
-            }
-        }
-        else
-        {
-            <a class='dropdown-button btn' href='#' data-activates='quickly@{ @Model.TaskId }'>Срочность</a>
-            <ul id='quickly@{ @Model.TaskId }' class='dropdown-content'>
-                @foreach (var qick in TaskQuickly.GetList())
-                {
-                    <li><a type="set-quickly" href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</a></li>
-                }
-            </ul>
-    }
-        <div name="chkpCount"></div>
-    </td>
     <td class="text-nowrap">
         @if (String.IsNullOrEmpty(Model.SpecialistSid))
         {
-            <a class='dropdown-button btn' href='#' data-activates='specialist@{ @Model.TaskId }'>Специалист</a>
-            <ul id='specialist@{ @Model.TaskId }' class='dropdown-content'>
-                @foreach (var spec in Specialist.GetProgrammers())
+            @*<a class='dropdown-button btn' href='#' data-activates='specialist@{ @Model.TaskId }'>Специалист</a>*@
+            <select name="set-specialist" id='specialist@{ @Model.TaskId }' class='form-control input-xs'>
+                <option href="#!">Специалист</option>
+                @foreach (var spec in ViewBag.SpecialistList)
                 {
-                    <li><a type="set-specialist" href="#!" sid="@spec.Key" tid="@Model.TaskId">@spec.Value</a></li>
-                    <li class="divider"></li>
+                    <option href="#!" sid="@spec.Key" tid="@Model.TaskId">@spec.Value</option>
                 }
-            </ul>
+            </select>
     }
     else
     {
@@ -125,10 +134,9 @@
     </td>
     <td>
         @*<a tid="@Model.TaskId" type="test" href="#" class="btn amber  waves-effect waves-orange" title="ПРОВЕРКА"><i class="material-icons">computer</i></a>*@
-        <a tid="@Model.TaskId" href="#modalPause" class="btn orange waves-effect waves-orange modal-trigger" id="modalPauseModal"><i class="material-icons">pause</i></a>
-        <a tid="@Model.TaskId" type="work" href="#!" class="btn green waves-effect waves-green"><i class="material-icons">play_arrow</i></a>
-        <a tid="@Model.TaskId" href="#modalRework" class="btn orange waves-effect waves-orange modal-trigger" id="modalReworkModal"><i class="material-icons">fast_rewind</i></a>
-        <a tid="@Model.TaskId" type="done" href="#!" class="btn green waves-effect waves-green"><i class="material-icons">done</i></a>
-
+        <a tid="@Model.TaskId" href="#modalPause" class="btn btn-warning orange waves-effect waves-orange modal-trigger" id="modalPauseModal"><i class="fa fa-pause"></i></a>
+        <a tid="@Model.TaskId" type="work" href="#!" class="btn btn-success green waves-effect waves-green"><i class="fa fa-play"></i></a>
+        <a tid="@Model.TaskId" href="#modalRework" class="btn btn-warning orange waves-effect waves-orange modal-trigger" id="modalReworkModal"><i class="fa fa-fast-forward"></i></a>
+        <a tid="@Model.TaskId" type="done" href="#!" class="btn btn-success green waves-effect waves-green"><i class="fa fa-check"></i></a>
     </td>
 </tr>

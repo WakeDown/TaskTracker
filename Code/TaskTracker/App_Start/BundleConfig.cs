@@ -20,16 +20,19 @@ namespace TaskTracker
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-            //          "~/Scripts/bootstrap.js",
-            //          "~/Scripts/respond.js"));
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                      "~/Scripts/bootstrap.min.js",
+                      "~/Scripts/jasny-bootstrap.min.js",
+                      "~/Scripts/respond.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
-                      "~/Scripts/materialize/materialize.js"));
+            //bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
+            //          "~/Scripts/materialize/materialize.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      //"~/Content/bootstrap.css",
-                      "~/Content/materialize/css/materialize.css",
+                      "~/Content/bootstrap.min.css",
+                      "~/Content/jasny-bootstrap.min.css",
+                      "~/Content/font-awesome.min.css",
+                      "~/Content/material-colors.css",
                       "~/Content/site.css"));
         }
     }

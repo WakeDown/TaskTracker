@@ -275,6 +275,10 @@ namespace TaskTracker.Controllers
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
             var task = await TaskClaim.GetAsync(id.Value);
+            ViewBag.TaskCategoryList = TaskCategory.GetList();
+            ViewBag.TaskImportantList = TaskImportant.GetList();
+            ViewBag.TaskQuicklyList = TaskQuickly.GetList();
+            ViewBag.SpecialistList = Specialist.GetProgrammers();
             return PartialView("TaskListManagerItem", task);
         }
 

@@ -13,88 +13,108 @@
     var prjs = Project.GetList();
     int[] selProjects = !selProjectsStr.Any() ? prjs.Select(x => x.ProjectId).ToArray() : Array.ConvertAll<string, int>(selProjectsStr, int.Parse);
 
+    ViewBag.TaskCategoryList = TaskCategory.GetList();
+    ViewBag.TaskImportantList = TaskImportant.GetList();
+    ViewBag.TaskQuicklyList = TaskQuickly.GetList();
+    ViewBag.SpecialistList = Specialist.GetProgrammers();
 
+    var selSpec = AdHelper.GetUserBySid(Request.QueryString["spec"]);
+    var selAuthor = AdHelper.GetUserBySid(Request.QueryString["author"]);
 }
 
-<table class="bordered hoverable">
-    <thead>
-    <tr>
-        <td colspan="7" class="no-pad-bot">
-            <div class="row no-pad-bot no-marg-bot">
-                <div class="col l8">
-                    <div class="row">
-                        <div id="stateFilterContainer" class="row">
-                            <div class="col l1">
-                                <div class="left marg-r-md">
-                                    <input type="checkbox" value="" id="chk-ts-all" @(sts.Count() == selStates.Count() ? "checked='checked'" : "")/><label for="chk-ts-all">все</label>
-                                </div>
-                            </div>
-                            <div class="col l11">
-                                @foreach (var ts in sts)
-                                {
-                                    <div class="left marg-r-md">
-                                        <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked='checked'" : "")/><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row no-pad-bot no-marg-bot">
-                        <div id="projectFilterContainer" class="row">
-                            <div class="col l1">
-                                <div class="left marg-r-md">
-                                    <input type="checkbox" value="" id="chk-prj-all" @(prjs.Count() == selProjects.Count() ? "checked='checked'" : "")/><label for="chk-prj-all">все</label>
-                                </div>
-                            </div>
-                            <div class="col l11">
-                                @foreach (var prj in Project.GetList())
-                                {
-                                    <div class="left marg-r-md">
-                                        <input type="checkbox" value="@prj.ProjectId" name="chk-prj" id="chk-prj-@prj.ProjectId" @(selProjects.Contains(prj.ProjectId) ? "checked='checked'" : "")/><label for="chk-prj-@prj.ProjectId">@prj.Name</label>
-                                    </div>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l1">
-                    <a class="btn-floating btn-large waves-effect waves-light blue" id="search"><i class="material-icons">search</i></a>
-                </div>
+<div class="row no-pad-bot no-marg-bot">
+    <div class="col-lg-11">
+        <div id="stateFilterContainer">
+            <div class="pull-left marg-r-md">
+                <input type="checkbox" value="" id="chk-ts-all" @(sts.Count() == selStates.Count() ? "checked='checked'" : "") /><label for="chk-ts-all">все</label>
             </div>
-        </td>
-    </tr>
-        @if (ViewBag.AdGroup == AdGroup.TaskTrackerManager)
-        {
-            @Html.Partial("TaskListManagerHeader", Model)
-        }
-        else if (ViewBag.AdGroup == AdGroup.TaskTrackerProg)
-        {
-            @Html.Partial("TaskListProgHeader", Model)
-        }
-        else
-        {
-            @Html.Partial("TaskListUserHeader", Model)
-        }
 
+            @foreach (var ts in sts)
+            {
+                <div class="pull-left marg-r-md">
+                    <input type="checkbox" value="@ts.TaskStateId" name="chk-ts" id="chk-ts-@ts.TaskStateId" @(selStates.Contains(ts.TaskStateId) ? "checked='checked'" : "") /><label for="chk-ts-@ts.TaskStateId">@ts.Name</label>
+                </div>
+            }
+        </div>
+        <div class="clearfix"></div>
+        <div id="projectFilterContainer">
+            <div class="pull-left marg-r-md">
+                <input type="checkbox" value="" id="chk-prj-all" @(prjs.Count() == selProjects.Count() ? "checked='checked'" : "") /><label for="chk-prj-all">все</label>
+            </div>
+            @foreach (var prj in Project.GetList())
+            {
+                <div class="pull-left marg-r-md">
+                    <input type="checkbox" value="@prj.ProjectId" name="chk-prj" id="chk-prj-@prj.ProjectId" @(selProjects.Contains(prj.ProjectId) ? "checked='checked'" : "") /><label for="chk-prj-@prj.ProjectId">@prj.Name</label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-lg-1">
+        <a class="btn btn-primary btn-lg" id="search"><i class="fa fa-search"></i></a>
+    </div>
+</div>
+
+
+
+<table class="table table-bordered table-hover">
+    <thead>
+        @*@if (ViewBag.AdGroup == AdGroup.TaskTrackerManager)
+            {
+                @Html.Partial("TaskListManagerHeader", Model)
+            }
+            else if (ViewBag.AdGroup == AdGroup.TaskTrackerProg)
+            {
+                @Html.Partial("TaskListProgHeader", Model)
+            }
+            else
+            {
+                @Html.Partial("TaskListUserHeader", Model)
+            }*@
+        <tr class="indigo lighten-2 white-text">
+            <th></th>
+            <th class="min-width center">ID</th>
+            <th>Задача</th>
+            <th>
+                <select id='specFilter' class='form-control input-xs'>
+                    <option name="spec" sid="" fio="Специалист">Специалист</option>
+                    @foreach (var spec in Specialist.GetProgrammers())
+            {
+                        <option sid="@spec.Key" fio="@spec.Value" name="spec" @(selSpec.SpecialistSid == spec.Key ? "selected" : String.Empty)>@spec.Value</option>
+                    }
+                </select>
+            </th>
+            <th style="min-width: 200px">
+                <select id='authorFilter' class='form-control input-xs'>
+                    <option name="author" sid="" fio="Автор">Автор</option>
+                    @*href="@Url.Action("List", new { auth = "", spec = Request.QueryString["spec"] })"*@
+                    @foreach (var auth in Model.GroupBy(x => x.CreatorSid).Select(x => new { Sid = x.Key, Name = AdHelper.GetUserBySid(x.Key).DisplayName }).OrderBy(x => x.Name))
+                    {
+                        <option sid="@auth.Sid" fio="@auth.Name" name="author" @(selAuthor.SpecialistSid == auth.Sid ? "selected" : String.Empty)>@auth.Name</option>
+                    }
+                </select>
+
+            </th>
+            <th style="width: 20%"></th>
+        </tr>
     </thead>
     @if (Model.Any())
     {
         <tbody>
             @foreach (TaskClaim task in Model)
             {
-                if (ViewBag.AdGroup == AdGroup.TaskTrackerManager)
-                {
-                   @Html.Partial("TaskListManagerItem", task)
-                }
-                else if (ViewBag.AdGroup == AdGroup.TaskTrackerProg)
-                {
-                    @Html.Partial("TaskListProgItem", task)
-                }
-                else
-                {
-                    @Html.Partial("TaskListUserItem", task)
-                }
-                
+                @*if (ViewBag.AdGroup == AdGroup.TaskTrackerManager)
+                    {
+                       @Html.Partial("TaskListManagerItem", task)
+                    }
+                    else if (ViewBag.AdGroup == AdGroup.TaskTrackerProg)
+                    {
+                        @Html.Partial("TaskListProgItem", task)
+                    }
+                    else
+                    {
+                        @Html.Partial("TaskListUserItem", task)
+                    }*@
+                @Html.Partial("TaskListManagerItem", task)
             }
         </tbody>
     }
@@ -222,7 +242,7 @@
                 url: '@Url.Action("GetTaskCheckpointCount")',
                 method: 'POST',
                 data: { taskId: tid },
-                success: function (data) {
+                success: function(data) {
                     var $item = $('#' + listItemId + ' [name="chkpCount"]');
 
                     $item.append('<div><span class="bold" title="контрольные точки">КТ:</span> <span class="grey-text" title="всего">' + data.all + '</span>-<span class="green-text" title="выполнено">' + data.done + '</span>-<span class="red-text" title="невыполнено">' + data.undone + '</span></div>');
@@ -312,70 +332,82 @@
                     }
                 });
             });
-            $('[type="set-category"]', $container).click(function(e) {
-                var tid = $(this).attr('tid');
-                $.ajax(
-                {
-                    url: '@Url.Action("SetTaskCategory")',
-                    method: 'POST',
-                    data: { id: tid, cid: $(this).attr('cid') },
-                    success: function(e) {
-                        updateTaskItem(tid);
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                    }
-                });
+            $('[name="set-category"]', $container).change(function(e) {
+                var tid = $(this).find('option:checked').attr('tid');
+                var cid = $(this).find('option:checked').attr('cid');
 
-            });
-            $('[type="set-specialist"]', $container).click(function() {
-                var tid = $(this).attr('tid');
-                $.ajax(
-                {
-                    url: '@Url.Action("SetTaskSpecialist")',
-                    method: 'POST',
-                    data: { id: tid, sid: $(this).attr('sid') },
-                    success: function(data) {
-                        if (data.error == null) {
+                if (tid > 0 && cid > 0) {
+                    $.ajax(
+                    {
+                        url: '@Url.Action("SetTaskCategory")',
+                        method: 'POST',
+                        data: { id: tid, cid: cid },
+                        success: function(e) {
                             updateTaskItem(tid);
-                        } else {
-                            alert(data.error);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
                         }
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                    }
-                });
+                    });
+                }
             });
-            $('[type="set-important"]', $container).click(function() {
-                var tid = $(this).attr('tid');
-                $.ajax(
-                {
-                    url: '@Url.Action("SetTaskImportant")',
-                    method: 'POST',
-                    data: { id: tid, iid: $(this).attr('iid') },
-                    success: function() {
-                        updateTaskItem(tid);
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                    }
-                });
+            $('[name="set-specialist"]', $container).change(function() {
+                var tid = $(this).find('option:checked').attr('tid');
+                var sid = $(this).find('option:checked').attr('sid');
+                if (tid > 0) {
+                    $.ajax(
+                    {
+                        url: '@Url.Action("SetTaskSpecialist")',
+                        method: 'POST',
+                        data: { id: tid, sid: sid },
+                        success: function(data) {
+                            if (data.error == null) {
+                                updateTaskItem(tid);
+                            } else {
+                                alert(data.error);
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
             });
-            $('[type="set-quickly"]', $container).click(function() {
-                var tid = $(this).attr('tid');
-                $.ajax(
-                {
-                    url: '@Url.Action("SetTaskQuickly")',
-                    method: 'POST',
-                    data: { id: tid, qid: $(this).attr('qid') },
-                    success: function() {
-                        updateTaskItem(tid);
-                    },
-                    error: function(xhr, ajaxOptions, thrownError) {
-                        alert(xhr.responseText);
-                    }
-                });
+            $('[name="set-important"]', $container).change(function() {
+                var tid = $(this).find('option:checked').attr('tid');
+                var iid = $(this).find('option:checked').attr('iid');
+                if (tid > 0 && iid > 0) {
+                    $.ajax(
+                    {
+                        url: '@Url.Action("SetTaskImportant")',
+                        method: 'POST',
+                        data: { id: tid, iid: iid },
+                        success: function() {
+                            updateTaskItem(tid);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
+            });
+            $('[name="set-quickly"]', $container).change(function() {
+                var tid = $(this).find('option:checked').attr('tid');
+                var qid = $(this).find('option:checked').attr('qid');
+                if (tid > 0 && qid > 0) {
+                    $.ajax(
+                    {
+                        url: '@Url.Action("SetTaskQuickly")',
+                        method: 'POST',
+                        data: { id: tid, qid: qid },
+                        success: function() {
+                            updateTaskItem(tid);
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
             });
 
             $('.dropdown-button', $container).dropdown({
