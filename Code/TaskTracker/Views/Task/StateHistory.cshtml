@@ -1,22 +1,22 @@
 ﻿@using TaskTracker.Objects
 @model IEnumerable<TaskTracker.Models.Task2TaskState>
-<div class="card-panel">
-    <h5>История задачи</h5>
+@*<div class="card-panel">
+    <h5>История задачи</h5>*@
     @foreach (var st in ViewBag.StateHistory)
             {
-        <div class="card @st.TaskState.BgColor">
-            <div class="card-content white-text">
-                    <small>@String.Format("{0:dd.MM.yy hh:mm}", st.DateCreate)</small>
-                    <div>
-                        @st.TaskState.Name - @AdHelper.GetUserBySid(st.CreatorSid).DisplayName
-                    </div>
+        <div class="history-item white-text @st.TaskState.BgColor">
+            @*<div class="card-content white-text">*@
+            <strong>@st.TaskState.Name</strong>
+            <div>
+                <small>@String.Format("{0:dd.MM.yy hh:mm}", st.DateCreate)- @AdHelper.GetUserBySid(st.CreatorSid).DisplayName</small>
+            </div>
                     @if (!String.IsNullOrEmpty(st.Descr))
                     {
-                    <p>
-                        @st.Descr
-                    </p>
+                        <p>
+                            @st.Descr
+                        </p>
                     }
-                </div>
+                @*</div>*@
             </div>
     }
-</div>
+@*</div>*@

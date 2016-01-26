@@ -28,7 +28,7 @@ namespace TaskTracker.Controllers
                 //}
                 
                 var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
-                list = list.OrderByDescending(x => x.DateCreate);
+                list = list.OrderByDescending(x => x.Rank).ThenByDescending(x => x.DateCreate);
                 ViewBag.AdGroup = AdGroup.TaskTrackerManager;
                 return View("List", list);
             }
@@ -41,7 +41,7 @@ namespace TaskTracker.Controllers
 
                 //spec = CurUser.Sid;
                 var list = await TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
-                list = list.OrderByDescending(x => x.DateCreate);
+                list = list.OrderByDescending(x => x.Rank).ThenByDescending(x => x.DateCreate);
                 ViewBag.AdGroup = AdGroup.TaskTrackerProg;
                 return View("List", list);
             }
@@ -218,6 +218,14 @@ namespace TaskTracker.Controllers
             var chk = new TaskCheckpoint() { TaskId = taskId, Name = chekpointName};
             int id = await chk.AddAsync(CurUser.Sid);
             return Json(new {id= id });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SaveTaskRank(int taskId, int rank)
+        {
+
+            await TaskClaim.SaveRankAsync(CurUser.Sid, taskId, rank);
+            return Json(new { });
         }
 
         [HttpPost]

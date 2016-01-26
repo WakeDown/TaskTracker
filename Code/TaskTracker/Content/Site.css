@@ -241,3 +241,15 @@ td.row-marker {
   line-height: 1.5;
   border-radius: 3px;   
 }
+
+.history-item {
+    /*margin-bottom: 10px;*/
+    padding: 5px;
+    /*border-radius: 4px;*/
+    border: 0;
+    border-bottom: 1px solid #d3d3d3;
+}
+
+.border-bot-dash {
+    border-bottom: 1px dashed #999;
+}

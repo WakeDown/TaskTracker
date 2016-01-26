@@ -85,12 +85,14 @@
     <div class="top-nav white-text @(String.IsNullOrEmpty(ViewBag.HeaderBgColor) ? "indigo lighten-2" : ViewBag.HeaderBgColor)">
         <div class="container">
             <div class="row">
-                <span class="page-title pull-left">
-                    @(String.IsNullOrEmpty(ViewBag.Header) ? ViewBag.Title : ViewBag.Header)
-                </span>
-                <span class="pull-right">
-                    Вы вошли как @ViewBag.CurUser.ShortName
-                </span>
+                <div class="col-lg-12">
+                    <span class="page-title pull-left">
+                        @(String.IsNullOrEmpty(ViewBag.Header) ? ViewBag.Title : ViewBag.Header)
+                    </span>
+                    <span class="pull-right">
+                        Вы вошли как @ViewBag.CurUser.ShortName
+                    </span>
+                </div>
             </div>
         </div>
     </div>

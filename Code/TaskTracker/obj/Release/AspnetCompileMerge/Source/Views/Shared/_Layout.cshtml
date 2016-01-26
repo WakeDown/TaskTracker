@@ -4,13 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    
 </head>
 <body>
-    <header>
+@*<header>
 
         <nav class="top-nav  @(String.IsNullOrEmpty(ViewBag.HeaderBgColor) ? "indigo lighten-2" : ViewBag.HeaderBgColor)">
             <div class="container">
@@ -28,7 +28,6 @@
 
         <ul id="nav-mobile" class="side-nav fixed" style="width: 240px; left: -250px;">
             <li class="logo">
-                @*@Html.ActionLink("Задачи", "List", "Task", new { area = "" }, new { @class = "brand-logo" })*@
             </li>
             <li>
                 <div class="row">
@@ -46,8 +45,62 @@
                 </div>
             </li>
         </ul>
-    </header>
-    <main>
+    </header>*@
+<div class="navmenu navmenu-default navmenu-fixed-left offcanvas-sm" style="">
+    <a class="navmenu-brand visible-md visible-lg" href="#">TaskTracker</a>
+    <ul class="nav navmenu-nav">
+        @*<li class="active"><a href="./">Slide in</a></li>*@
+        <li><a class="waves-effect waves-teal" href="@Url.Action("List", "Task")"><i class="fa fa-list" style="line-height: 64px;"></i> Список задач</a></li>
+        <li><a class="waves-effect waves-teal" href="@Url.Action("New", "Task")" target="_blank"><i class="fa fa-plus left center" style="line-height: 64px;"></i> Новая</a></li>
+        <li><a class="waves-effect waves-teal" href="@Url.Action("Index", "Planing")"><i class="fa fa-list-ol left center" style="line-height: 64px;"></i> План</a></li>
+    </ul>
+    @*<ul class="nav navmenu-nav">
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+            <ul class="dropdown-menu navmenu-nav">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+            </ul>
+        </li>
+    </ul>*@
+</div>
+
+<div class="navbar navbar-default navbar-fixed-top hidden-md hidden-lg">
+    <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".navmenu">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">TaskTracker</a>
+</div>
+
+    <div class="top-nav white-text @(String.IsNullOrEmpty(ViewBag.HeaderBgColor) ? "indigo lighten-2" : ViewBag.HeaderBgColor)">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="page-title pull-left">
+                        @(String.IsNullOrEmpty(ViewBag.Header) ? ViewBag.Title : ViewBag.Header)
+                    </span>
+                    <span class="pull-right">
+                        Вы вошли как @ViewBag.CurUser.ShortName
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container">
+    @RenderBody()
+</div>
+
+@*<main>
         <div class="container">
             <div class="row">
                 @RenderBody()
@@ -55,7 +108,7 @@
         </div>
 
 
-    </main>
+    </main>*@
     <footer>
         <div class="footer-copyright">
             <div class="container"><p>&copy; @DateTime.Now.Year</p> <a href="mailto: wakedown.59@gmail.com" class="btn waves-effect waves-light red lighten-3">Оставить отзыв</a></div>
@@ -63,11 +116,13 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/materialize")
+@*@Scripts.Render("~/bundles/materialize")*@
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".button-collapse").sideNav();
+
+            //$(".button-collapse").sideNav();
         });
     </script>
 </body>

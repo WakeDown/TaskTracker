@@ -33,7 +33,7 @@
                                 <option href="#!" cid="@cat.TaskCategoryId" tid="@Model.TaskId">@cat.Name</option>
                             }
                         </select>
-    }
+                    }
                 </div>
                 <div class="pull-left" style="padding-left: 5px;">
                     @if (@Model.TaskImportant != null)
@@ -57,7 +57,7 @@
                                 <option href="#!" iid="@imp.TaskImportantId" tid="@Model.TaskId">@imp.Name</option>
                             }
                         </select>
-    }
+                    }
                 </div>
                 <div class="pull-left" style="padding-left: 5px;">
                     @if (@Model.TaskQuickly != null)
@@ -81,10 +81,14 @@
                                 <option href="#!" qid="@qick.TaskQuicklyId" tid="@Model.TaskId">@qick.Name</option>
                             }
                         </select>
-    }
+                    }
                 </div>
             </div>
             <div class="pull-right">
+                <a tid="@Model.TaskId" href="#modalPause" class="btn btn-warning orange btn-xs" id="modalPauseModal"><i class="fa fa-pause"></i></a>
+                <a tid="@Model.TaskId" type="work" href="#!" class="btn btn-success green btn-xs"><i class="fa fa-play"></i></a>
+                <a tid="@Model.TaskId" href="#modalRework" class="btn btn-warning orange btn-xs" id="modalReworkModal"><i class="fa fa-fast-forward"></i></a>
+                <a tid="@Model.TaskId" type="done" href="#!" class="btn btn-success green btn-xs"><i class="fa fa-check"></i></a>
                 <span class="@(String.IsNullOrEmpty(Model.TaskState.BgColor) ? "indigo lighten-2" : Model.TaskState.BgColor) marker">@Model.TaskState.Name</span>
             </div>
         </div>
@@ -101,8 +105,8 @@
                 @if (Model.Descr.Length > 350)
                 {
                     @Model.Descr.Remove(350)
-                    <br />
-                                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
+                    <br/>
+                    <a class="red-text" href="@Url.Action("Card", "Task", new {id = Model.TaskId})" target="_blank">читать полностью</a>
                 }
                 else
                 {
@@ -111,6 +115,9 @@
 
             </small>
         }
+    </td>
+    <td>
+        <input class="form-control" value="@Model.Rank" name="claim-rank" tid="@Model.TaskId" />
     </td>
     <td class="text-nowrap">
         @if (String.IsNullOrEmpty(Model.SpecialistSid))
@@ -132,11 +139,11 @@
     <td class="text-nowrap">
         @AdHelper.GetUserBySid(Model.CreatorSid).DisplayName
     </td>
-    <td>
+    @*<td>*@
         @*<a tid="@Model.TaskId" type="test" href="#" class="btn amber  waves-effect waves-orange" title="ПРОВЕРКА"><i class="material-icons">computer</i></a>*@
-        <a tid="@Model.TaskId" href="#modalPause" class="btn btn-warning orange waves-effect waves-orange modal-trigger" id="modalPauseModal"><i class="fa fa-pause"></i></a>
-        <a tid="@Model.TaskId" type="work" href="#!" class="btn btn-success green waves-effect waves-green"><i class="fa fa-play"></i></a>
-        <a tid="@Model.TaskId" href="#modalRework" class="btn btn-warning orange waves-effect waves-orange modal-trigger" id="modalReworkModal"><i class="fa fa-fast-forward"></i></a>
-        <a tid="@Model.TaskId" type="done" href="#!" class="btn btn-success green waves-effect waves-green"><i class="fa fa-check"></i></a>
-    </td>
+        @*<a tid="@Model.TaskId" href="#modalPause" class="btn btn-warning orange btn-xs" id="modalPauseModal"><i class="fa fa-pause"></i></a>
+        <a tid="@Model.TaskId" type="work" href="#!" class="btn btn-success green btn-xs"><i class="fa fa-play"></i></a>
+        <a tid="@Model.TaskId" href="#modalRework" class="btn btn-warning orange btn-xs" id="modalReworkModal"><i class="fa fa-fast-forward"></i></a>
+        <a tid="@Model.TaskId" type="done" href="#!" class="btn btn-success green btn-xs"><i class="fa fa-check"></i></a>*@
+    @*</td>*@
 </tr>

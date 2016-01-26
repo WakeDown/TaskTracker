@@ -1,15 +1,15 @@
 ﻿@using TaskTracker.Objects
 @model TaskTracker.Models.TaskCheckpoint
 
-<div id="cntnr-task-chkp-@Model.TaskCheckpointId" name="cntnr-task-chkp-container" class="row" @(Model.Done?"done=done":String.Empty) @(Model.Done && Model.DateDone.HasValue?String.Format("date-done='{0:yyyy-MM-dd}'", Model.DateDone.Value):String.Empty)>
-    <div class="col l10">
+<div id="cntnr-task-chkp-@Model.TaskCheckpointId" name="cntnr-task-chkp-container" class="row no-marg-bot border-bot-dash" @(Model.Done?"done=done":String.Empty) @(Model.Done && Model.DateDone.HasValue?String.Format("date-done='{0:yyyy-MM-dd}'", Model.DateDone.Value):String.Empty)>
+    <div class="col-lg-10">
         <input type="checkbox" value="@Model.TaskCheckpointId" name="task-chkp" id="task-chkp-@Model.TaskCheckpointId" @(Model.Done ? "checked='checked'" : "") />
-        <label for="task-chkp-@Model.TaskCheckpointId">@Model.Name <br />@(Model.Done && Model.DateDone.HasValue ? String.Format(" {1:dd.MM.yyyy HH:mm} - {0}", AdHelper.GetUserBySid(Model.DonerSid).DisplayName, Model.DateDone.Value) : "")</label>
+        <span for="task-chkp-@Model.TaskCheckpointId">@Model.Name <br /><small>@(Model.Done && Model.DateDone.HasValue ? String.Format(" {1:dd.MM.yyyy HH:mm} - {0}", AdHelper.GetUserBySid(Model.DonerSid).DisplayName, Model.DateDone.Value) : "")</small></span>
     </div>
     @if (!Model.Done)
     {
-        <div class="col l2">
-            <a class="btn-floating" href="#!" chkpid="@Model.TaskCheckpointId" name="task-chkp-del"><i class="material-icons">highlight_off</i></a>
+        <div class="col-lg-2">
+            <a class="btn btn-link text-danger no-pad no-marg" href="#!" chkpid="@Model.TaskCheckpointId" name="task-chkp-del"><i class="fa fa-remove"></i></a>
         </div>
     }
 </div>

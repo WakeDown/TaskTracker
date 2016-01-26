@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace TaskTracker.Helpers
@@ -35,7 +36,7 @@ namespace TaskTracker.Helpers
             client.EnableSsl = true;
             client.Host = "smtp.office365.com";
             client.Credentials = new NetworkCredential("delivery@unitgroup.ru", "pRgvD7TL");
-            client.Send(mail);
+            Task.Run(()=> client.Send(mail));
         }
     }
 }
