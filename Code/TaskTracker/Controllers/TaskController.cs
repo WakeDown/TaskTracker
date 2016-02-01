@@ -193,18 +193,37 @@ namespace TaskTracker.Controllers
             return View(task);
         }
 
+        public async Task<PartialViewResult> GetTaskHistory(int id, bool full=true)
+        {
+            var list = await TaskClaim.GetStateHistoryAsync(id, full);
+            return PartialView("StateHistory",list);
+        }
+
+        public async Task<PartialViewResult> GetActionHistory(int id, bool full = true)
+        {
+            var list = await TaskClaim.GetActionListAsync(id, full);
+            return PartialView("TaskActionList", list);
+        }
+        [HttpPost]
+        public async Task<JsonResult> SaveClaimInfo(int id, decimal? cost, decimal? quantity, int? quantityTypeId)
+        {
+            await TaskClaim.SaveInfo(id, cost, quantity, quantityTypeId);
+            return Json(new {});
+        }
+
         [HttpGet]
         public async Task<ActionResult> Card(int? id)
         {
             if (!id.HasValue) return HttpNotFound();
             var task = await TaskClaim.GetAsync(id.Value);
-            ViewBag.StateHistory = await task.GetStateHistoryAsync();
+            //ViewBag.StateHistory = await task.GetStateHistoryAsync();
 
             if (CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
             {
                 ViewBag.Checkpoints = await TaskCheckpoint.GetListAsync(id.Value);
                 ViewBag.TaskFiles = await TaskFile.GetListAsync(id.Value);
                 ViewBag.TaskComments = await TaskComment.GetListAsync(id.Value);
+                ViewBag.TaskActions = await task.GetActionListAsync();
                 return View("CardPerf",task);
             }
             else
@@ -401,6 +420,13 @@ namespace TaskTracker.Controllers
             int done = list.Count(x => x.Done);
             int undone = list.Count(x => !x.Done);
             return Json(new { all = all, done = done , undone = undone });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SaveAction(TaskAction model)
+        {
+            await model.SaveAsync(CurUser);
+            return Json(new {});
         }
     }
 }

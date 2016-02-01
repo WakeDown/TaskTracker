@@ -82,7 +82,7 @@
     <a class="navbar-brand" href="#">TaskTracker</a>
 </div>
 
-    <div class="top-nav white-text @(String.IsNullOrEmpty(ViewBag.HeaderBgColor) ? "indigo lighten-2" : ViewBag.HeaderBgColor)">
+    <div class="top-nav white-text @(String.IsNullOrEmpty(ViewBag.HeaderBgColor) ? "bg-primary" : ViewBag.HeaderBgColor)">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -109,11 +109,11 @@
 
 
     </main>*@
-    <footer>
-        <div class="footer-copyright">
+    @*<p>
+        <div class="container footer-copyright">
             <div class="container"><p>&copy; @DateTime.Now.Year</p> <a href="mailto: wakedown.59@gmail.com" class="btn waves-effect waves-light red lighten-3">Оставить отзыв</a></div>
         </div>
-    </footer>
+    </p>*@
 
     @Scripts.Render("~/bundles/jquery")
 @*@Scripts.Render("~/bundles/materialize")*@

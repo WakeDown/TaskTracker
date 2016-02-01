@@ -41,6 +41,15 @@ textarea {
     margin-left: 5px;
 }
 
+.navmenu {
+    width: 200px;
+}
+
+.nav>li>a {
+    padding: 5px 10px;
+    
+}
+
 @media (min-width: 1px) {
   .navbar-toggle {
     display: block !important;
@@ -72,13 +81,13 @@ ul.side-nav.fixed li.logo {
 }
 
 nav.top-nav {
-    height: 122px;
+    height: 60px;
     box-shadow: none;
 }
 
 .page-title {
-    line-height: 122px;
-    font-size: 48px;
+    line-height: 60px;
+    font-size: 24px;
 }
 
 .min-width {
@@ -115,6 +124,26 @@ nav.top-nav {
 
 .no-marg-bot {
     margin-bottom: 0 !important;
+}
+
+.updated {
+    /*border: 1px solid red;*/
+    -webkit-animation-name: updated; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 1s; /* Chrome, Safari, Opera */
+    animation-name: updated;
+    animation-duration: 1s;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes updated {
+    0% {background-color: #ffecb3;}
+    100% {background-color: #fff;}
+}
+
+/* Standard syntax */
+@keyframes updated {
+    0% {background-color: #ffecb3;}
+    100% {background-color: #fff;}
 }
 
 tr.updated-task-claim {
@@ -240,6 +269,14 @@ td.row-marker {
   font-size: 10px;
   line-height: 1.5;
   border-radius: 3px;   
+}
+
+.input-xxs {
+ height: 20px;
+  padding: 1px 3px;
+  font-size: 10px;
+  line-height: 1.5;
+  border-radius: 2px;   
 }
 
 .history-item {

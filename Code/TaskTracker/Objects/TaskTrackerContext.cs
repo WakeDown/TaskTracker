@@ -29,12 +29,13 @@ namespace TaskTracker.Objects
         public DbSet<TaskFile> TaskFiles { get; set; }
         public DbSet<TaskComment> TaskComments { get; set; }
         public DbSet<TaskPlan> TaskPlans { get; set; }
-
+        public DbSet<TaskAction> TaskActions { get; set; }
+        public DbSet<QuantityType> QuantityTypes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TaskClaim>().Property(m => m.SpecialistSid).IsOptional();
             //base.OnModelCreating(modelBuilder);
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+           modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }

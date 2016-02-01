@@ -1,8 +1,9 @@
 ﻿@using TaskTracker.Objects
-@model IEnumerable<TaskTracker.Models.Task2TaskState>
+@model TaskTracker.Models.ListResult<TaskTracker.Models.Task2TaskState>
+
 @*<div class="card-panel">
     <h5>История задачи</h5>*@
-    @foreach (var st in ViewBag.StateHistory)
+    @foreach (var st in Model.List)
             {
         <div class="history-item white-text @st.TaskState.BgColor">
             @*<div class="card-content white-text">*@
@@ -19,4 +20,9 @@
                 @*</div>*@
             </div>
     }
-@*</div>*@
+@if (Model.Total > Model.ListCount)
+{
+    <div>
+        <a id="historyShowAll" class="btn btn-link">показать все (еще @(Model.Total - Model.ListCount))</a>
+    </div>
+}@*</div>*@
