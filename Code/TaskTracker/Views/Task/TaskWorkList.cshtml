@@ -1,0 +1,7 @@
+﻿
+@model TaskTracker.Models.ListResult<TaskTracker.Models.TaskWork>
+    
+@foreach (var work in Model.List)
+{
+    @Html.Partial("TaskWorkItem", work);
+}

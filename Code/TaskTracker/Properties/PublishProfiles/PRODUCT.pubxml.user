@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>02/02/2016 09:48:23</publishTime>
+      <publishTime>02/02/2016 22:28:54</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>02/02/2016 09:48:23</publishTime>
+      <publishTime>02/02/2016 22:28:54</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/26/2015 08:24:18</publishTime>
@@ -91,7 +91,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:06</publishTime>
     </File>
     <File Include="bin/TaskTracker.dll">
-      <publishTime>02/02/2016 09:48:19</publishTime>
+      <publishTime>02/02/2016 22:28:50</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/25/2015 08:27:09</publishTime>
@@ -271,7 +271,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/02/2016 20:14:24</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>02/02/2016 09:48:20</publishTime>
+      <publishTime>02/02/2016 22:28:52</publishTime>
     </File>
     <File Include="Scripts/bootstrap-datepicker.js">
       <publishTime>01/02/2016 20:14:23</publishTime>
@@ -556,13 +556,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2015 09:32:53</publishTime>
     </File>
     <File Include="Views/Task/CardPerf.cshtml">
-      <publishTime>02/02/2016 09:10:58</publishTime>
+      <publishTime>02/02/2016 22:28:14</publishTime>
     </File>
     <File Include="Views/Task/CardUser.cshtml">
       <publishTime>09/30/2015 18:24:49</publishTime>
     </File>
     <File Include="Views/Task/CheckpointItem.cshtml">
-      <publishTime>02/02/2016 09:11:15</publishTime>
+      <publishTime>02/02/2016 19:52:27</publishTime>
     </File>
     <File Include="Views/Task/Edit.cshtml">
       <publishTime>09/28/2015 08:40:49</publishTime>
@@ -584,6 +584,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Task/New.cshtml">
       <publishTime>01/26/2016 23:18:31</publishTime>
+    </File>
+    <File Include="Views/Task/SpecificationEdit.cshtml">
+      <publishTime>02/02/2016 20:29:17</publishTime>
+    </File>
+    <File Include="Views/Task/SpecificationItem.cshtml">
+      <publishTime>02/02/2016 20:53:57</publishTime>
+    </File>
+    <File Include="Views/Task/SpecificationList.cshtml">
+      <publishTime>02/02/2016 20:37:16</publishTime>
     </File>
     <File Include="Views/Task/StateHistory.cshtml">
       <publishTime>01/02/2016 22:03:53</publishTime>
@@ -620,6 +629,15 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Task/TaskListUserItem.cshtml">
       <publishTime>01/10/2015 09:14:53</publishTime>
+    </File>
+    <File Include="Views/Task/TaskWorkEdit.cshtml">
+      <publishTime>02/02/2016 21:37:51</publishTime>
+    </File>
+    <File Include="Views/Task/TaskWorkItem.cshtml">
+      <publishTime>02/02/2016 22:02:41</publishTime>
+    </File>
+    <File Include="Views/Task/TaskWorkList.cshtml">
+      <publishTime>02/02/2016 21:37:15</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>08/25/2015 08:26:22</publishTime>

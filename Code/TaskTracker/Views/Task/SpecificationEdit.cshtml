@@ -1,0 +1,30 @@
+﻿
+@using TaskTracker.Models
+@model TaskTracker.Models.TaskSpecification
+
+<div>
+    <div>
+        <div class="input-group">
+            <textarea id="specName" class="form-control input-xs" placeholder="Наименование"></textarea>
+            <div class="input-group-btn">
+                <button class="btn btn-success"><i class="fa fa-plus"></i></button>
+            </div>
+        </div>
+    </div>
+    <div>
+        <input id="specCost" type="text" class="form-control input-xs pull-left" placeholder="Цена" style="width: 100px" />
+        <div class="input-group pull-left" >
+            <input id="specQuantity" type="text" class="form-control input-xs" placeholder="Труд"style="width: 100px"/>
+            <div class="input-group-addon input-xs" style="width: 60px">
+                <select id="ClaimQuantityType" class="form-control input-xxs">
+                    <option>----</option>
+                    @foreach (var type in QuantityType.GetList())
+                    { 
+                        <option value="@type.Id" @(Model.QuantityTypeId.HasValue && Model.QuantityTypeId == type.Id ? "selected" : String.Empty)>@type.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

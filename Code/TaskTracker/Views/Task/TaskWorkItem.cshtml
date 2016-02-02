@@ -1,0 +1,15 @@
+﻿@model TaskTracker.Models.TaskWork
+
+
+<div id="task-work-@Model.Id" class="row no-marg-bot border-bot-dash">
+    <div class="col-lg-2"><small>@Model.DateWork.ToString("dd.MM.yyyy")</small></div>
+    <div class="col-lg-6">
+        @Model.Name
+    </div>
+    <div class="col-lg-3">
+        <small>@Model.Hours час.</small>
+    </div>
+    <div class="col-lg-1">
+        <a class="btn btn-link text-danger no-pad no-marg text-danger" href="#!" wid="@Model.Id" name="work-del"><i class="fa fa-remove"></i></a>
+    </div>
+</div>

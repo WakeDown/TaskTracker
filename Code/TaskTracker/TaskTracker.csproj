@@ -153,8 +153,10 @@
     <Compile Include="Models\TaskPlan.cs" />
     <Compile Include="Models\TaskQuickly.cs" />
     <Compile Include="Models\TaskAction.cs" />
+    <Compile Include="Models\TaskSpecification.cs" />
     <Compile Include="Models\TaskState.cs" />
     <Compile Include="Models\Task2TaskState.cs" />
+    <Compile Include="Models\TaskWork.cs" />
     <Compile Include="Objects\AdGroup.cs" />
     <Compile Include="Helpers\AdHelper.cs" />
     <Compile Include="Objects\AdUser.cs" />
@@ -349,6 +351,12 @@
     <Content Include="Views\Shared\WindowClose.cshtml" />
     <Content Include="Views\Task\List.cshtml" />
     <Content Include="Views\Task\TaskActionList.cshtml" />
+    <Content Include="Views\Task\SpecificationEdit.cshtml" />
+    <Content Include="Views\Task\SpecificationList.cshtml" />
+    <Content Include="Views\Task\SpecificationItem.cshtml" />
+    <Content Include="Views\Task\TaskWorkList.cshtml" />
+    <Content Include="Views\Task\TaskWorkEdit.cshtml" />
+    <Content Include="Views\Task\TaskWorkItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -204,6 +204,51 @@ namespace TaskTracker.Controllers
             var list = await TaskClaim.GetActionListAsync(id, full);
             return PartialView("TaskActionList", list);
         }
+
+        public async Task<PartialViewResult> GetSpicificationList(int id)
+        {
+            var list = await TaskSpecification.GetListAsync(id);
+            return PartialView("SpecificationList", list);
+        }
+
+        public async Task<PartialViewResult> GetTaskWorkList(int id)
+        {
+            var list = await TaskWork.GetListAsync(id);
+            return PartialView("TaskWorkList", list);
+        }
+
+        public async Task<JsonResult> CloseTaskWork(int wid)
+        {
+            await TaskWork.Close(wid, CurUser);
+            return Json(new {});
+        }
+        [HttpPost]
+        public async Task<JsonResult> SetTaskNeedWorkList(int id)
+        {
+            await TaskClaim.SetTaskNeedWorkList(id);
+            return Json(new { });
+        }
+        [HttpPost]
+        public async Task<JsonResult> SetTaskNeedCheckpoints(int id)
+        {
+            await TaskClaim.SetTaskNeedCheckpoints(id);
+            return Json(new { });
+        }
+        
+        public async Task<JsonResult> SaveTaskWork(TaskWork model)
+        {
+            await model.CreateAsync(CurUser);
+            return Json(new {});
+        }
+
+
+        public async Task<PartialViewResult> GetSpicificationEdit(int specid)
+        {
+            var model = await TaskSpecification.Get(specid);
+            return PartialView("SpecificationEdit", model);
+        }
+        
+
         [HttpPost]
         public async Task<JsonResult> SaveClaimInfo(int id, decimal? cost, decimal? quantity, int? quantityTypeId, DateTime? DateStartPlan)
         {

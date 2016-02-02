@@ -1,0 +1,19 @@
+﻿
+@model TaskTracker.Models.TaskWork
+
+
+<div id="task-work-@Model.Id" class="row no-marg-bot border-bot-dash">
+    <div class="col-lg-2">
+        <input name="workDateWork" class="form-control input-xs" value="@Model.DateWork.ToString("dd.MM.yyyy")"/>
+    </div>
+    <div class="col-lg-7">
+        <input name="workName" class="form-control input-xs" value="@Model.Name" />
+        
+    </div>
+    <div class="col-lg-2">
+        <input name="workHours" class="form-control input-xs" value="@Model.Hours" /> час.
+    </div>
+    <div class="col-lg-1">
+        @*<a class="btn btn-link text-danger no-pad no-marg text-danger" href="#!" workid="@Model.Id" name="work-del"><i class="fa fa-remove"></i></a>*@
+    </div>
+</div>

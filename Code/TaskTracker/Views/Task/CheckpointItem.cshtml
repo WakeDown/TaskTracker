@@ -2,11 +2,11 @@
 @model TaskTracker.Models.TaskCheckpoint
 
 <div id="cntnr-task-chkp-@Model.TaskCheckpointId" name="cntnr-task-chkp-container" class="row no-marg-bot border-bot-dash" @(Model.Done?"done=done":String.Empty) @(Model.Done && Model.DateDone.HasValue?String.Format("date-done='{0:yyyy-MM-dd}'", Model.DateDone.Value):String.Empty)>
-    <div class="col-lg-9">
+    <div class="col-lg-8">
         <input type="checkbox" value="@Model.TaskCheckpointId" name="task-chkp" id="task-chkp-@Model.TaskCheckpointId" @(Model.Done ? "checked='checked'" : "")/>
         <span for="task-chkp-@Model.TaskCheckpointId">@Model.Name <br /><small>@(Model.Done && Model.DateDone.HasValue ? String.Format(" {1:dd.MM.yyyy HH:mm} - {0}", AdHelper.GetUserBySid(Model.DonerSid).DisplayName, Model.DateDone.Value) : "")</small></span>
     </div>
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <div class="input-group">
             <input name="CheckpointHours" chkpid="@Model.TaskCheckpointId" type="text" class="form-control input-xs" value="@(Model.Hours.HasValue ? Model.Hours.Value.ToString("D") : null)"/>
             <div class="input-group-addon input-xs">час.</div>

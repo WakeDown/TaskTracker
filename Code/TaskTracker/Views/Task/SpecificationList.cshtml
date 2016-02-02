@@ -1,0 +1,15 @@
+﻿@*@model TaskTracker.Models.ListResult<TaskTracker.Models.TaskSpecification>*@
+@model IEnumerable<TaskTracker.Models.TaskSpecification>
+
+<div>
+    @foreach (var spec in Model.ToList())
+    {
+        @Html.Partial("SpecificationItem", spec)
+    }
+</div>
+@*@if (Model.Total > Model.ListCount)
+{
+    <div>
+        <a id="specificationShowAll" class="btn btn-link">показать все (еще @(Model.Total - Model.ListCount))</a>
+    </div>
+}*@

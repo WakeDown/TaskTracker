@@ -1,0 +1,21 @@
+﻿
+@using TaskTracker.Models
+@using TaskTracker.Objects
+@model TaskTracker.Models.TaskSpecification
+
+
+<div id="task-spec-@Model.Id" class="row no-marg-bot border-bot-dash">
+    <div class="col-lg-7">
+        @*<a class="btn btn-link text-danger no-pad no-marg" href="#!" specid="@Model.Id" name="spec-edit"><i class="fa fa-edit"></i></a>*@
+        @Model.Name
+    </div>
+    <div class="col-lg-2">
+        @Model.Quantity @Model.QuantityType.Name
+    </div>
+    <div class="col-lg-2"> 
+        @(Model.Cost.HasValue ? Model.Cost.Value.ToString("F") : String.Empty)
+    </div>
+        <div class="col-lg-1">
+            <a class="btn btn-link text-danger no-pad no-marg text-danger" href="#!" specid="@Model.Id" name="spec-del"><i class="fa fa-remove"></i></a>
+        </div>
+</div>

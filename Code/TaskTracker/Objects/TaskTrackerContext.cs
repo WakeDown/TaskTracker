@@ -31,6 +31,8 @@ namespace TaskTracker.Objects
         public DbSet<TaskPlan> TaskPlans { get; set; }
         public DbSet<TaskAction> TaskActions { get; set; }
         public DbSet<QuantityType> QuantityTypes { get; set; }
+        public DbSet<TaskSpecification> TaskSpecifications { get; set; }
+        public DbSet<TaskWork> TaskWorks { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TaskClaim>().Property(m => m.SpecialistSid).IsOptional();
