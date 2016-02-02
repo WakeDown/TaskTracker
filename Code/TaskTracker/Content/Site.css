@@ -45,9 +45,28 @@ textarea {
     width: 200px;
 }
 
-.nav>li>a {
+
+.nav-item {
     padding: 5px 10px;
-    
+    height: 30px;
+    border-bottom: 1px solid white;
+    background-color: #337ab7;
+}
+
+.nav-item a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    height: 30px;
+}
+
+.nav-item a:hover {
+   color: #337ab7;
+}
+
+.nav-item:hover {
+     color: #337ab7;
+    background-color: white;
 }
 
 @media (min-width: 1px) {
@@ -58,7 +77,7 @@ textarea {
 
 @media (min-width: 992px) {
   body {
-    padding: 0 0 0 300px;
+    padding: 0 0 0 200px;
   }
   .navmenu {
     padding-top: 0;

@@ -31,6 +31,7 @@ namespace TaskTracker.Models
         public DateTime? DateUndone { get; set; }
         [MaxLength(46)]
         public string UndonerSid { get; set; }
+        public int? Hours { get; set; }
 
         public TaskCheckpoint()
         {
@@ -51,6 +52,14 @@ namespace TaskTracker.Models
         {
             TaskTrackerContext db = new TaskTrackerContext();
             return db.TaskCheckpoints.SingleOrDefault(x => x.TaskCheckpointId == id);
+        }
+
+        public static async Task SaveInfo(int id, int? hours)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            var chkp = db.TaskCheckpoints.Single(x => x.TaskCheckpointId == id);
+            chkp.Hours = hours;
+            await db.SaveChangesAsync();
         }
 
         public static async Task<IEnumerable<TaskCheckpoint>> GetListAsync(int taskId, bool? done = null)

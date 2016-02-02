@@ -21,17 +21,20 @@ namespace TaskTracker
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                 "~/Scripts/jasny-bootstrap.min.js",
                       "~/Scripts/bootstrap.min.js",
-                      "~/Scripts/jasny-bootstrap.min.js",
+                     
                       "~/Scripts/bootstrap-datepicker.min.js",
+                      "~/Scripts/bootstrap-datepicker.ru.js",
                       "~/Scripts/respond.js"));
 
             //bundles.Add(new ScriptBundle("~/bundles/materialize").Include(
             //          "~/Scripts/materialize/materialize.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/jasny-bootstrap.min.css",
                       "~/Content/bootstrap.min.css",
-                      "~/Content/jasny-bootstrap.min.css",
+                      
                       "~/Content/bootstrap-datepicker3.min.css",
                       "~/Content/font-awesome.min.css",
                       "~/Content/material-colors.css",

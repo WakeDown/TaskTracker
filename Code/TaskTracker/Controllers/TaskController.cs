@@ -205,10 +205,17 @@ namespace TaskTracker.Controllers
             return PartialView("TaskActionList", list);
         }
         [HttpPost]
-        public async Task<JsonResult> SaveClaimInfo(int id, decimal? cost, decimal? quantity, int? quantityTypeId)
+        public async Task<JsonResult> SaveClaimInfo(int id, decimal? cost, decimal? quantity, int? quantityTypeId, DateTime? DateStartPlan)
         {
-            await TaskClaim.SaveInfo(id, cost, quantity, quantityTypeId);
+            await TaskClaim.SaveInfo(id, cost, quantity, quantityTypeId, DateStartPlan);
             return Json(new {});
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SaveCheckpointInfo(int chkpid, int? hours)
+        {
+            await TaskCheckpoint.SaveInfo(chkpid, hours);
+            return Json(new { });
         }
 
         [HttpGet]

@@ -13,10 +13,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:09</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>01/26/2016 23:19:34</publishTime>
+      <publishTime>02/02/2016 09:48:23</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>01/26/2016 23:19:34</publishTime>
+      <publishTime>02/02/2016 09:48:23</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/26/2015 08:24:18</publishTime>
@@ -91,10 +91,34 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:27:06</publishTime>
     </File>
     <File Include="bin/TaskTracker.dll">
-      <publishTime>01/26/2016 23:12:53</publishTime>
+      <publishTime>02/02/2016 09:48:19</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/25/2015 08:27:09</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker.min.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker.standalone.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker.standalone.min.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker3.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker3.min.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker3.standalone.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
+    </File>
+    <File Include="Content/bootstrap-datepicker3.standalone.min.css">
+      <publishTime>01/02/2016 20:14:24</publishTime>
     </File>
     <File Include="Content/bootstrap-theme.css">
       <publishTime>01/16/2016 14:44:39</publishTime>
@@ -202,7 +226,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/26/2015 08:23:45</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>01/26/2016 22:27:07</publishTime>
+      <publishTime>02/02/2016 09:47:30</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>08/25/2015 08:26:22</publishTime>
@@ -244,10 +268,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:26:22</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>01/17/2016 21:58:19</publishTime>
+      <publishTime>01/02/2016 20:14:24</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>01/26/2016 23:19:32</publishTime>
+      <publishTime>02/02/2016 09:48:20</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap-datepicker.js">
+      <publishTime>01/02/2016 20:14:23</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap-datepicker.min.js">
+      <publishTime>01/02/2016 20:14:23</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap-datepicker.ru.js">
+      <publishTime>02/02/2016 08:52:48</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>01/16/2016 14:44:37</publishTime>
@@ -282,6 +315,201 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
       <publishTime>08/25/2015 08:27:10</publishTime>
     </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ar.min.js">
+      <publishTime>01/02/2016 20:14:22</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.az.min.js">
+      <publishTime>01/02/2016 20:14:22</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.bg.min.js">
+      <publishTime>01/02/2016 20:14:22</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.bs.min.js">
+      <publishTime>01/02/2016 20:14:21</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ca.min.js">
+      <publishTime>01/02/2016 20:14:21</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.cs.min.js">
+      <publishTime>01/02/2016 20:14:20</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.cy.min.js">
+      <publishTime>01/02/2016 20:14:20</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.da.min.js">
+      <publishTime>01/02/2016 20:14:19</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.de.min.js">
+      <publishTime>01/02/2016 20:14:19</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.el.min.js">
+      <publishTime>01/02/2016 20:14:19</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.en-GB.min.js">
+      <publishTime>01/02/2016 20:14:18</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.eo.min.js">
+      <publishTime>01/02/2016 20:14:18</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.es.min.js">
+      <publishTime>01/02/2016 20:14:17</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.et.min.js">
+      <publishTime>01/02/2016 20:14:17</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.eu.min.js">
+      <publishTime>01/02/2016 20:14:17</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.fa.min.js">
+      <publishTime>01/02/2016 20:14:16</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.fi.min.js">
+      <publishTime>01/02/2016 20:14:16</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.fo.min.js">
+      <publishTime>01/02/2016 20:14:15</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.fr-CH.min.js">
+      <publishTime>01/02/2016 20:14:15</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.fr.min.js">
+      <publishTime>01/02/2016 20:14:15</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.gl.min.js">
+      <publishTime>01/02/2016 20:14:14</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.he.min.js">
+      <publishTime>01/02/2016 20:14:14</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.hr.min.js">
+      <publishTime>01/02/2016 20:14:14</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.hu.min.js">
+      <publishTime>01/02/2016 20:14:13</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.hy.min.js">
+      <publishTime>01/02/2016 20:14:13</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.id.min.js">
+      <publishTime>01/02/2016 20:14:13</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.is.min.js">
+      <publishTime>01/02/2016 20:14:12</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.it-CH.min.js">
+      <publishTime>01/02/2016 20:14:12</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.it.min.js">
+      <publishTime>01/02/2016 20:14:12</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ja.min.js">
+      <publishTime>01/02/2016 20:14:12</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ka.min.js">
+      <publishTime>01/02/2016 20:14:11</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.kh.min.js">
+      <publishTime>01/02/2016 20:14:11</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.kk.min.js">
+      <publishTime>01/02/2016 20:14:11</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ko.min.js">
+      <publishTime>01/02/2016 20:14:10</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.kr.min.js">
+      <publishTime>01/02/2016 20:14:10</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.lt.min.js">
+      <publishTime>01/02/2016 20:14:10</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.lv.min.js">
+      <publishTime>01/02/2016 20:14:10</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.me.min.js">
+      <publishTime>01/02/2016 20:14:09</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.mk.min.js">
+      <publishTime>01/02/2016 20:14:09</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.mn.min.js">
+      <publishTime>01/02/2016 20:14:09</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ms.min.js">
+      <publishTime>01/02/2016 20:14:09</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.nb.min.js">
+      <publishTime>01/02/2016 20:14:08</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.nl-BE.min.js">
+      <publishTime>01/02/2016 20:14:08</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.nl.min.js">
+      <publishTime>01/02/2016 20:14:08</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.no.min.js">
+      <publishTime>01/02/2016 20:14:08</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.pl.min.js">
+      <publishTime>01/02/2016 20:14:08</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.pt-BR.min.js">
+      <publishTime>01/02/2016 20:14:07</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.pt.min.js">
+      <publishTime>01/02/2016 20:14:07</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ro.min.js">
+      <publishTime>01/02/2016 20:14:07</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.rs-latin.min.js">
+      <publishTime>01/02/2016 20:14:07</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.rs.min.js">
+      <publishTime>01/02/2016 20:14:07</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.ru.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sk.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sl.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sq.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sr-latin.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sr.min.js">
+      <publishTime>01/02/2016 20:14:06</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sv.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.sw.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.th.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.tr.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.uk.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.vi.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.zh-CN.min.js">
+      <publishTime>01/02/2016 20:14:05</publishTime>
+    </File>
+    <File Include="Scripts/locales/bootstrap-datepicker.zh-TW.min.js">
+      <publishTime>01/02/2016 20:14:04</publishTime>
+    </File>
     <File Include="Scripts/materialize/materialize.js">
       <publishTime>08/26/2015 08:23:45</publishTime>
     </File>
@@ -301,7 +529,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/09/2015 19:33:04</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>01/17/2016 21:54:56</publishTime>
+      <publishTime>02/02/2016 08:52:48</publishTime>
     </File>
     <File Include="Views/Error/AccessDenied.cshtml">
       <publishTime>08/30/2015 17:50:54</publishTime>
@@ -319,7 +547,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/08/2015 08:23:38</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>01/26/2016 22:33:47</publishTime>
+      <publishTime>02/02/2016 09:48:03</publishTime>
     </File>
     <File Include="Views/Task/AddFile.cshtml">
       <publishTime>09/27/2015 23:22:27</publishTime>
@@ -328,19 +556,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/08/2015 09:32:53</publishTime>
     </File>
     <File Include="Views/Task/CardPerf.cshtml">
-      <publishTime>01/26/2016 22:32:44</publishTime>
+      <publishTime>02/02/2016 09:10:58</publishTime>
     </File>
     <File Include="Views/Task/CardUser.cshtml">
       <publishTime>09/30/2015 18:24:49</publishTime>
     </File>
     <File Include="Views/Task/CheckpointItem.cshtml">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>02/02/2016 09:11:15</publishTime>
     </File>
     <File Include="Views/Task/Edit.cshtml">
       <publishTime>09/28/2015 08:40:49</publishTime>
     </File>
     <File Include="Views/Task/List.cshtml">
-      <publishTime>01/26/2016 23:06:49</publishTime>
+      <publishTime>01/27/2016 08:54:28</publishTime>
     </File>
     <File Include="Views/Task/ListManager.cshtml">
       <publishTime>10/08/2015 08:23:38</publishTime>
@@ -358,7 +586,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/26/2016 23:18:31</publishTime>
     </File>
     <File Include="Views/Task/StateHistory.cshtml">
-      <publishTime>01/26/2016 21:55:43</publishTime>
+      <publishTime>01/02/2016 22:03:53</publishTime>
+    </File>
+    <File Include="Views/Task/TaskActionList.cshtml">
+      <publishTime>01/02/2016 22:21:10</publishTime>
     </File>
     <File Include="Views/Task/TaskCommentItem.cshtml">
       <publishTime>09/30/2015 10:59:55</publishTime>
@@ -397,7 +628,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>08/25/2015 08:26:22</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>01/26/2016 23:12:54</publishTime>
+      <publishTime>02/02/2016 09:19:38</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ namespace TaskTracker.Models
 
         //public string SpecialistCategorySysName { get; set; }
         //public virtual SpecialistCategory SpecialistCategory { get; set; }
-
+        [OutputCache(Duration = 3600)]
         public static IEnumerable<KeyValuePair<string, string>> GetProgrammers()
         {
             var list = AdHelper.GetSpecialistList(AdGroup.TaskTrackerProg);
