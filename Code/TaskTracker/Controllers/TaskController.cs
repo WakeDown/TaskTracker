@@ -30,7 +30,7 @@ namespace TaskTracker.Controllers
                 //    states = TaskState.GetManagerDefaultList().Select(x=>x.TaskStateId).ToArray();
                 //}
                 
-                var list = await TaskClaimModel.GetListAsync(CurUser, spec, author, states, projects);
+                var list = await Models.TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.Rank).ThenByDescending(x => x.DateCreate);
                 ViewBag.AdGroup = AdGroup.TaskTrackerManager;
                 return View("List", list);
@@ -43,7 +43,7 @@ namespace TaskTracker.Controllers
                 //}
 
                 //spec = CurUser.Sid;
-                var list = await TaskClaimModel.GetListAsync(CurUser, spec, author, states, projects);
+                var list = await Models.TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.Rank).ThenByDescending(x => x.DateCreate);
                 ViewBag.AdGroup = AdGroup.TaskTrackerProg;
                 return View("List", list);
@@ -56,7 +56,7 @@ namespace TaskTracker.Controllers
                 //}
 
                 //author = CurUser.Sid;
-                var list = await TaskClaimModel.GetListAsync(CurUser, spec, author, states, projects);
+                var list = await Models.TaskClaim.GetListAsync(CurUser, spec, author, states, projects);
                 list = list.OrderByDescending(x => x.DateCreate);
                 return View("List", list);
             }
@@ -99,7 +99,7 @@ namespace TaskTracker.Controllers
 
             if (idParent.HasValue)
             {
-                var parent = await TaskClaimModel.GetAsync(idParent.Value);
+                var parent = await Models.TaskClaim.GetAsync(idParent.Value);
 
                 task = new TaskClaim() { ParentTaskId = idParent, ProjectId = parent .ProjectId};
                 //task.ParentTask = parent;
@@ -213,19 +213,19 @@ namespace TaskTracker.Controllers
         public async Task<ActionResult> Edit(int? id)
         {
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaimModel.GetAsync(id.Value);
+            var task = await Models.TaskClaim.GetAsync(id.Value);
             return View(task);
         }
 
         public async Task<PartialViewResult> GetTaskHistory(int id, bool full=true)
         {
-            var list = await TaskClaimModel.GetStateHistoryAsync(id, full);
+            var list = await Models.TaskClaim.GetStateHistoryAsync(id, full);
             return PartialView("StateHistory",list);
         }
 
         public async Task<PartialViewResult> GetActionHistory(int id, bool full = true)
         {
-            var list = await TaskClaimModel.GetActionListAsync(id, full);
+            var list = await Models.TaskClaim.GetActionListAsync(id, full);
             return PartialView("TaskActionList", list);
         }
 
@@ -249,13 +249,13 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> SetTaskNeedWorkList(int id)
         {
-            await TaskClaimModel.SetTaskNeedWorkList(id);
+            await Models.TaskClaim.SetTaskNeedWorkList(id);
             return Json(new { });
         }
         [HttpPost]
         public async Task<JsonResult> SetTaskNeedCheckpoints(int id)
         {
-            await TaskClaimModel.SetTaskNeedCheckpoints(id);
+            await Models.TaskClaim.SetTaskNeedCheckpoints(id);
             return Json(new { });
         }
         
@@ -276,7 +276,7 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> SaveClaimInfo(int id, decimal? cost, decimal? quantity, int? quantityTypeId, DateTime? DateStartPlan)
         {
-            await TaskClaimModel.SaveInfo(id, cost, quantity, quantityTypeId, DateStartPlan);
+            await Models.TaskClaim.SaveInfo(id, cost, quantity, quantityTypeId, DateStartPlan);
             return Json(new {});
         }
 
@@ -291,7 +291,7 @@ namespace TaskTracker.Controllers
         public async Task<ActionResult> Card(int? id)
         {
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaimModel.GetAsync(id.Value);
+            var task = await Models.TaskClaim.GetAsync(id.Value);
             //ViewBag.StateHistory = await task.GetStateHistoryAsync();
 
             if (CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
@@ -319,7 +319,7 @@ namespace TaskTracker.Controllers
         public async Task<JsonResult> SaveTaskRank(int taskId, int rank)
         {
 
-            await TaskClaimModel.SaveRankAsync(CurUser.Sid, taskId, rank);
+            await Models.TaskClaim.SaveRankAsync(CurUser.Sid, taskId, rank);
             return Json(new { });
         }
 
@@ -341,26 +341,26 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> SetDoneState(int id)
         {
-            await TaskClaimModel.SetDone(id, CurUser.Sid);
+            await Models.TaskClaim.SetDone(id, CurUser.Sid);
             return Json(new { });
         }
         [HttpPost]
         public async Task<JsonResult> SetWorkState(int id)
         {
-            await TaskClaimModel.SetWork(id, CurUser.Sid);
+            await Models.TaskClaim.SetWork(id, CurUser.Sid);
             return Json(new { });
         }
         [HttpPost]
         public async Task<JsonResult> SetPauseState(int id, string descr)
         {
-            await TaskClaimModel.SetPause(id, descr, CurUser.Sid);
+            await Models.TaskClaim.SetPause(id, descr, CurUser.Sid);
             return Json(new { });
         }
 
         [HttpPost]
         public async Task<JsonResult> SetReworkState(int id, string descr)
         {
-            await TaskClaimModel.SetRework(id, descr, CurUser.Sid);
+            await Models.TaskClaim.SetRework(id, descr, CurUser.Sid);
             return Json(new { });
         }
         
@@ -377,7 +377,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaimModel.GetAsync(id.Value);
+            var task = await Models.TaskClaim.GetAsync(id.Value);
             ViewBag.TaskCategoryList = TaskCategory.GetList();
             ViewBag.TaskImportantList = TaskImportant.GetList();
             ViewBag.TaskQuicklyList = TaskQuickly.GetList();
@@ -390,7 +390,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaimModel.GetAsync(id.Value);
+            var task = await Models.TaskClaim.GetAsync(id.Value);
             return PartialView("TaskListProgItem", task);
         }
 
@@ -399,7 +399,7 @@ namespace TaskTracker.Controllers
         {
             //int tid = int.Parse(id);
             if (!id.HasValue) return HttpNotFound();
-            var task = await TaskClaimModel.GetAsync(id.Value);
+            var task = await Models.TaskClaim.GetAsync(id.Value);
             return PartialView("TaskListUserItem", task);
         }
         //[HttpPost]
@@ -414,7 +414,7 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> SetTaskCategory(int id, int cid)
         {
-            await TaskClaimModel.SetCategory(id, cid, CurUser.Sid);
+            await Models.TaskClaim.SetCategory(id, cid, CurUser.Sid);
             return Json(new { });
         }
 
@@ -424,7 +424,7 @@ namespace TaskTracker.Controllers
             string s = "";
             try
             {
-                await TaskClaimModel.SetSpecialist(id, sid, CurUser.Sid);
+                await Models.TaskClaim.SetSpecialist(id, sid, CurUser.Sid);
             }
             catch (Exception ex)
             {
@@ -435,13 +435,13 @@ namespace TaskTracker.Controllers
         [HttpPost]
         public async Task<JsonResult> SetTaskImportant(int id, int iid)
         {
-            await TaskClaimModel.SetTaskImportant(id, iid, CurUser.Sid);
+            await Models.TaskClaim.SetTaskImportant(id, iid, CurUser.Sid);
             return Json(new { });
         }
         [HttpPost]
         public async Task<JsonResult> SetTaskQuickly(int id, int qid)
         {
-            await TaskClaimModel.SetTaskQuickly(id, qid, CurUser.Sid);
+            await Models.TaskClaim.SetTaskQuickly(id, qid, CurUser.Sid);
             return Json(new { });
         }
         [HttpGet]

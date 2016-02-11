@@ -9,7 +9,7 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class ProjectModel
+    public class Project
     {
         //[Key]
         //public int ProjectId { get; set; }

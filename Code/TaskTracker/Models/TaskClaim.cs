@@ -14,12 +14,12 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskClaimModel
+    public class TaskClaim
     {
         [Key]
         public int TaskId { get; set; }
         public int? ParentTaskId { get; set; }
-        public virtual TaskClaimModel ParentTask { get; set; }
+        public virtual TaskClaim ParentTask { get; set; }
         public string Name { get; set; }
         public string Descr { get; set; }
         public int? TaskCategoryId { get; set; }
@@ -54,7 +54,7 @@ namespace TaskTracker.Models
         public bool NeedCheckpoints { get; set; }
         public bool NeedWorkList { get; set; }
 
-        public TaskClaimModel()
+        public TaskClaim()
         {
 
         }
@@ -174,7 +174,7 @@ namespace TaskTracker.Models
 
         private static async Task SendAddedNoticeToAuthor(int taskId)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Ваша задача \"{taskClaim.Name}\" по проекту {taskClaim.Project.Name} успешно добавлена.<br />Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a>";
@@ -184,7 +184,7 @@ namespace TaskTracker.Models
 
         private static async Task SendAddedNoticeToManager(int taskId)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Добавлена новая задача \"{taskClaim.Name}\" по проекту {taskClaim.Project.Name}.<br />Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a>";
@@ -194,7 +194,7 @@ namespace TaskTracker.Models
 
         private static async Task SendSetNoticeToSpecialist(int taskId)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             if (!String.IsNullOrEmpty(taskClaim.SpecialistSid))
             {
                 string hostname = ConfigurationManager.AppSettings["hostname"];
@@ -306,7 +306,7 @@ namespace TaskTracker.Models
         }
         private static async Task SendWorkNoticeToProg(int taskId, string creatorName)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             //creatorName = String.IsNullOrEmpty(creatorName) ? String.Empty : $" ({creatorName})";
             string body =
@@ -316,7 +316,7 @@ namespace TaskTracker.Models
         }
         private static async Task SendWorkNoticeToAuthor(int taskId,string creatorName)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             //creatorName = String.IsNullOrEmpty(creatorName) ? String.Empty : $" ({creatorName})";
             string body =
@@ -332,7 +332,7 @@ namespace TaskTracker.Models
         }
         private static async Task SendReworkNoticeToProg(int taskId, string descr, string creatorName)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             creatorName = String.IsNullOrEmpty(creatorName) ? String.Empty : $" ({creatorName})";
             string body =
@@ -342,7 +342,7 @@ namespace TaskTracker.Models
         }
         private static async Task SendReworkNoticeToAuthor(int taskId, string descr, string creatorName)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             creatorName = String.IsNullOrEmpty(creatorName) ? String.Empty : $" ({creatorName})";
             string body =
@@ -352,7 +352,7 @@ namespace TaskTracker.Models
         }
         private static async Task SendPauseNoticeToAuthor(int taskId, string descr)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Задача \"{taskClaim.Name}\" по проекту {taskClaim.Project.Name} приостановлена.<br />Комментарий:<br />{descr}<br />Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a>";
@@ -362,7 +362,7 @@ namespace TaskTracker.Models
 
         private static async Task SendDoneNoticeToAuthor(int taskId)
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(taskId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(taskId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Ваша задача \"{taskClaim.Name}\" по проекту {taskClaim.Project.Name} выполнена.<br />Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a>";
@@ -480,7 +480,7 @@ namespace TaskTracker.Models
 
         public static async Task<ListResult<TaskAction>> GetActionListAsync(int id,bool full = false)
         {
-            var task = new TaskClaimModel() {TaskId = id};
+            var task = new TaskClaim() {TaskId = id};
             return await task.GetActionListAsync(full);
         }
 

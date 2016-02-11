@@ -18,7 +18,7 @@ namespace TaskTracker.Models
         public int TaskCommentId { get; set; }
         public string Text { get; set; }
         public int TaskClaimId { get; set; }
-        public virtual TaskClaimModel TaskClaim { get; set; }
+        public virtual TaskClaim TaskClaim { get; set; }
         public DateTime DateCreate { get; set; }
         public string CreatorSid { get; set; }
         public bool Enabled { get; set; }
@@ -75,7 +75,7 @@ namespace TaskTracker.Models
 
         private async Task SendNoticeToAuthor()
         {
-            TaskClaimModel taskClaim = await TaskClaimModel.GetAsync(TaskClaimId);
+            TaskClaim taskClaim = await TaskClaim.GetAsync(TaskClaimId);
             string hostname = ConfigurationManager.AppSettings["hostname"];
             string body =
                 $"Новый комментарий по задаче \"{taskClaim.Name}\" в проекте {taskClaim.Project.Name}.<br />{AdHelper.GetUserBySid(CreatorSid).DisplayName} пишет:<br />{Text}<p>Ссылка - <a href='{hostname}/Task/Card/{taskClaim.TaskId}'>{hostname}/Task/Card/{taskClaim.TaskId}</a></p>";
