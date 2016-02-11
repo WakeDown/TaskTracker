@@ -1,6 +1,6 @@
 ﻿@using TaskTracker.Models
 @using TaskTracker.Objects
-@model IEnumerable<TaskTracker.Models.TaskClaim>
+@model IEnumerable<TaskClaim>
 
 <tr>
     <th></th>
@@ -22,7 +22,7 @@
         </a>
         <ul id='specFilter' class='dropdown-content'>
             <li><a href="@Url.Action("List", new {spec = "", author = Request.QueryString["author"]})">все</a></li>
-            @foreach (var spec in Specialist.GetProgrammers())
+            @foreach (var spec in SpecialistModel.GetProgrammers())
             {
                 <li><a href="@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})" class="">@spec.Value</a></li>
             }

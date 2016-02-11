@@ -9,38 +9,38 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskCheckpoint
+    public class TaskCheckpointModel
     {
-        [Key]
-        public int TaskCheckpointId { get; set; }
-        public int TaskId { get; set; }
-        public virtual TaskClaim TaskClaim { get; set; }
-        [MaxLength(500)]
-        public string Name { get; set; }
-        public bool Done { get; set; }
-        [MaxLength(46)]
-        public string CreatorSid { get; set; }
-        public DateTime DateCreate { get; set; }
-        public DateTime? DateDone { get; set; }
-        [MaxLength(46)]
-        public string DonerSid { get; set; }
-        public bool Enabled { get; set; }
-        public string DeleterSid { get; set; }
-        public DateTime? DateDelete { get; set; }
-        public int OrderNum { get; set; }
-        public DateTime? DateUndone { get; set; }
-        [MaxLength(46)]
-        public string UndonerSid { get; set; }
-        public int? Hours { get; set; }
+        //[Key]
+        //public int TaskCheckpointId { get; set; }
+        //public int TaskId { get; set; }
+        //public virtual TaskClaimModel TaskClaim { get; set; }
+        //[MaxLength(500)]
+        //public string Name { get; set; }
+        //public bool Done { get; set; }
+        //[MaxLength(46)]
+        //public string CreatorSid { get; set; }
+        //public DateTime DateCreate { get; set; }
+        //public DateTime? DateDone { get; set; }
+        //[MaxLength(46)]
+        //public string DonerSid { get; set; }
+        //public bool Enabled { get; set; }
+        //public string DeleterSid { get; set; }
+        //public DateTime? DateDelete { get; set; }
+        //public int OrderNum { get; set; }
+        //public DateTime? DateUndone { get; set; }
+        //[MaxLength(46)]
+        //public string UndonerSid { get; set; }
+        //public int? Hours { get; set; }
 
-        public TaskCheckpoint()
-        {
-        }
+        //public TaskCheckpoint()
+        //{
+        //}
 
-        public TaskCheckpoint(int taskId)
-        {
-            TaskId = taskId;
-        }
+        //public TaskCheckpoint(int taskId)
+        //{
+        //    TaskId = taskId;
+        //}
 
         public static async Task<TaskCheckpoint> GetAsync(int id)
         {
@@ -75,15 +75,15 @@ namespace TaskTracker.Models
             return await GetListAsync(taskId, false);
         }
 
-        public async Task<int> AddAsync(string creatorSid)
+        public async Task<int> AddAsync(string creatorSid, TaskCheckpoint chk)
         {
             TaskTrackerContext db = new TaskTrackerContext();
-            Enabled = true;
-            CreatorSid = creatorSid;
-            DateCreate = DateTime.Now;
-            db.TaskCheckpoints.Add(this);
+            chk.Enabled = true;
+            chk.CreatorSid = creatorSid;
+            chk.DateCreate = DateTime.Now;
+            db.TaskCheckpoints.Add(chk);
             await db.SaveChangesAsync();
-            return TaskCheckpointId;
+            return chk.TaskCheckpointId;
         }
 
         public static void SetDone(int id, string creatorSid)

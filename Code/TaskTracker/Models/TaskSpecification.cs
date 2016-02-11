@@ -8,17 +8,17 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskSpecification
+    public class TaskSpecificationModel
     {
-        public int Id { get; set; }
-        public int TaskId { get; set; }
-        public string Name { get; set; }
-        public decimal? Cost { get; set; }
-        public int? Quantity { get;set; }
-        public int? QuantityTypeId { get; set; }
-        public virtual  QuantityType QuantityType{get;set;}
-        public DateTime DateCreate { get; set; }
-        public bool Enabled { get; set; }
+        //public int Id { get; set; }
+        //public int TaskId { get; set; }
+        //public string Name { get; set; }
+        //public decimal? Cost { get; set; }
+        //public int? Quantity { get;set; }
+        //public int? QuantityTypeId { get; set; }
+        //public virtual  QuantityType QuantityType{get;set;}
+        //public DateTime DateCreate { get; set; }
+        //public bool Enabled { get; set; }
 
         //public static async Task<ListResult<TaskSpecification>> GetListAsync(int taskId)
         public static async Task<IEnumerable<TaskSpecification>> GetListAsync(int taskId)

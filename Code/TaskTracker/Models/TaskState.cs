@@ -9,26 +9,26 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskState
+    public class TaskStateModel
     {
-        [Key]
-        public int TaskStateId { get; set; }
-        public string Name { get; set; }
-        public string SysName { get; set; }
-        public int OrderNum { get; set; }
-        public string BgColor { get; set; }
-        public bool ManagerSelectDefault { get; set; }
-        public bool ProgSelectDefault { get; set; }
-        public bool UserSelectDefault { get; set; }
+        //[Key]
+        //public int TaskStateId { get; set; }
+        //public string Name { get; set; }
+        //public string SysName { get; set; }
+        //public int OrderNum { get; set; }
+        //public string BgColor { get; set; }
+        //public bool ManagerSelectDefault { get; set; }
+        //public bool ProgSelectDefault { get; set; }
+        //public bool UserSelectDefault { get; set; }
 
-        public TaskState() { }
-        public TaskState(string name, string sysName, string bgColor, int orderNum)
-        {
-            Name = name;
-            SysName = sysName;
-            OrderNum = orderNum;
-            BgColor = bgColor;
-        }
+        //public TaskState() { }
+        //public TaskState(string name, string sysName, string bgColor, int orderNum)
+        //{
+        //    Name = name;
+        //    SysName = sysName;
+        //    OrderNum = orderNum;
+        //    BgColor = bgColor;
+        //}
 
         public async static Task<TaskState> Get(string sysName)
         {

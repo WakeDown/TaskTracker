@@ -10,20 +10,20 @@ using WebGrease.Css.Extensions;
 
 namespace TaskTracker.Models
 {
-    public class TaskPlan
+    public class TaskPlanModel
     {
-        [Key]
-        public int TaskPlanId { get; set; }
-        public int TaskId { get; set; }
-        public virtual TaskClaim TaskClaim { get; set; }
-        public int? TaskCheckpointId { get; set; }
-        public virtual TaskCheckpoint TaskCheckpoint { get; set; }
-        public DateTime PlanDate { get; set; }
-        public bool Enabled { get; set; }
-        public DateTime DateCreate { get; set; }
-        public string CreatorSid { get; set; }
-        public DateTime? DateDelete { get; set; }
-        public string DeleterSid { get; set; }
+        //[Key]
+        //public int TaskPlanId { get; set; }
+        //public int TaskId { get; set; }
+        //public virtual TaskClaimModel TaskClaim { get; set; }
+        //public int? TaskCheckpointId { get; set; }
+        //public virtual TaskCheckpoint TaskCheckpoint { get; set; }
+        //public DateTime PlanDate { get; set; }
+        //public bool Enabled { get; set; }
+        //public DateTime DateCreate { get; set; }
+        //public string CreatorSid { get; set; }
+        //public DateTime? DateDelete { get; set; }
+        //public string DeleterSid { get; set; }
 
         public static TaskPlan Get(int id)
         {

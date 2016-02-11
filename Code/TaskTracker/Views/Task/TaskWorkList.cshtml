@@ -1,6 +1,17 @@
 ﻿
 @model TaskTracker.Models.ListResult<TaskTracker.Models.TaskWork>
-    
+
+<div id="" class="row no-marg-bot border-bot-dash">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-6 text-right bold">
+        Итого
+    </div>
+    <div class="col-lg-3">
+        <small>@Model.List.Sum(x=>x.Hours) час.</small>
+    </div>
+    <div class="col-lg-1">
+    </div>
+</div>
 @foreach (var work in Model.List)
 {
     @Html.Partial("TaskWorkItem", work);

@@ -9,41 +9,50 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class Project
+    public class ProjectModel
     {
-        [Key]
-        public int ProjectId { get; set; }
-        public string Name { get; set; }
-        [NotMapped]
-        public bool Selected { get; set; }
-        public string BgColor { get; set; }
-        public string ManagerSid { get; set; }
+        //[Key]
+        //public int ProjectId { get; set; }
+        //public string Name { get; set; }
+        //[NotMapped]
+        //public bool Selected { get; set; }
+        //public string BgColor { get; set; }
+        //public string ManagerSid { get; set; }
+        //public string SysName { get; set; }
 
-        public Project()
-        {
-        }
+        //public Project()
+        //{
+        //}
 
-        public Project(string name)
-        {
-            Name = name;
-        }
+        //public Project(string name)
+        //{
+        //    Name = name;
+        //}
 
         public static IEnumerable<Project> GetList()
         {
             TaskTrackerContext db = new TaskTrackerContext();
             var list = db.Projects.OrderBy(c => c.Name).ToList();
            
-            if (list.Any())
-            {
-                list.First().Selected = true;
-            }
+            //if (list.Any())
+            //{
+            //    list.First().Selected = true;
+            //}
             return list;
         }
 
-        public static SelectList GetSelectionList()
+        public static SelectList GetSelectionList(int? id = null)
         {
+
             var list = GetList().ToList();
-            return new SelectList(list, "ProjectId", "Name");
+            var selList = new SelectList(list, "ProjectId", "Name", id);
+            return selList;
+        }
+
+        public static int GetBySysName(string sysName)
+        {
+            TaskTrackerContext db = new TaskTrackerContext();
+            return db.Projects.Where(c => c.SysName == sysName).Single().ProjectId;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@using TaskTracker.Models
 @using TaskTracker.Objects
-@model TaskTracker.Models.TaskClaim
+@model TaskClaim
 
 <tr id="taskClaim-@Model.TaskId" name="taskClaimItem" tid="@Model.TaskId">
     <td class="row-marker @(String.IsNullOrEmpty(Model.Project.BgColor) ? "indigo lighten-2" : Model.Project.BgColor)"></td>

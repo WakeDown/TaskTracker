@@ -1,16 +1,15 @@
 ﻿@using TaskTracker.Models
-@using TaskTracker.Objects
-@model IEnumerable<TaskTracker.Models.TaskClaim>
+@model IEnumerable<TaskClaim>
 
 @{
     ViewBag.Title = "Список задач";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] selStatesStr = String.IsNullOrEmpty(Request.QueryString["tsts"]) ? new string[0] : Request.QueryString["tsts"].Split(',');
-    var sts = TaskState.GetList();
-    int[] selStates = !selStatesStr.Any() ? TaskState.GetManagerDefaultList().Select(x => x.TaskStateId).ToArray() : Array.ConvertAll<string, int>(selStatesStr, int.Parse);
+    var sts = TaskStateModel.GetList();
+    int[] selStates = !selStatesStr.Any() ? TaskStateModel.GetManagerDefaultList().Select(x => x.TaskStateId).ToArray() : Array.ConvertAll<string, int>(selStatesStr, int.Parse);
 
     string[] selProjectsStr = String.IsNullOrEmpty(Request.QueryString["prjs"]) ? new string[0] : Request.QueryString["prjs"].Split(',');
-    var prjs = Project.GetList();
+    var prjs = ProjectModel.GetList();
     int[] selProjects = !selProjectsStr.Any() ? prjs.Select(x=>x.ProjectId).ToArray() : Array.ConvertAll<string, int>(selProjectsStr, int.Parse);
 }
 
@@ -45,7 +44,7 @@
                                     </div>
                                 </div>
                                 <div class="col l11">
-                                    @foreach (var prj in Project.GetList())
+                                    @foreach (var prj in ProjectModel.GetList())
                                     {
                                         <div class="left marg-r-md">
                                             <input type="checkbox" value="@prj.ProjectId" name="chk-prj" id="chk-prj-@prj.ProjectId" @(selProjects.Contains(prj.ProjectId) ? "checked='checked'" : "") /><label for="chk-prj-@prj.ProjectId">@prj.Name</label>

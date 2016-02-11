@@ -9,34 +9,35 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskFile
+    public class TaskFileModel
     {
-        public System.Guid TaskFileId { get; set; }
-        public int TaskClaimId { get; set; }
-        public virtual TaskClaim TaskClaim { get; set; }
-        [MaxLength(500)]
-        public string Name { get; set; }
-        public byte[] Data { get; set; }
-        public DateTime DateCreate { get; set; }
-        public string CreatorSid { get; set; }
-        public bool Enabled { get; set; }
-        public DateTime? DateDelete { get; set; }
-        public string DeleterrSid { get; set; }
+        //public System.Guid TaskFileId { get; set; }
+        //public int TaskClaimId { get; set; }
+        //public virtual TaskClaimModel TaskClaim { get; set; }
+        //[MaxLength(500)]
+        //public string Name { get; set; }
+        //public byte[] Data { get; set; }
+        //public DateTime DateCreate { get; set; }
+        //public string CreatorSid { get; set; }
+        //public bool Enabled { get; set; }
+        //public DateTime? DateDelete { get; set; }
+        //public string DeleterrSid { get; set; }
 
-        public TaskFile()
+        public TaskFileModel()
         {
         }
 
-        public async Task<System.Guid> Add(string creatorSid)
+        public async Task<System.Guid> Add(string creatorSid, TaskFile file)
         {
             TaskTrackerContext db = new TaskTrackerContext();
-            TaskFileId=Guid.NewGuid();
-            Enabled = true;
-            CreatorSid = creatorSid;
-            DateCreate = DateTime.Now;
-            db.TaskFiles.Add(this);
+
+            file.TaskFileId = Guid.NewGuid();
+            file.Enabled = true;
+            file.CreatorSid = creatorSid;
+            file.DateCreate = DateTime.Now;
+            db.TaskFiles.Add(file);
             await db.SaveChangesAsync();
-            return TaskFileId;
+            return file.TaskFileId;
         }
 
         public static async Task<TaskFile> GetAsync(string guid)

@@ -1,6 +1,8 @@
-﻿@using TaskTracker.Models
+﻿
+@using TaskTracker.Models
 @using TaskTracker.Objects
-@model TaskTracker.Models.TaskClaim
+@using Task2TaskState = TaskTracker.Task2TaskState
+@model TaskClaim
 @{
     ViewBag.Title = "Карточка задачи";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -17,7 +19,7 @@
         </div>
     </div>
     <div class="col s4">
-       @Html.Partial("StateHistory", (IEnumerable<Task2TaskState>)ViewBag.StateHistory)
+       @Html.Partial("StateHistory", (ListResult<Task2TaskState>)ViewBag.StateHistory)
     </div>
 </div>
 

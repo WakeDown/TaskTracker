@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using TaskTracker.Objects
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -48,12 +49,18 @@
     </header>*@
 <div class="navmenu navbar-inverse navmenu-fixed-left offcanvas-sm" style="">
     <a class="navmenu-brand visible-md visible-lg bold" href="#">TaskTracker</a>
+
     <ul class="list-unstyled">
+        @if (ViewBag.CurUser.Is(AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg, AdGroup.TaskTrackerAdmin))
+        {
         @*<li class="active"><a href="./">Slide in</a></li>*@
-        <li class="nav-item "><a  href="@Url.Action("List", "Task")"><i class="fa fa-list"></i> Список задач</a></li>
+        <li class="nav-item "><a href="@Url.Action("List", "Task")"><i class="fa fa-list"></i> Список задач</a></li>
         <li class="nav-item "><a href="@Url.Action("New", "Task")" target="_blank"><i class="fa fa-plus"></i> Новая</a></li>
-        <li  class="nav-item "><a href="@Url.Action("Index", "Planing")"><i class="fa fa-list-ol"></i> План</a></li>
+            <li class="nav-item "><a href="@Url.Action("Index", "Planing")"><i class="fa fa-list-ol"></i> План</a></li>
+        }
+        <li class="nav-item "><a href="@Url.Action("NewWish", "Task")" target="_blank"><i class="fa fa-plus"></i> Новая заявка</a></li>
     </ul>
+    
     @*<ul class="nav navmenu-nav">
         <li><a href="#">Link</a></li>
         <li><a href="#">Link</a></li>

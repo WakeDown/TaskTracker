@@ -62,6 +62,8 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -144,7 +146,7 @@
     <Compile Include="Models\QuantityType.cs" />
     <Compile Include="Models\Specialist.cs" />
     <Compile Include="Models\TaskCheckpoint.cs" />
-    <Compile Include="Models\TaskClaim.cs" />
+    <Compile Include="Models\TaskClaimModel.cs" />
     <Compile Include="Models\TaskCategory.cs" />
     <Compile Include="Models\TaskClaimPlanItem.cs" />
     <Compile Include="Models\TaskComment.cs" />
@@ -157,6 +159,7 @@
     <Compile Include="Models\TaskState.cs" />
     <Compile Include="Models\Task2TaskState.cs" />
     <Compile Include="Models\TaskWork.cs" />
+    <Compile Include="Models\Wish.cs" />
     <Compile Include="Objects\AdGroup.cs" />
     <Compile Include="Helpers\AdHelper.cs" />
     <Compile Include="Objects\AdUser.cs" />
@@ -165,7 +168,76 @@
     <Compile Include="Objects\TaskTrackerContext.cs" />
     <Compile Include="Objects\TaskTrackerInitializer.cs" />
     <Compile Include="Objects\WindowsImpersonationContextFacade.cs" />
+    <Compile Include="Project.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuantityType.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Specialist.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Task2TaskState.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskAction.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskCategory.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskCheckpoint.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskClaim.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskComment.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskFile.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskImportant.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskPlan.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskQuickly.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskSpecification.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskState.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskTrackerModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskTrackerModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskTrackerModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TaskTrackerModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TaskTrackerModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TaskWork.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Wish.cs">
+      <DependentUpon>TaskTrackerModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datepicker.css" />
@@ -312,6 +384,16 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\site.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="TaskTrackerModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TaskTrackerModel.edmx</DependentUpon>
+      <LastGenOutput>TaskTrackerModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="TaskTrackerModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>TaskTrackerModel.edmx</DependentUpon>
+      <LastGenOutput>TaskTrackerModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -357,6 +439,14 @@
     <Content Include="Views\Task\TaskWorkList.cshtml" />
     <Content Include="Views\Task\TaskWorkEdit.cshtml" />
     <Content Include="Views\Task\TaskWorkItem.cshtml" />
+    <Content Include="Views\Task\NewWish.cshtml" />
+    <EntityDeploy Include="TaskTrackerModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TaskTrackerModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="TaskTrackerModel.edmx.diagram">
+      <DependentUpon>TaskTrackerModel.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -364,6 +454,9 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
