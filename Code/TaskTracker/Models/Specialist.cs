@@ -11,14 +11,14 @@ using TaskTracker.Objects;
 namespace TaskTracker.Models
 {
     
-    public class SpecialistModel
+    public class Specialist
     {
-        //[Key]
-        //public string SpecialistSid { get; set; }
-        //public string FullName { get; set; }
-        //public string DisplayName { get; set; }
-        //[MaxLength(150)]
-        //public string Email { get; set; }
+        [Key]
+        public string SpecialistSid { get; set; }
+        public string FullName { get; set; }
+        public string DisplayName { get; set; }
+        [MaxLength(150)]
+        public string Email { get; set; }
 
         //public string SpecialistCategorySysName { get; set; }
         //public virtual SpecialistCategory SpecialistCategory { get; set; }

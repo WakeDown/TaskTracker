@@ -30,7 +30,7 @@
                 </a>
                 <ul id='specFilter' class='dropdown-content'>
                     <li><a href="@Url.Action("List", new {spec = "", author = Request.QueryString["author"]})">все</a></li>
-                    @foreach (var spec in SpecialistModel.GetProgrammers())
+                    @foreach (var spec in Specialist.GetProgrammers())
                     {
                         <li><a href="@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})" class="">@spec.Value</a></li>
                     }
@@ -122,7 +122,7 @@
                     {
                         <a class='dropdown-button btn' href='#' data-activates='category@{ @task.TaskId }'>Назначить</a>
                         <ul id='category@{ @task.TaskId }' class='dropdown-content'>
-                            @foreach (var cat in TaskCategoryModel.GetList())
+                            @foreach (var cat in TaskCategory.GetList())
                             {
                                 <li><a href="#!" value="@cat.TaskCategoryId">@cat.Name</a></li>
                             }
@@ -136,7 +136,7 @@
                                     <div class="col s9">*@
                         <a class='dropdown-button btn' href='#' data-activates='specialist@{ @task.TaskId }'>Назначить</a>
                         <ul id='specialist@{ @task.TaskId }' class='dropdown-content'>
-                            @foreach (var spec in SpecialistModel.GetProgrammers())
+                            @foreach (var spec in Specialist.GetProgrammers())
                             {
                                 <li><a href="#!" value="@spec.Key">@spec.Value</a></li>
                                 <li class="divider"></li>

@@ -11,33 +11,33 @@ namespace TaskTracker.Models
 {
     public class Project
     {
-        //[Key]
-        //public int ProjectId { get; set; }
-        //public string Name { get; set; }
-        //[NotMapped]
-        //public bool Selected { get; set; }
-        //public string BgColor { get; set; }
-        //public string ManagerSid { get; set; }
-        //public string SysName { get; set; }
+        [Key]
+        public int ProjectId { get; set; }
+        public string Name { get; set; }
+        [NotMapped]
+        public bool Selected { get; set; }
+        public string BgColor { get; set; }
+        public string ManagerSid { get; set; }
+        public string SysName { get; set; }
 
-        //public Project()
-        //{
-        //}
+        public Project()
+        {
+        }
 
-        //public Project(string name)
-        //{
-        //    Name = name;
-        //}
+        public Project(string name)
+        {
+            Name = name;
+        }
 
         public static IEnumerable<Project> GetList()
         {
             TaskTrackerContext db = new TaskTrackerContext();
             var list = db.Projects.OrderBy(c => c.Name).ToList();
-           
-            //if (list.Any())
-            //{
-            //    list.First().Selected = true;
-            //}
+
+            if (list.Any())
+            {
+                list.First().Selected = true;
+            }
             return list;
         }
 

@@ -88,7 +88,7 @@ namespace TaskTracker.Controllers
         [HttpGet]
         public async Task<ActionResult> GetTaskFileData(string guid)
         {
-            var file = await TaskFileModel.GetAsync(guid);
+            var file = await TaskFile.GetAsync(guid);
             return File(file.Data, System.Net.Mime.MediaTypeNames.Application.Octet, file.Name);
         }
 

@@ -28,7 +28,7 @@
         <select id='specFilter' class='form-control input-xs'>
             <option name="spec" sid="" fio="Специалист">Специалист</option>
             @*href="@Url.Action("List", new { spec = "", author = Request.QueryString["author"] })"*@
-            @foreach (var spec in SpecialistModel.GetProgrammers())
+            @foreach (var spec in Specialist.GetProgrammers())
             {
                 <option sid="@spec.Key" fio="@spec.Value" name="spec" @(selSpec.SpecialistSid == spec.Key ? "selected" : String.Empty)>@spec.Value</option>
                 //href = "@Url.Action("List", new {spec = spec.Key, author = Request.QueryString["author"]})"

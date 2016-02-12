@@ -1,4 +1,4 @@
-﻿@model TaskPlan
+﻿@model TaskTracker.Models.TaskPlan
 
 <div class="plan-task-item-dated @(String.IsNullOrEmpty(Model.TaskClaim.Project.BgColor) ? "indigo lighten-2" : Model.TaskClaim.Project.BgColor) row" name="plan-task-item-dated-@Model.TaskPlanId">
     <div class="col l10 text white">

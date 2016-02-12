@@ -7,27 +7,27 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskActionModel
+    public class TaskAction
     {
-        //public int Id { get; set; }
-        //public int TaskId { get; set; }
-        //public string Name { get; set; }
-        //public string Descr { get; set; }
-        //public string CreatorSid { get; set; }
-        //public string CreatorName { get; set; }
-        //public DateTime DateCreate { get; set; }
-        //public DateTime? RemindDate { get; set; }
-        //public string RemindText { get; set; }
-        //public bool Enabled { get; set; }
+        public int Id { get; set; }
+        public int TaskId { get; set; }
+        public string Name { get; set; }
+        public string Descr { get; set; }
+        public string CreatorSid { get; set; }
+        public string CreatorName { get; set; }
+        public DateTime DateCreate { get; set; }
+        public DateTime? RemindDate { get; set; }
+        public string RemindText { get; set; }
+        public bool Enabled { get; set; }
 
-        public async Task SaveAsync(AdUser user, TaskAction action)
+        public async Task SaveAsync(AdUser user)
         {
-            action.DateCreate = DateTime.Now;
-            action.Enabled = true;
-            action.CreatorSid = user.Sid;
-            action.CreatorName = user.ShortName;
+            DateCreate = DateTime.Now;
+            Enabled = true;
+            CreatorSid = user.Sid;
+            CreatorName = user.ShortName;
             var db = new TaskTrackerContext();
-            db.TaskActions.Add(action);
+            db.TaskActions.Add(this);
             await db.SaveChangesAsync();
         }
     }

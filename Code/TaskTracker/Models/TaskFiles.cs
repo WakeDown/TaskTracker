@@ -9,21 +9,21 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskFileModel
+    public class TaskFile
     {
-        //public System.Guid TaskFileId { get; set; }
-        //public int TaskClaimId { get; set; }
-        //public virtual TaskClaimModel TaskClaim { get; set; }
-        //[MaxLength(500)]
-        //public string Name { get; set; }
-        //public byte[] Data { get; set; }
-        //public DateTime DateCreate { get; set; }
-        //public string CreatorSid { get; set; }
-        //public bool Enabled { get; set; }
-        //public DateTime? DateDelete { get; set; }
-        //public string DeleterrSid { get; set; }
+        public System.Guid TaskFileId { get; set; }
+        public int TaskClaimId { get; set; }
+        public virtual TaskClaim TaskClaim { get; set; }
+        [MaxLength(500)]
+        public string Name { get; set; }
+        public byte[] Data { get; set; }
+        public DateTime DateCreate { get; set; }
+        public string CreatorSid { get; set; }
+        public bool Enabled { get; set; }
+        public DateTime? DateDelete { get; set; }
+        public string DeleterrSid { get; set; }
 
-        public TaskFileModel()
+        public TaskFile()
         {
         }
 

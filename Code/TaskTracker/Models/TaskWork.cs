@@ -8,20 +8,20 @@ using TaskTracker.Objects;
 
 namespace TaskTracker.Models
 {
-    public class TaskWorkModel
+    public class TaskWork
     {
-        //public int Id { get; set; }
-        //public int TaskId { get; set; }
-        //public string Name { get; set; }
-        //public decimal? Hours { get; set; }
-        //public DateTime DateCreate { get; set; }
-        //public bool Enabled { get; set; }
-        //public string CreatorSid { get; set; }
-        //public string CreatorName { get; set; }
-        //public DateTime DateWork { get; set; }
-        //public DateTime? DateClose { get; set; }
-        //public string CloserSid { get; set; }
-        //public string CloserName { get; set; }
+        public int Id { get; set; }
+        public int TaskId { get; set; }
+        public string Name { get; set; }
+        public decimal? Hours { get; set; }
+        public DateTime DateCreate { get; set; }
+        public bool Enabled { get; set; }
+        public string CreatorSid { get; set; }
+        public string CreatorName { get; set; }
+        public DateTime DateWork { get; set; }
+        public DateTime? DateClose { get; set; }
+        public string CloserSid { get; set; }
+        public string CloserName { get; set; }
 
         public static async Task<ListResult<TaskWork>> GetListAsync(int taskId)
         {
@@ -44,15 +44,15 @@ namespace TaskTracker.Models
             return await db.TaskWorks.SingleAsync(x => x.Id == id);
         }
 
-        public async Task CreateAsync(AdUser user, TaskWork work)
+        public async Task CreateAsync(AdUser user)
         {
-            work.CreatorSid = user.Sid;
-            work.CreatorName = user.ShortName;
-            work.Enabled = true;
-            work.DateCreate = DateTime.Now;
+            CreatorSid = user.Sid;
+            CreatorName = user.ShortName;
+            Enabled = true;
+            DateCreate = DateTime.Now;
 
             TaskTrackerContext db = new TaskTrackerContext();
-            db.TaskWorks.Add(work);
+            db.TaskWorks.Add(this);
             await db.SaveChangesAsync();
         }
 
