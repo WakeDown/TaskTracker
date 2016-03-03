@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TaskTrackerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TaskTracker.dbo.wish_view' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="wish_view">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="CreatorSid" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="CreatorName" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="Descr" Type="nvarchar(max)" />
+          <Property Name="Where" Type="nvarchar" MaxLength="500" />
+          <Property Name="ActionsBefore" Type="nvarchar(max)" />
+          <Property Name="Link" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatorSid" Type="varchar" MaxLength="46" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="StateChangerSid" Type="varchar" MaxLength="46" />
+          <Property Name="StateChangeDate" Type="datetime" />
+          <Property Name="StateDescr" Type="nvarchar(max)" />
+          <Property Name="CreatorName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar(max)" />
+          <Property Name="ProjectBgColor" Type="nvarchar(max)" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateChangerName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityContainer Name="TaskTrackerModelStoreContainer">
+          <EntitySet Name="wish_view" EntityType="Self.wish_view" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [wish_view].[Id] AS [Id], 
+    [wish_view].[ProjectId] AS [ProjectId], 
+    [wish_view].[Title] AS [Title], 
+    [wish_view].[Descr] AS [Descr], 
+    [wish_view].[Where] AS [Where], 
+    [wish_view].[ActionsBefore] AS [ActionsBefore], 
+    [wish_view].[Link] AS [Link], 
+    [wish_view].[CreatorSid] AS [CreatorSid], 
+    [wish_view].[CreateDate] AS [CreateDate], 
+    [wish_view].[StateId] AS [StateId], 
+    [wish_view].[StateChangerSid] AS [StateChangerSid], 
+    [wish_view].[StateChangeDate] AS [StateChangeDate], 
+    [wish_view].[StateDescr] AS [StateDescr], 
+    [wish_view].[CreatorName] AS [CreatorName], 
+    [wish_view].[ProjectName] AS [ProjectName], 
+    [wish_view].[ProjectBgColor] AS [ProjectBgColor], 
+    [wish_view].[StateName] AS [StateName], 
+    [wish_view].[StateChangerName] AS [StateChangerName]
+    FROM [dbo].[wish_view] AS [wish_view]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TaskTrackerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="wish_view">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="ProjectId" />
+            <PropertyRef Name="CreatorSid" />
+            <PropertyRef Name="CreateDate" />
+            <PropertyRef Name="CreatorName" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Descr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Where" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionsBefore" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Link" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatorSid" Type="String" MaxLength="46" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatorName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectBgColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="StateChangerSid" Type="String" MaxLength="46" FixedLength="false" Unicode="false" />
+          <Property Name="StateChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="StateDescr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StateChangerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="TaskTrackerEntitity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="wish_view" EntityType="Self.wish_view" />
+          </EntityContainer>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TaskTrackerModelStoreContainer" CdmEntityContainer="TaskTrackerEntitity">
+          <EntitySetMapping Name="wish_view">
+            <EntityTypeMapping TypeName="TaskTrackerModel.wish_view">
+              <MappingFragment StoreEntitySet="wish_view">
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateChangerName" ColumnName="StateChangerName" />
+                <ScalarProperty Name="StateDescr" ColumnName="StateDescr" />
+                <ScalarProperty Name="StateChangeDate" ColumnName="StateChangeDate" />
+                <ScalarProperty Name="StateChangerSid" ColumnName="StateChangerSid" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="ProjectBgColor" ColumnName="ProjectBgColor" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="CreatorName" ColumnName="CreatorName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Descr" ColumnName="Descr" />
+                <ScalarProperty Name="Where" ColumnName="Where" />
+                <ScalarProperty Name="ActionsBefore" ColumnName="ActionsBefore" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="CreatorSid" ColumnName="CreatorSid" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

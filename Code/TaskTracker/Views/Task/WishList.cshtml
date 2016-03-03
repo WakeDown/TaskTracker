@@ -1,6 +1,6 @@
 ﻿
 @using TaskTracker.Models
-@model IEnumerable<Wish>
+@model IEnumerable<wish_view>
 @{
     ViewBag.Title = "Список заявок";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,11 +8,11 @@
 
 <table class="table table-bordered table-striped">
     <thead>
-    <tr>
+    <tr><th></th>
+
         <th>№</th>
-        <th></th>
         <th>Заявка</th>
-        <th>Автор</th>
+        <th>Статус</th>
         <th>Создано</th>
     </tr>
     </thead>
@@ -24,18 +24,105 @@
     {
         i++;
         <tr>
-            <td>@i</td>
-            <td></td>
+            <td class="row-marker @(String.IsNullOrEmpty(wish.ProjectBgColor) ? "indigo lighten-2" : wish.ProjectBgColor)"></td>
+            <th class="text-center">@i</th>
             <td>
-                <h4>@wish.Title</h4>
+                <div class="row no-marg-bot">
+                    <div class="col-lg-6">
+                        <span class="bold @(String.IsNullOrEmpty(wish.ProjectBgColor) ? "indigo lighten-2" : wish.ProjectBgColor) marker">@wish.ProjectName</span>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="pull-right">
+                            <a wid="@wish.Id" href="#modalCancel" class="btn btn-danger btn-xs" type="modalCancelModal"><i class="fa fa-remove"></i></a>
+                            <a wid="@wish.Id" type="came" wid="@wish.Id" class="btn btn-success btn-xs"><i class="fa fa-play"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="no-marg-bot">@wish.Title</h4>
                 <div>
-                    @wish.Descr
+                    <small>
+                        @wish.Descr
+                    </small>
                 </div>
             </td>
             <td>
-                @wish.CreatorSid
+                @wish.StateName
+                @(wish.StateChangeDate.HasValue ? wish.StateChangeDate.Value.ToString("dd.MM.yyyy") : null)
+                <div class="text-nowrap">@wish.StateChangerName</div>
+            </td>
+            <td>
+                Создано
+                <div>
+                    @((DateTime.Now - wish.CreateDate).TotalDays.ToString("N0")) дн.
+                </div>
+                @wish.CreateDate.ToString("dd.MM.yyyy")
+                <div class="text-nowrap">@wish.CreatorName</div>
+
             </td>
         </tr>
     }
     </tbody>
 </table>
+
+<div id="modalCancel" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Причина отклонения</h4>
+            </div>
+            <div class="modal-body">
+                <textarea type="text" id="cancelDescr" class="form-control" required="required" placeholder="Укажите причину отклонения"></textarea>
+            </div>
+            <div class="modal-footer">
+                <a id="cancel" class="btn btn-success">Сохранить</a>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('[type=modalCancelModal]').click(function () {
+                $('#cancel').attr('wid', $(this).attr('wid'));
+                $('#modalCancel').modal('show');
+            });
+            $('[type=came]').click(function () {
+                var wid = $(this).attr('wid');
+                $.ajax({
+                    url: '@Url.Action("SetCameState")',
+                    method: 'POST',
+                    data: { id: wid },
+                    success: function () {
+                        location.reload();
+                    },
+                    error: function () {
+                        location.reload();
+                    }
+                });
+            });
+            $('#cancel').click(function() {
+                var cancelDescr = $('#cancelDescr').val();
+                if (cancelDescr == '') {
+                    alert('Укажите причину отклонения!');
+                    return;
+                }
+                var wid = $(this).attr('wid');
+                $.ajax({
+                    url: '@Url.Action("SetCancelState")',
+                    method: 'POST',
+                    data: { id: wid, descr: cancelDescr },
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function() {
+                        location.reload();
+                    }
+                });
+            });
+        });
+    </script>
+}
