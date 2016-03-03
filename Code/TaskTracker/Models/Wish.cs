@@ -19,6 +19,10 @@ namespace TaskTracker.Models
         public string Link { get; set; }
         public string CreatorSid { get; set; }
         public DateTime CreateDate { get; set; }
+        public string StateChangerSid { get; set; }
+        public DateTime? StateChangeDate { get; set; }
+        public int? StateId { get; set; }
+        public string StateDescr { get; set; }
 
         public static void Create(Wish wish, AdUser user)
         {
@@ -26,19 +30,34 @@ namespace TaskTracker.Models
             {
                 wish.CreateDate=DateTime.Now;
                 wish.CreatorSid = user.Sid;
+                wish.StateId = WishState.Get("NEW").Id;
                 db.Wishes.Add(wish);
                 db.SaveChanges();
             }
         }
 
-        public async static Task<IEnumerable<Wish>> GetList(AdUser user)
+        public async static Task<IEnumerable<wish_view>> GetList(AdUser user)
         {
-            using (var db = new TaskTrackerContext())
-            {
+            
                 string creatorSid = user.Sid;
                 if (user.HasAccess(AdGroup.TaskTrackerAdmin, AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
                     creatorSid = null;
-               return await db.Wishes.Where(x=> creatorSid == null || (creatorSid != null && x.CreatorSid == creatorSid)).ToListAsync();
+            using (var db = new TaskTrackerEntitity())
+            {
+                return await db.wish_view.Where(x => creatorSid == null || (creatorSid != null && x.CreatorSid == creatorSid)).ToListAsync();
+            }
+        }
+
+        public async static Task SetState(int wishId, string stateSysName, string stateDescr, AdUser user)
+        {
+            using (var db = new TaskTrackerContext())
+            {
+                var wish = db.Wishes.Single(x => x.Id == wishId);
+                wish.StateChangeDate = DateTime.Now;
+                wish.StateChangerSid = user.Sid;
+                wish.StateDescr = stateDescr;
+                wish.StateId = (await WishState.Get(stateSysName)).Id;
+                db.SaveChanges();
             }
         }
     }

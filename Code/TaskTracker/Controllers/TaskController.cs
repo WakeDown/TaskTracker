@@ -511,5 +511,19 @@ namespace TaskTracker.Controllers
             var list = await Wish.GetList(CurUser);
             return View(list);
         }
+
+        [HttpPost]
+        public async Task<JsonResult> SetCancelState(int id, string descr)
+        {
+            await Wish.SetState(id, "CANCEL", descr, CurUser);
+            return Json(new {});
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> SetCameState(int id)
+        {
+            await Wish.SetState(id, "CAME", null, CurUser);
+            return Json(new { });
+        }
     }
 }

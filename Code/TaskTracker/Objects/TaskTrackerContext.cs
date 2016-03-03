@@ -34,6 +34,7 @@ namespace TaskTracker.Objects
         public DbSet<TaskSpecification> TaskSpecifications { get; set; }
         public DbSet<TaskWork> TaskWorks { get; set; }
         public DbSet<Wish> Wishes { get; set; }
+        public DbSet<WishState> WishStates { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Entity<TaskClaim>().Property(m => m.SpecialistSid).IsOptional();
