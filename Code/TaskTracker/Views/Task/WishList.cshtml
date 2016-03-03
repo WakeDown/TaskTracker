@@ -1,0 +1,41 @@
+﻿
+@using TaskTracker.Models
+@model IEnumerable<Wish>
+@{
+    ViewBag.Title = "Список заявок";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th></th>
+        <th>Заявка</th>
+        <th>Автор</th>
+        <th>Создано</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        int i = 0;
+    }
+    @foreach (var wish in Model)
+    {
+        i++;
+        <tr>
+            <td>@i</td>
+            <td></td>
+            <td>
+                <h4>@wish.Title</h4>
+                <div>
+                    @wish.Descr
+                </div>
+            </td>
+            <td>
+                @wish.CreatorSid
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

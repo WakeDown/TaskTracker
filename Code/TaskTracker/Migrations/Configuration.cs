@@ -9,7 +9,7 @@ namespace TaskTracker.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
             ContextKey = "TaskTracker.Objects.TaskTrackerContext";
         }
 

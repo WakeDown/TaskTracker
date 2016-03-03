@@ -27,17 +27,17 @@ namespace TaskTracker.Models
         {
         }
 
-        public async Task<System.Guid> Add(string creatorSid, TaskFile file)
+        public async Task<System.Guid> Add(string creatorSid)
         {
             TaskTrackerContext db = new TaskTrackerContext();
 
-            file.TaskFileId = Guid.NewGuid();
-            file.Enabled = true;
-            file.CreatorSid = creatorSid;
-            file.DateCreate = DateTime.Now;
-            db.TaskFiles.Add(file);
+            TaskFileId = Guid.NewGuid();
+            Enabled = true;
+            CreatorSid = creatorSid;
+            DateCreate = DateTime.Now;
+            db.TaskFiles.Add(this);
             await db.SaveChangesAsync();
-            return file.TaskFileId;
+            return TaskFileId;
         }
 
         public static async Task<TaskFile> GetAsync(string guid)

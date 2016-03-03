@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using TaskTracker.Objects;
 
@@ -26,6 +28,17 @@ namespace TaskTracker.Models
                 wish.CreatorSid = user.Sid;
                 db.Wishes.Add(wish);
                 db.SaveChanges();
+            }
+        }
+
+        public async static Task<IEnumerable<Wish>> GetList(AdUser user)
+        {
+            using (var db = new TaskTrackerContext())
+            {
+                string creatorSid = user.Sid;
+                if (user.HasAccess(AdGroup.TaskTrackerAdmin, AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
+                    creatorSid = null;
+               return await db.Wishes.Where(x=> creatorSid == null || (creatorSid != null && x.CreatorSid == creatorSid)).ToListAsync();
             }
         }
     }

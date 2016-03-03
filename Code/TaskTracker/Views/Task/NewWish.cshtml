@@ -1,0 +1,83 @@
+﻿@using TaskTracker.Models
+@model Wish
+@{
+    ViewBag.Title = "Новая";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<p>
+    <div class="red lighten-3 red-text">
+        @TempData["error"]
+    </div>
+
+    @using (Html.BeginForm("NewWish", "Task", FormMethod.Post, new { enctype = "multipart/form-data", role = "form" }))
+    {
+
+        <div class="row">
+
+            <div class="col-lg-3">
+                <label for="project">Проект</label>
+                @Html.DropDownListFor(m => m.ProjectId, Project.GetSelectionList(), "--выберите проект--", new { id = "project", @class = "validate browser-default form-control", required = "required" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col-lg-6">
+                <label for="name">Название</label>
+                @Html.TextBoxFor(m => m.Title, new { @id = "name", @class = "validate form-control", required = "required" })
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col-lg-6">
+                <label for="descr">Описание</label>
+                @Html.TextAreaFor(m => m.Descr, new { @id = "descr", @class = "validate  form-control", rows = "6" })
+
+            </div>
+        </div>
+        <h3>
+            Если произошла ошибка или сбой укажите пожалуйста следующую информацию
+        </h3>
+        <div class="row">
+            <div class="input-field col-lg-6">
+                <label for="descr">Какие действия были в программе перед ошибкой?</label>
+                @Html.TextAreaFor(m => m.ActionsBefore, new { @id = "descr", @class = "validate  form-control", rows = "2" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col-lg-6">
+                <label for="descr">В каком окне программы произошло</label>
+                @Html.TextBoxFor(m => m.Where, new { @id = "descr", @class = "validate  form-control" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col-lg-6">
+                <label for="descr">Ссылка</label>
+                @Html.TextBoxFor(m => m.Link, new { @id = "descr", @class = "validate  form-control" })
+            </div>
+        </div>
+        @*<div class="row">
+                <div class="col-lg-6">
+                    <input type="file" name="file" multiple>
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="col-lg-6">
+                <button class="btn btn-success waves-effect waves-light" type="submit" name="WindowClose" value="WindowClose">
+                    Сохранить
+                </button>
+            </div>
+        </div>
+    }
+</p>
+
+
+<script>
+        @if (ViewBag.Success != null && ViewBag.Success)
+        {
+            <text>
+        alert('Ваша заявка успешно добавлена!');
+
+            </text>
+
+            }
+</script>

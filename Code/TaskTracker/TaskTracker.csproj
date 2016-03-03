@@ -361,6 +361,7 @@
     <Content Include="Views\Task\TaskWorkEdit.cshtml" />
     <Content Include="Views\Task\TaskWorkItem.cshtml" />
     <Content Include="Views\Task\NewWish.cshtml" />
+    <Content Include="Views\Task\WishList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

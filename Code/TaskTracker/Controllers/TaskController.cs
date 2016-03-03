@@ -505,5 +505,11 @@ namespace TaskTracker.Controllers
             await model.SaveAsync(CurUser);
             return Json(new {});
         }
+
+        public async Task<ActionResult> WishList()
+        {
+            var list = await Wish.GetList(CurUser);
+            return View(list);
+        }
     }
 }
