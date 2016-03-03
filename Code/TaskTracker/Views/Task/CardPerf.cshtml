@@ -1,0 +1,879 @@
+﻿@using System.Collections
+@using TaskTracker.Models
+@using TaskTracker.Objects
+@model TaskTracker.Models.TaskClaim
+@{
+    ViewBag.Title = "Карточка задачи";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Header = Model.Name;
+    ViewBag.HeaderBgColor = Model.Project.BgColor;
+}
+
+
+<div class="row">
+    <div class="col-lg-5">
+        <h4>@AdHelper.GetUserBySid(Model.CreatorSid).DisplayName пишет <a href="@Url.Action("New", new {idParent = Model.TaskId})" class="btn btn-default btn-xs" id="addSubTask" target="_blank" data-position="top" data-delay="50" tooltip="Создать подзадачу" data-toggle="tooltip"><i class="fa fa-plus"></i> подзадача</a></h4>
+        <div class="pad-l-lg">
+            <div class="">
+                @Model.Descr
+            </div>
+
+            <div id="modalFile" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        @using (Html.BeginForm("AddFile2Task", "Task", new {taskId = Model.TaskId}, FormMethod.Post, new {enctype = "multipart/form-data", role = "form"}))
+                        {
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Добавление файлов</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    <input type="file" name="file" multiple>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-success" type="submit" name="action"><i class="fa fa-save"></i> Сохранить</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            @*<div id="modalFile" class="modal">
+                    @using (Html.BeginForm("AddFile2Task", "Task", new {taskId = Model.TaskId}, FormMethod.Post, new {enctype = "multipart/form-data", role = "form"}))
+                    {
+                        <div class="modal-content">
+                            <h4>Добавление файлов</h4>
+                            @Html.Partial("AddFile")
+                        </div>
+                        <div class="modal-footer">
+                            <button class="modal-action modal-close waves-effect waves-green btn green" type="submit" name="action"><i class="material-icons right">done</i></button>
+                            <a href="#!" class="modal-action modal-close waves-effect waves-red btn red "><i class="material-icons">close</i></a>
+                        </div>
+                    }
+                </div>*@
+
+
+        </div>
+        @if (ViewBag.TaskFiles != null && ViewBag.TaskFiles.Count > 0)
+        {
+            <h4>Прикрепленные файлы <a href="#modalFile" class="btn btn-default btn-xs" id="modalFileModal" data-position="top" data-delay="50" tooltip="Добавить файл" data-toggle="modal" data-target="#modalFile"><i class="fa fa-upload"></i> добавить</a>
+            </h4>
+            <p id="taskFiles">
+                @foreach (TaskFile file in ViewBag.TaskFiles)
+                {
+                    <div>
+                        <a target="_blank" href="@Url.Action("GetTaskFileData", new {guid = file.TaskFileId})">@file.Name</a>
+                    </div>
+                }
+            </p>
+        }
+        <h4>
+            Комментарии
+            @*<a href="#modalTaskComment" class="btn waves-effect waves-light modal-trigger btn-flat tooltipped" id="modalTaskCommentModal" data-position="top" data-delay="50" data-tooltip="Добавить комментарий"><i class="material-icons">comment</i></a>*@
+        </h4>
+        <div>
+            <div id="taskComments">
+                @if (ViewBag.TaskComments != null && ViewBag.TaskComments.Count > 0)
+                {
+                    foreach (TaskComment comment in ViewBag.TaskComments)
+                    {
+                        @Html.Partial("TaskCommentItem", comment)
+                    }
+                }
+            </div>
+            <div class="row">
+                <div class="input-field col-lg-12">
+                    <textarea type="text" id="taskCommentText" tid="@Model.TaskId" class="validate no-marg-bot form-control" placeholder="Новый комментарий"></textarea>
+                    <small>Сохранить - Ctrl+Enter</small>
+                </div>
+            </div>
+        </div>
+
+
+        @*<div id="modalTaskComment" class="modal">
+                <div class="modal-content">
+                    <h4>Комментарий к задаче</h4>
+                    <div class="input-field col s12">
+                        <input type="text" id="taskCommentText" class="validate" required="required" />
+                        <label for="taskCommentText">Комментарий</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="addComment" href="#!" class="modal-action modal-close waves-effect waves-green btn green" tid="@Model.TaskId"><i class="material-icons">done</i></a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn red "><i class="material-icons">close</i></a>
+                </div>
+            </div>*@
+    </div>
+<div class="col-lg-4">
+    @*<div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>Смета</h4>
+            @Html.Partial("SpecificationEdit", new TaskSpecification())
+        </div>
+        <div class="panel-body" id="specificationContainer">
+        </div>
+    </div>*@
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="nomargin h4">Журнал работ</span> @if (!Model.NeedWorkList) { <a class='btn btn-link' id='setNeedWorkList'>добавить</a>}
+            @if (Model.NeedWorkList)
+            {
+                <div class="row no-marg-bot border-bot-dash" id="addWorkContainer">
+                    <div class="col-lg-12">
+                        <textarea id="newWorkName" class="form-control input-xs pull-left" placeholder="Что сделано" rows="1" style="width: 270px"></textarea>
+                        <input id="newWorkDateWork" class="form-control input-xs pull-left datepicker" placeholder="Дата" style="width: 80px" value="@DateTime.Now.ToString("dd.MM.yyyy")"/>
+                        <input id="newWorkHours" class="form-control input-xs pull-left" placeholder="Часы" style="width: 40px"/>
+                        <a class="btn btn-success btn-sm no-marg" href="#!" id="addWOrk"><i class="fa fa-plus"></i></a>
+                    </div>
+                    @*<div class="col-lg-6">
+                    <textarea id="newWorkName" class="form-control input-xs" placeholder="Что сделано" rows="1"></textarea>
+                </div>
+                <div class="col-lg-3">
+                    <input id="newWorkDateWork" class="form-control input-xs datepicker" placeholder="Дата" value="@DateTime.Now.ToString("dd.MM.yyyy")" />
+                </div>
+                <div class="col-lg-2">
+                    <input id="newWorkHours" class="form-control input-xs" placeholder="Часы"/> <small>час.</small>
+                </div>
+                <div class="col-lg-1">
+                    <a class="btn btn-success no-pad no-marg" href="#!" id="addWOrk"><i class="fa fa-plus"></i></a>
+                </div>*@
+                </div>
+            }
+        </div>
+@if (Model.NeedWorkList)
+{
+    <div class="panel-body" id="workContainer">
+    </div>
+}
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="nomargin h4">
+                Контрольные точки 
+            </span>
+            @if (!Model.NeedCheckpoints)
+            { <a class='btn btn-link' id='setTaskNeedCheckpoints'>добавить</a>}
+            @if (Model.NeedCheckpoints)
+            {
+                <span id="chkpFilter" class="">
+                <input type="radio" name="chkpFilter" id="chkpFilterDefault" checked="checked" /><label for="chkpFilterDefault">все</label>
+                <input type="radio" name="chkpFilter" id="chkpFilterDone" /><label for="chkpFilterDone">выпол</label>
+                <input type="radio" name="chkpFilter" id="chkpFilterUndone" /><label for="chkpFilterUndone">невып</label>
+                @*<input type="radio" name="chkpFilter" id="chkpFilterDoneOrder" /><label for="chkpFilterDoneOrder">по выполнению</label>*@
+            </span>
+                <div class="row">
+                    <div class="input-field col-lg-12">
+                        <textarea id="chkpAddName" type="text" tid="@Model.TaskId" class="no-marg-bot form-control" placeholder="Новая точка"></textarea>
+                        <small>Сохранить - Enter</small>
+                    </div>
+                    @*<div class="col l4">
+                <button id="addCheckpoint" class="btn waves-effect waves-light btn-flat" tid="@Model.TaskId"><i class="material-icons right">add</i></button>
+            </div>*@
+                </div>
+            }
+        </div>
+@if (Model.NeedCheckpoints)
+{
+    <div class="panel-body">
+        <div id="checkpoints">
+            <div id="checkpointList">
+                @foreach (TaskCheckpoint chk in ViewBag.Checkpoints)
+                {
+                    @Html.Partial("CheckpointItem", chk)
+                }
+            </div>
+        </div>
+    </div>
+}
+    </div>
+
+</div>
+    <div class="col-lg-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="nomargin">
+                    <a tid="@Model.TaskId" id="done" href="#!" class="btn btn-success btn-sm" data-toggle="tooltip" tooltip="Готово"><i class="fa fa-check"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div id="claimInfoContainer">
+                    <div class="form-group">
+                        <label class="col-lg-4">Исполнитель</label>
+                        <div class="col-lg-8">
+                            <select id="Specialist" class="form-control input-sm">
+                                <option>--выберите--</option>
+                                @foreach (var spec in Specialist.GetProgrammers())
+                                {
+                                    <option value="@spec.Key" @(!String.IsNullOrEmpty(Model.SpecialistSid) && Model.SpecialistSid == spec.Key ? "selected" : String.Empty)>@spec.Value</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4">Дата план</label>
+                        <div class="col-lg-8">
+                                <input id="DateStartPlan" class="form-control input-sm datepicker" value="@(Model.DateStartPlan.HasValue ? Model.DateStartPlan.Value.ToString("dd.MM.yyyy") : null)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4">Трудозатраты</label>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <input id="ClaimQuantity" type="text" class="form-control input-sm" value="@(Model.Quantity.HasValue ? Model.Quantity.Value.ToString("F") : null)"/>
+                                <div class="input-group-addon input-xs" style="width: 70px">
+                                    <select id="ClaimQuantityType" class="form-control input-xs">
+                                        <option>----</option>
+                                        @foreach (var q in QuantityType.GetList())
+                                        {
+                                            <option value="@q.Id" @(Model.QuantityTypeId.HasValue && Model.QuantityTypeId == q.Id ? "selected" : String.Empty)>@q.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4">Стоимость</label>
+                        <div class="col-lg-8">
+                            <div class="input-group">
+                                <input id="ClaimCost" type="text" class="form-control input-sm" value="@(Model.Cost.HasValue ? Model.Cost.Value.ToString("F") : null)" />
+                                <div class="input-group-addon input-xs">
+                                    руб.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div>
+                    <a tid="@Model.TaskId" id="addResult" href="#!" class="btn btn-warning btn-sm" data-toggle="tooltip" tooltip="Добавить действие"><i class="fa fa-plus-circle"></i></a>
+                </div>
+                <h4 class="nomargin">
+                    Действия и заметки
+                </h4>
+            </div>
+            <div class="panel-body" id="actions">
+                @*@Html.Partial("TaskActionList", (TaskTracker.Models.ListResult<TaskTracker.Models.TaskAction>)ViewBag.TaskActions)*@
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+
+                <h4>История</h4>
+            </div>
+            <div class="panel-body" id="history">
+                @*@Html.Partial("StateHistory", (ListResult<Task2TaskState>) ViewBag.StateHistory)*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalAction" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Добавление действия или заметки</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div>
+                        <input id="actionName" type="text" class="form-control" placeholder="Название"/>
+                    </div>
+                    <div>
+                        <textarea id="actionDescr" class="form-control" placeholder="Описание"></textarea>
+                    </div>
+                    <div>
+                        <input id="actionRemindDate" class="form-control datepicker" placeholder="Напомнить"/>
+                    </div>
+                    <div>
+                        <input id="actionRemindText" type="text" class="form-control" placeholder="Напоминиание" />
+                    </div>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="saveAction" name="action"><i class="fa fa-save"></i> Сохранить</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalHistory" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">История</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalHistoryContainer">
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalActionList" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Действия и заметки</h4>
+            </div>
+            <div class="modal-body">
+                <p id="modalActionContainer">
+
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        function loadHistory() {
+            var $cont = $('#history');
+            $cont.html('');
+            $.ajax({
+                url: '@Url.Action("GetTaskHistory")',
+                method: 'GET',
+                data:{id:@Model.TaskId, full:false},
+                success:function(html) {
+                    $cont.html(html);
+
+                    $('#historyShowAll').click(function () {
+                        $('#modalHistory').modal('show');
+                        var $cont = $('#modalHistoryContainer');
+                        $cont.html('');
+                        $.ajax({
+                            url: '@Url.Action("GetTaskHistory")',
+                            method: 'GET',
+                            data:{id:@Model.TaskId},
+                            success: function(html) {
+                                $cont.html(html);
+                            },
+                            error:function() {
+                                alert('Ошибка при загрузке истории');
+                            }
+                        });
+                    });
+                },
+                error:function() {
+                    alert('Ошибка при загрузке истории');
+                }
+            });
+        }
+
+        function loadActions() {
+            var $cont = $('#actions');
+            $cont.html('');
+            $.ajax({
+                url: '@Url.Action("GetActionHistory")',
+                method: 'GET',
+                data:{id:@Model.TaskId, full:false},
+                success:function(html) {
+                    $cont.html(html);
+
+                    $('#actionShowAll').click(function() {
+                $('#modalActionList').modal('show');
+                var $cont = $('#modalActionContainer');
+                $cont.html('');
+                $.ajax({
+                    url: '@Url.Action("GetActionHistory")',
+                    method: 'GET',
+                    data:{id:@Model.TaskId},
+                    success: function(html) {
+                        $cont.html(html);
+                    },
+                    error:function() {
+                        alert('Ошибка при загрузке действий');
+                    }
+                });
+            });
+                },
+                error:function() {
+                    alert('Ошибка при загрузке действий');
+                }
+            });
+        }
+
+        function saveClaimInfo(target) {
+            var $ClaimCost = $('#ClaimCost');
+            var cost = $ClaimCost.val();
+            var $ClaimQuantity = $('#ClaimQuantity');
+            var quantity = $ClaimQuantity.val();
+            var $ClaimQuantityType = $('#ClaimQuantityType');
+            var quantityTypeId = $ClaimQuantityType.val();
+            var dateStartPlan = $('#DateStartPlan').val();
+            $.ajax({
+                url: '@Url.Action("SaveClaimInfo")',
+                method:'POST',
+                data: {id: @Model.TaskId, cost:cost, quantity:quantity,quantityTypeId:quantityTypeId, DateStartPlan:dateStartPlan },
+                success:function() {
+                    var $cont = $('#claimInfoContainer');
+                    var $target=$(target);
+                    $target.blur();
+                    $target.removeClass('updated');
+                    $target.addClass('updated');
+                },
+                error:function() {
+                    alert('Ошибка при обновлении информации о заявке');
+                }
+            });
+        }
+
+        function loadCheckpoints() {
+            var $cont = $('#checkpointList');
+            //$cont.html('');
+            $cont.find('[name=CheckpointHours]').keypress(function(e) {
+                if (e.keyCode !== 13)return;
+                var $this = $(this);
+                var chkpid = $this.attr('chkpid');
+                var hours = $this.val();
+                $.ajax({
+                    url: '@Url.Action("SaveCheckpointInfo")',
+                    method: 'POST',
+                    data: { chkpid: chkpid, hours: hours },
+                    success: function() {
+                        $this.blur();
+                        $this.removeClass('updated');
+                        $this.addClass('updated');
+                    },
+                    error: function() {
+                        alert('Ошибка при обновлении контрольной точки');
+                    }
+                });
+            });
+        }
+
+        @*function loadSpecifications() {
+            var $cont = $('#specificationContainer');
+            $cont.html('');
+            $.ajax({
+                url: '@Url.Action("GetSpicificationList")',
+                method: 'GET',
+                data:{id:@Model.TaskId},
+                success: function(html) {
+                    $cont.html(html);
+                    initSpecificationBtns($cont);
+                },
+                error:function() {
+                    alert('Ошибка при загрузке спецификации!');
+                }
+            });
+        }
+
+        function initSpecificationBtns($container) {
+            if (!$container) $container = $('#specificationContainer');
+
+            $('[name="spec-edit"]', $container).click(function() {
+                var $this = $(this);
+                var specid = $this.attr('specid');
+                var $elem = $('#task-spec-' + specid);
+                $.ajax({
+                    url: '@Url.Action("GetSpicificationEdit")',
+                    method: 'GET',
+                    data:{specid:specid},
+                    success: function(html) {
+                        $elem.replaceWith(html);
+                        initSpecificationBtns($elem);
+                    },
+                    error:function() {
+                        alert('Ошибка при загрузке спецификации!');
+                    }
+                });
+            });
+        }*@
+
+        function loadWorkList() {
+            var $cont = $('#workContainer');
+            $cont.html('');
+            $.ajax({
+                url: '@Url.Action("GetTaskWorkList")',
+                method: 'GET',
+                data:{id:@Model.TaskId},
+                success: function(html) {
+                    $cont.html(html);
+                    $('[name="work-del"]').click(function() {
+                        if (!confirm('Вы уверены что хотите удалить работу?'))return;
+                        var wid = $(this).attr('wid');
+                        $.ajax({
+                            url: '@Url.Action("CloseTaskWork")',
+                            method: 'POST',
+                            data: { wid:wid},
+                            success: function() {
+                                $('#task-work-' + wid).remove();
+                            },
+                            error: function() {
+                                alert('Ошибка при сохранении работы!');
+                            }
+                        });
+                    });
+                },
+                error:function() {
+                    alert('Ошибка при загрузке журнала работ!');
+                }
+            });
+        }
+
+
+        $(function () {
+            loadHistory();
+            loadActions();
+            loadCheckpoints();
+            //loadSpecifications();
+            loadWorkList();
+
+            $('#setNeedWorkList').click(function() {
+                $.ajax({
+                    url: '@Url.Action("SetTaskNeedWorkList")',
+                    method: 'POST',
+                    data: { id:@Model.TaskId},
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function() {
+                        //alert('Ошибка при сохранении работы!');
+                    }
+                });
+            });
+            $('#setTaskNeedCheckpoints').click(function() {
+                $.ajax({
+                    url: '@Url.Action("SetTaskNeedCheckpoints")',
+                    method: 'POST',
+                    data: { id:@Model.TaskId},
+                    success: function() {
+                        location.reload();
+                    },
+                    error: function() {
+                        //alert('Ошибка при сохранении работы!');
+                    }
+                });
+            });
+
+            $('#newWorkName').focus(function() {
+                $(this).attr('rows', 3);
+            });
+            $('#newWorkName').blur(function() {
+                $(this).attr('rows', 1);
+            });
+
+            $('#addWOrk').click(function() {
+                var newWorkHours = $('#newWorkHours').val();
+                var newWorkDateWork = $('#newWorkDateWork').val();
+                var newWorkName = $('#newWorkName').val();
+
+                $.ajax({
+                    url: '@Url.Action("SaveTaskWork")',
+                    method: 'POST',
+                    data: { TaskId: @Model.TaskId, Hours: newWorkHours, DateWork:newWorkDateWork, Name:newWorkName},
+                    success: function() {
+                        loadWorkList();
+                        $('#addWorkContainer input').val('');
+                        $('#newWorkDateWork').val(newWorkDateWork);
+
+                    },
+                    error: function() {
+                        alert('Ошибка при сохранении работы!');
+                    }
+                });
+            });
+
+            $('.datepicker').datepicker({
+                language: "ru",
+                todayHighlight: true,
+                autoclose: true
+            });
+
+            $('#claimInfoContainer input[type=text]').focus(function() {
+                $(this).select();
+            });
+            $('#DateStartPlan').change(function(e) {
+                //if (e.keyCode !== 13) return;
+                saveClaimInfo(this);
+            });
+            $('#ClaimCost').keypress(function(e) {
+                if (e.keyCode !== 13) return;
+                saveClaimInfo(this);
+            });
+            $('#ClaimQuantity').keypress(function(e) {
+                if (e.keyCode !== 13) return;
+                saveClaimInfo(this);
+            });
+            $('#ClaimQuantityType').change(function(e) {
+                saveClaimInfo(this);
+            });
+
+            $('#Specialist').change(function(e) {
+                
+                var $target = $(this);
+                var tid = @Model.TaskId;
+                var sid = $target.find('option:checked').val();
+                
+                if (tid > 0) {
+                    $.ajax(
+                    {
+                        url: '@Url.Action("SetTaskSpecialist")',
+                        method: 'POST',
+                        data: { id: tid, sid: sid },
+                        success: function(data) {
+                            $target.blur();
+                            //var newone = $target.clone(true);
+                            //$target.before(newone);
+                            //$("." + $target.attr("class") + ":last").remove();
+                            $target.removeClass('updated');
+                            $target.addClass('updated');
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
+            });
+
+
+            $('#saveAction').click(function() {
+                var name = $('#actionName').val();
+                var descr = $('#actionDescr').val();
+                var remDate = $('#actionRemindDate').val();
+                var remText = $('#actionRemindText').val();
+                $.ajax({
+                    url: '@Url.Action("SaveAction")',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ TaskId:@Model.TaskId, Name: name, Descr: descr, RemindDate: remDate, RemindText: remText }),
+                    success:function() {
+                        $('#modalAction').modal('hide');
+                        loadActions();
+                    },
+                    error:function() {
+                        alert('Ошибка при добавлении действия!');
+                    }
+                });
+            });
+
+            $('#addResult').click(function() {
+                $('#modalAction').modal('show');
+
+            });
+            $('[data-toggle="tooltip"]').tooltip();
+            $('[name="chkpFilter"]').click(function () {
+
+                var sortOrder = $(this).attr('id');
+                if (sortOrder === 'chkpFilterUndone') {
+                    var $chkpList = $('[name="cntnr-task-chkp-container"]');
+                    for (var i = 0; i < $chkpList.length; i++) {
+                        var $item = $($chkpList.get(i));
+                        if ($item.attr('done') !== undefined) {
+                            $item.hide();
+                        } else {
+                            $item.show();
+                        }
+                    }
+                } else if (sortOrder === 'chkpFilterDone') {
+                    var $chkpList = $('[name="cntnr-task-chkp-container"]');
+                    for (var i = 0; i < $chkpList.length; i++) {
+                        var $item = $($chkpList.get(i));
+                        if ($item.attr('done') === undefined) {
+                            $item.hide();
+                        } else {
+                            $item.show();
+                        }
+                    }
+                } else if (sortOrder === 'chkpFilterDefault') {
+                    var $chkpList = $('[name="cntnr-task-chkp-container"]:hidden');
+                    for (var i = 0; i < $chkpList.length; i++) {
+                        var $item = $($chkpList.get(i));
+                        $item.show();
+                    }
+                }
+            });
+
+            $('#done').click(function () {
+                var tid = $(this).attr('tid');
+                $.ajax(
+                {
+                    url: '@Url.Action("SetDoneState")',
+                    method: 'POST',
+                    data: { id: tid },
+                    success: function () {
+                        window.close();
+                        //window.location = '@Url.Action("List")';
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                    }
+                });
+            });
+            $('.tooltipped').tooltip();
+            //$('#addComment').click(
+            $('#taskCommentText').keypress(
+                function (e) {
+                    if ((e.ctrlKey) && ((e.keyCode == 0xA) || (E.keyCode == 0xD))) {
+                        var text = $('#taskCommentText').val();
+                        if (text === '') {
+                            alert('Укажите текст комментария.');
+                            return;
+                        }
+                        var tid = $(this).attr('tid');
+
+                        $.ajax({
+                            url: '@Url.Action("AddTaskComment")',
+                            method: 'POST',
+                            data: { taskId: tid, commentText: text },
+                            success: function (data) {
+                                $.ajax({
+                                    url: '@Url.Action("GetTaskCommentItem")?id=' + data.id,
+                                    method: 'GET',
+                                    success: function (html) {
+                                        $('#taskComments').append(html);
+                                        $('#taskCommentText').val('');
+                                        $('#taskCommentText').blur();
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert(xhr.responseText);
+                                    }
+                                });
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.responseText);
+                            }
+
+                        });
+                    }
+                });
+            //$('#modalTaskCommentModal.modal-trigger').leanModal();
+            //$('#modalFileModal.modal-trigger').leanModal();
+            //    .click(function () {
+            //    $('#pause').attr('tid', $(this).attr('tid'));
+            //    $('#modalTaskComment').openModal();
+            //});
+            $('[name="task-chkp-del"]').click(closeCheckpoint);
+            $(':checkbox[name="task-chkp"]').click(checkpointSetDone);
+
+            $('#chkpAddName').keypress(
+                //$('#addCheckpoint').click(
+                function (e) {
+                    if (e.keyCode === 13) {
+                        var chkName = $('#chkpAddName').val();
+
+                        if (chkName === '') {
+                            alert('Укажите текст точки.');
+                            $('#chkpAddName').focus();
+                            return;
+                        }
+                        var taskId = $(this).attr('tid');
+                        $('#chkpAddName').prop('disabled', true);
+                        $.ajax({
+                            url: '@Url.Action("AddCheckpoint")',
+                            method: 'POST',
+                            data: { taskId: taskId, chekpointName: chkName },
+                            success: function (data) {
+                                $.ajax({
+                                    url: '@Url.Action("GetCheckpointItem")?id=' + data.id,
+                                    method: 'GET',
+                                    success: function (html) {
+                                        $('#checkpointList').append(html);
+                                        $('#cntnr-task-chkp-' + data.id + ' :checkbox[name="task-chkp"]').click(checkpointSetDone);
+                                        $('#cntnr-task-chkp-' + data.id + ' [name="task-chkp-del"]').click(closeCheckpoint);
+                                        $('#chkpAddName').val('');
+                                        $('#chkpAddName').prop('disabled', false);
+                                        $('#chkpAddName').focus();
+                                    },
+                                    error: function (xhr, ajaxOptions, thrownError) {
+                                        alert(xhr.responseText);
+                                        $('#chkpAddName').prop('disabled', false);
+                                    }
+                                });
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                alert(xhr.responseText);
+                            }
+                        });
+                        return;
+                    }
+                });
+        });
+
+        function closeCheckpoint() {
+            if (!confirm('Вы уверены что хотите удалить точку?')) return;
+            var chkpId = $(this).attr('chkpid');
+            $.ajax({
+                url: '@Url.Action("CloseCheckpoint")',
+                method: 'POST',
+                data: { id: chkpId },
+                success: function () {
+                    $('#checkpointList #cntnr-task-chkp-' + chkpId).remove();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function checkpointSetDone() {
+            var chkpId = $(this).val();
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '@Url.Action("SetCheckpointDone")',
+                    method: 'POST',
+                    data: { id: chkpId },
+                    success: function () {
+                        updateCheckpointItem(chkpId);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                    }
+                });
+            } else {
+                $.ajax({
+                    url: '@Url.Action("SetCheckpointUndone")',
+                    method: 'POST',
+                    data: { id: chkpId },
+                    success: function () {
+                        updateCheckpointItem(chkpId);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.responseText);
+                    }
+                });
+            }
+        }
+
+        function updateCheckpointItem(chkpId) {
+            $.ajax({
+                url: '@Url.Action("GetCheckpointItem")?id=' + chkpId,
+                method: 'GET',
+                success: function (html) {
+                    $('#checkpointList #cntnr-task-chkp-' + chkpId).replaceWith(html);
+                    $('#cntnr-task-chkp-' + chkpId + ' :checkbox[name="task-chkp"]').click(checkpointSetDone);
+                    $('#cntnr-task-chkp-' + chkpId + ' [name="task-chkp-del"]').click(closeCheckpoint);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

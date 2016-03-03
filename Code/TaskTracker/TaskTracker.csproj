@@ -397,6 +397,7 @@
     <Content Include="TaskTrackerModel.edmx.diagram">
       <DependentUpon>TaskTrackerModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\Task\CardPerf.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

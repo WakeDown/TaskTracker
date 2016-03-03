@@ -1,0 +1,36 @@
+﻿@using TaskTracker.Objects
+@model TaskTracker.Models.ListResult<TaskTracker.Models.TaskAction>
+
+@*<div class="card-panel">
+    <h5>История задачи</h5>*@
+@foreach (var action in Model.List.ToList())
+{
+    <div class="history-item">
+        @*<div class="card-content white-text">*@
+        <strong>@action.Name</strong>
+        <div>
+            <small>@String.Format("{0:dd.MM.yy hh:mm}", action.DateCreate)- @action.CreatorName</small>
+        </div>
+        @if (!String.IsNullOrEmpty(action.Descr))
+        {
+            <p>
+                @action.Descr
+            </p>
+        }
+        @if (action.RemindDate.HasValue)
+        {
+            @:Напомнить - <strong>@action.RemindDate.Value.ToString("dd.MM.yyyy")</strong><br/>
+            <small>
+                @action.RemindText
+            </small>
+        }
+        @*</div>*@
+    </div>
+}
+@if (Model.Total > Model.ListCount)
+{
+    <div>
+        <a id="actionShowAll" class="btn btn-link">показать все (еще @(Model.Total - Model.ListCount))</a>
+    </div>
+}
+@*</div>*@
