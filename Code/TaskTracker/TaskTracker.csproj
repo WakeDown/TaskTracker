@@ -345,7 +345,6 @@
     <Content Include="Views\Task\TaskListProgHeader.cshtml" />
     <Content Include="Views\Task\TaskListManagerFilter.cshtml" />
     <Content Include="Views\Task\TaskFilteredManagerList.cshtml" />
-    <Content Include="Views\Task\CardPerf.cshtml" />
     <Content Include="Views\Task\CheckpointItem.cshtml" />
     <Content Include="Views\Task\AddFile.cshtml" />
     <Content Include="Views\Task\TaskCommentItem.cshtml" />
