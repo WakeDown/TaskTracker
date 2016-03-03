@@ -19,6 +19,7 @@ namespace TaskTracker.Models
         public string BgColor { get; set; }
         public string ManagerSid { get; set; }
         public string SysName { get; set; }
+        public string OwnerSid { get; set; }
 
         public Project()
         {

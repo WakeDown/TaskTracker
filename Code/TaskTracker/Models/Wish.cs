@@ -42,9 +42,21 @@ namespace TaskTracker.Models
                 string creatorSid = user.Sid;
                 if (user.HasAccess(AdGroup.TaskTrackerAdmin, AdGroup.TaskTrackerManager, AdGroup.TaskTrackerProg))
                     creatorSid = null;
+
+                
+
             using (var db = new TaskTrackerEntitity())
             {
-                return await db.wish_view.Where(x => creatorSid == null || (creatorSid != null && x.CreatorSid == creatorSid)).ToListAsync();
+                using (var db2 = new TaskTrackerContext())
+                {
+                    var projIds = db2.Projects.Where(y => y.OwnerSid == user.Sid).Select(y => y.ProjectId).ToList();
+                
+                return
+                        await
+                            db.wish_view.Where(
+                                x => (creatorSid == null || (creatorSid != null && x.CreatorSid == creatorSid)) || (projIds.Contains(x.ProjectId)))
+                                .ToListAsync();
+                }
             }
         }
 
